@@ -26,7 +26,7 @@ namespace LDTS
             if (!string.IsNullOrEmpty(json))
             {
                 ReProcessQuestion reProcessForm = new JavaScriptSerializer().Deserialize<ReProcessQuestion>(json);
-                RelationService.DeleteReProcessFormByID(reProcessForm.PID);
+                Service.RelationService.DeleteReProcessFormByID(reProcessForm.PID);
             }
         }
 

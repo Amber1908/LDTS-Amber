@@ -29,7 +29,6 @@ namespace LDTS.Service
                     sqlCommand.Parameters["@SID"].Value = sid;
                     if (sqlCommand.ExecuteNonQuery() > 0)
                         result = true;
-                    sqc.Close();
                 }
 
             }

@@ -24,7 +24,6 @@ namespace LDTS
             {
                 byte[] imgbyte = LDTSservice.GetImageById(loginAdmin.admin_sign).image_bytes;
                 adminSign.Value = loginAdmin.admin_sign.ToString();
-                //adminSign.Value = System.Text.Encoding.UTF8.GetString(imgbyte);
             }
             if (!Page.IsPostBack)
             {
@@ -49,8 +48,27 @@ namespace LDTS
                     ExtendName.Value = reportAnswer.ExtendName;
                     Stauts.Value = reportAnswer.Status.ToString();
                     desc.Text = reportAnswer.Description;
+                    int Qsid = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).QID;
+                    List<ReAdminForm> adminForms= AoService.GetReAdminForms().Where(x => x.QID == Qsid).ToList();
+                    ReAdminForm adminForm= adminForms.Where(x=>x.admin_id== loginAdmin.admin_id).FirstOrDefault();
+                    if (adminForm != null)
+                    {
+                        //1.編輯2.編輯加簽核
+                        if (adminForm.status==1)
+                        {
+                            Ao.Text ="1";
+                        }
+                        else
+                        {
+                            Ao.Text = "2";
+                        }
+                    }
+                    else
+                    {
+                        Ao.Text = "0";
+                    }
                 }
-                else if (ReportAnswerSid!=0)
+                else if (ReportAnswerSid != 0)
                 {
                     ReportAnswer reportAnswer = FormService.GetReportAnswerById(ReportAnswerSid);
                     Qtitle.Text = reportAnswer.Title;
@@ -60,7 +78,7 @@ namespace LDTS
                     desc.Text = reportAnswer.Description;
 
                 }
-                else if (ReportQuestionSid!=0)
+                else if (ReportQuestionSid != 0)
                 {
                     ReportQuestion reportQuestion = FormService.GetReportQuestionById(ReportQuestionSid);
                     Qtitle.Text = reportQuestion.Title;

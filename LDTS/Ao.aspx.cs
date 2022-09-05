@@ -18,15 +18,15 @@ namespace LDTS
             //全部的程序書
             List<Process> processes = ProcessService.GetAllProcesses();
             //全部跟程序書有關的標準書
-            List<ReProcessStandardWorkBook> reProcessStandards = RelationService.GetAllReProcessStandardWorkBooks();
+            List<ReProcessStandardWorkBook> reProcessStandards = Service.RelationService.GetAllReProcessStandardWorkBooks();
             //全部跟程序書有關的表單
-            List<ReProcessQuestion> reProcessForms = RelationService.GetAllReProcesssQuestion();
+            List<ReProcessQuestion> reProcessForms = Service.RelationService.GetAllReProcesssQuestion();
             //組完的Json
             List<AoViewJson> aoViewJsons = new List<AoViewJson>();//組完全部
                                                                   //全部的標準書
             List<StandardWorkBook> SWBs = StandarWorkBookService.GetAllStandarwookbooks();
             //全部跟標準書有關的表單
-            List<ReStandarWorkBookForm> reStandarWorkBookForms = RelationService.GetAllreSWorkBookForm();
+            List<ReStandarWorkBookForm> reStandarWorkBookForms = Service.RelationService.GetAllreSWorkBookForm();
             //Admin有關的程序書
             List<ReAdminProcess> reAdminProcesses = AoService.GetReAdminProcesses();
             //Admin有關的表單

@@ -43,7 +43,7 @@
                                 </select>
                             </div>
                             <div class="ansDesc form-group">
-                                <label for="desc" style="font-size: 12px; color: #00000080">表單狀態</label>
+                                <label for="desc" style="font-size: 12px; color: #00000080">表單描述</label>
                                 <asp:TextBox TextMode="MultiLine" ID="desc" runat="server" Rows="5" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
@@ -106,11 +106,13 @@
             </div>
         </div>
     </div>
-
+    <asp:TextBox runat="server" ID="Ao" CssClass="d-none" ></asp:TextBox>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">
     <script>
+
         window.onload = function () {
+            //Signbtn 
             var dataObj = GetJsonData();
             GroupsTemplate(dataObj);
             let rawUrl = window.location.href;
@@ -119,6 +121,33 @@
                 let breadcrumbItem = document.querySelectorAll(".breadcrumb-item");
                 breadcrumbItem[1].cloneNode.innerText = "標準作業書";
             }
+            var ao = document.getElementById("mainPlaceHolder_Ao");
+            switch (ao.value) {
+                case "2":
+                    break;
+                case "1":
+                    var allsign = document.getElementsByClassName("Signbtn");
+                    for (var i = 0; i < allsign.length; i++) {
+                        console.log(allsign.length);
+                        allsign[i].removeAttribute("onclick");
+                    }
+                    break;
+                case "0":
+                    var allinputs = document.getElementsByTagName("input");
+                    var allsign = document.getElementsByClassName("Signbtn");
+                    console.log(allsign.length);
+                    for (var i = 0; i < allsign.length; i++) {
+                        allsign[i].removeAttribute("onclick");
+                    }
+                    for (var i = 0; i < allinputs.length; i++) {
+                        console.log(allinputs[i].type);
+                        //inputBrothers[d].disabled = true;
+                        allinputs[i].disabled = true;
+                    }
+                    break;
+                default:
+            }
+
         }
         function Upload(fileName) {
             var fileData = new FormData();
@@ -244,6 +273,7 @@
                                     CreateNormalTypeSelect(Obj, i, q, QcardBody);
                                     break;
                                 case "image"://上傳圖片
+                                case "file":
                                     CreateNormalTypeImage(Obj, i, q, QcardBody);
                                     break;
                                 case "date":
@@ -273,79 +303,6 @@
                         }
                         break;
                     case "table":
-                        //        let colunmRow = document.createElement("div");
-                        //        colunmRow.classList.add("row", "colunm");
-                        //        container.append(colunmRow);
-                        //        let GroupName = document.createElement("h3");
-                        //        GroupName.innerText = Obj.Groups[i].GroupName;
-                        //        colunmRow.append(GroupName);
-                        //        let tableContainer = document.createElement("div");
-                        //        tableContainer.classList.add("col-12", "tableContainer", "p-5");
-                        //        tableContainer.style.backgroundColor = "#fff";
-                        //        colunmRow.append(tableContainer);
-                        //        for (var r = 0; r < Obj.Groups[i].Rows.length; r++) {
-                        //            let tableCard = document.createElement("div");
-                        //            tableCard.classList.add("card");//一個Group會有一個Card
-                        //            tableContainer.append(tableCard);
-                        //            let CardHeader = document.createElement("div");//Card的標頭 會放會變動的問題
-                        //            CardHeader.classList.add("card-header", "py-3");
-                        //            tableCard.append(CardHeader);
-                        //            let Cardbody = document.createElement("div");
-                        //            Cardbody.classList.add("card-body", "row", "d-flex", "justfy-content-center");
-                        //            tableCard.append(Cardbody);
-                        //            let QuestionText = document.createElement("span");
-                        //            QuestionText.classList.add("QuestionText", "p-2", "cardHeader");
-                        //            let ColsText;
-                        //            let colsInputgroup;
-                        //            for (var col = 0; col < Obj.Groups[i].Rows[r].Cols.length; col++) {
-                        //                if (Obj.Groups[i].Rows[r].Cols[col].isColunm) {//會變動的欄位
-                        //                    cols = Obj.Groups[i].Rows[r].Cols.length;
-                        //                    QuestionText.innerText = Obj.Groups[i].Rows[r].Cols[0].QuestionText;
-                        //                    let QuestionType = Obj.Groups[i].Rows[r].Cols[0].QuestionType;
-                        //                    let GroupsSn = i;
-                        //                    let RowsSn = r;
-                        //                    if (QuestionType == "filling") {//filling 要加d-flex 才不會跑版
-                        //                        CardHeader.classList.add("d-flex");
-                        //                    }
-                        //                    ColsText = ColsMapQuestionTypeTemplate(QuestionType, GroupsSn, RowsSn, Obj);//產出Card標頭的對應樣式 QuestionType
-                        //                } else {
-                        //                    let questionType = Obj.Groups[i].Rows[r].Cols[col].QuestionType;
-                        //                    let groupSn = i;
-                        //                    let rowSn = r;
-                        //                    colsInputgroup = RowsMapQuestionTypeTemplate(questionType, groupSn, rowSn, col, Obj);//產出CardBody的對應樣式 QuestionType
-                        //                    Cardbody.append(colsInputgroup);
-                        //                    if (Obj.Groups[i].Rows[r].Cols[col].hasOtherAnswers) {//其他
-                        //                        let otherQContainer = document.createElement("div");
-                        //                        otherQContainer.classList.add("col-12", "otherQContainer");
-                        //                        let otherLabel = document.createElement("label");
-                        //                        otherLabel.innerText = "其他:";
-                        //                        otherLabel.classList.add("d-inline", "mr-2");
-                        //                        otherQContainer.append(otherLabel);
-                        //                        let otherInput = document.createElement("input");
-                        //                        otherInput.setAttribute("type", "text");
-                        //                        otherInput.setAttribute("name", Obj.Groups[i].Rows[r].Cols[col].QuestionID);
-                        //                        otherInput.setAttribute("value", Obj.Groups[i].Rows[r].Cols[col].otherAnswer[0].value);
-                        //                        if (Obj.Groups[i].Rows[r].Cols[col].otherAnswer[0].value == null) {
-                        //                            otherInput.setAttribute("value", "");
-                        //                        }
-
-                        //                        otherInput.setAttribute("onchange", "changeTableJsonData(event)")
-                        //                        otherInput.classList.add("d-inline", "form-control", "form-control-user", "otherAns");
-                        //                        otherInput.style.width = "20%";
-                        //                        otherQContainer.append(otherInput);
-                        //                        Cardbody.append(otherQContainer);
-                        //                    }
-                        //                }
-                        //            }
-                        //            if (Obj.Groups[i].hasSN) {//是否有序號
-                        //                let sn = document.createElement("span");
-                        //                sn.innerText = Obj.Groups[i].Rows[r].index;
-                        //                CardHeader.append(sn)
-                        //            }
-
-                        //            CardHeader.append(QuestionText);
-                        //            CardHeader.append(ColsText);
-                        //        }
                         let ansEditFormT = document.querySelector(".ansEditForm");
                         let TampleteStr = "";
                         TampleteStr += "<div class=\"rowPart\">";
@@ -394,7 +351,7 @@
                                 TampleteStr += "<td class=\"dtr-control sorting_1\">";
                                 switch (Obj.Groups[i].Rows[w].Cols[c].QuestionType) {
                                     case "text":
-                                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length==0) {
+                                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
                                             Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
@@ -416,7 +373,6 @@
                                             TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
                                         }
                                         TampleteStr += ">";
-
                                         break;
                                     //case "select":
                                     //    TampleteStr += Obj.Groups[i].Rows[w].Cols[c].Answers[0].value;
@@ -432,12 +388,12 @@
                                         TampleteStr += "<input type=\"date\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
                                         TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                                            let v =new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].value);
+                                            let v = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].value);
                                             console.log("v" + v);
                                             if (v > 0) {
                                                 v = v.Format("yyyy-MM-dd");
                                             }
-                                            TampleteStr += "value=\"" +v + "\"";
+                                            TampleteStr += "value=\"" + v + "\"";
                                         }
                                         TampleteStr += ">";
 
@@ -474,7 +430,7 @@
                                     case "checkbox":
                                         //case "CheckboxMixImage":
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
-                                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length>Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
                                                 Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
@@ -508,10 +464,10 @@
                                         let signImgID = document.getElementById("mainPlaceHolder_adminSign").value;
                                         let time = new Date();
                                         let today = time.Format("yyyy-MM-dd");
-                                        
+
                                         if (Number(Obj.Groups[i].Rows[w].Cols[c].Answers[0].value) > 0) {
                                             TampleteStr += "<div class=\"col-12 pt-2 tableSign\">";
-                                            TampleteStr += "<div data-Staut=\"Edit\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                            TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
                                             TampleteStr += "取消簽核";
                                             TampleteStr += "</div>";
                                             TampleteStr += "<div class=\"ml-5 \">";//SignImageBox
@@ -529,11 +485,11 @@
                                             TampleteStr += "</div>";
                                         } else {
                                             TampleteStr += "<div class=\"col-12 pt-2 tableSign\">";
-                                            TampleteStr += "<div data-Staut=\"Edit\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                            TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
                                             TampleteStr += "簽核";
                                             TampleteStr += "</div>";
                                             TampleteStr += "<div class=\"ml-5 d-none\">";//SignImageBox
-                                            TampleteStr += "<img style=\"width:40%\" scr=\"";//img
+                                            TampleteStr += "<img style=\"width:40%\" src=\"";//img
                                             TampleteStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
                                             TampleteStr += "id=\"sign" + signImgID + "\"";
                                             TampleteStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
@@ -546,7 +502,7 @@
                                             TampleteStr += "</div>";//SignImageBox
                                             TampleteStr += "</div>";
                                         }
-                                        
+
                                         break;
                                     case "filling":
                                         let fillingStr = Obj.Groups[i].Rows[w].Cols[c].QuestionText;
@@ -577,8 +533,20 @@
                                             }
                                         }
                                         break;
-                                    //case "file"://要可以下載檔案
-                                    //    break;
+                                    case "file"://要可以下載檔案
+                                        TampleteStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
+                                        TampleteStr += "<input  onchange=\"changeTableJsonData(event)\" type=\"file\" class=\"Upload form-control mb-3\"name=\"";
+                                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\">";
+                                        TampleteStr += "上傳檔案";
+                                        TampleteStr += "</span>";
+                                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
+                                            TampleteStr += "</br>";
+                                            TampleteStr += "<span class=\"ml-3\">" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "</span>"
+                                            TampleteStr += "<a class=\"btn btn-default btn-sm ml-3\" href=\"Upload" + "/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
+                                            TampleteStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
+                                            TampleteStr += "</a>";
+                                        }
+                                        break;
                                     case "CheckboxMixFilling":
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
@@ -614,23 +582,37 @@
                                                     TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
                                                     TampleteStr += "data-checkboxIndex=\"" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index + "\"";
                                                     TampleteStr += "data-TextIndex=\"" + fSn + "\"";
-                                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length>0) {
-                                                        TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[n].value+"\"";
+                                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length > 0) {
+                                                        TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[n].value + "\"";
                                                     }
                                                     TampleteStr += ">";
                                                     fSn++;
                                                     n++;
                                                     let txt = StrArr[s].substring(2);
                                                     if (txt != null) {
-                                                        
+
                                                         TampleteStr += "<span>" + txt + "</span>";
                                                     }
                                                 } else {
-                                                    
+
                                                     TampleteStr += "<span>" + StrArr[s] + "</span>";
                                                 }
                                             }
                                             TampleteStr += "</div>";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                                }
+                                                TampleteStr += "<span>其他</span>"
+                                                TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"other form-control mb-3\"name=\"";
+                                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                }
+                                                TampleteStr += ">";
+                                            }
+
                                         }
                                         break;
                                     case "RadioMixFilling":
@@ -647,7 +629,11 @@
                                             TampleteStr += "\"id=\"";
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                                            TampleteStr += "\">";
+                                            TampleteStr += "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
+                                                TampleteStr += "checked";
+                                            }
+                                            TampleteStr += ">";
                                             let fillingStr = Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
                                             let StrArr = fillingStr.split("##");
                                             let fSn = 1;
@@ -678,6 +664,20 @@
                                             }
                                             TampleteStr += "</div>";
                                         }
+                                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                            }
+                                            TampleteStr += "<span>其他</span>"
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                            }
+                                            TampleteStr += ">";
+                                        }
+
                                         break;
                                     case "RadioMixCheckbox":
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
@@ -732,6 +732,20 @@
                                             }
                                             TampleteStr += "</div>";
                                         }
+                                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                            }
+                                            TampleteStr += "<span>其他</span>"
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                            }
+                                            TampleteStr += ">";
+                                        }
+
                                         break;
                                     default:
                                 }
@@ -831,6 +845,13 @@
                                 tampleteStr += "<td class=\"dtr-control sorting_1\">";
                                 if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
                                     switch (Obj.Groups[i].Rows[w].Cols[c].QuestionType) {
+                                        case "file":
+                                        case "image":
+                                            tampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value+"</span>";
+                                            tampleteStr += "<a  class=\"ml-1 btn btn-default btn-sm \" href=\"Upload/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value +"\">";
+                                            tampleteStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
+                                            tampleteStr += "</a>";
+                                            break;
                                         case "text":
                                         case "number":
                                         case "select":
@@ -883,8 +904,7 @@
                                                 }
                                             }
                                             break;
-                                        case "file"://要可以下載檔案
-                                            break;
+                                        
                                         case "CheckboxMixFilling":
                                         case "RadioMixFilling":
                                             for (var r = 0; r < Obj.Groups[i].Rows[w].Cols[c].Answers.length; r++) {
@@ -906,6 +926,10 @@
                                                 }
                                                 tampleteStr += "</br>";
                                             }
+                                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value;
+                                            }
+
                                             break;
                                         case "RadioMixCheckbox":
                                             for (var r = 0; r < Obj.Groups[i].Rows[w].Cols[c].Answers.length; r++) {
@@ -918,6 +942,10 @@
                                                     }
                                                 }
                                             }
+                                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value;
+                                            }
+
                                             break;
                                         default:
                                     }
@@ -1008,9 +1036,10 @@
                         case "file":
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             insertBodyStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
-                            insertBodyStr += "<input type=\"file\" class=\"form-control mb-3\"name=\"";
+                            insertBodyStr += "<input onchange=\"appenUploadName(event)\" type=\"file\" class=\"Upload form-control mb-3\"name=\"";
                             insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\">";
                             insertBodyStr += "上傳檔案";
+                            insertBodyStr += "<span id=\"UploadName" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"></span>";
                             insertBodyStr += "</span>";
                             break;
                         case "text":
@@ -1176,6 +1205,15 @@
                                 //insertBodyStr += "</label>";
                                 insertBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers == true) {
+                                let time = new Date().getMilliseconds();
+                                insertBodyStr += "<span>其他:</span>";
+                                insertBodyStr += "<input type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                insertBodyStr += ">";
+
+                            }
                             break;
                         case "RadioMixFilling":
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1216,6 +1254,16 @@
                                 //insertBodyStr += "</label>";
                                 insertBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers == true) {
+                                let time = new Date().getMilliseconds();
+                                insertBodyStr += "<span>其他:</span>";
+                                insertBodyStr += "<input type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                insertBodyStr += ">";
+
+                            }
+
                             break;
                         case "RadioMixCheckbox":
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1248,6 +1296,16 @@
                                 }
                                 insertBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers == true) {
+                                let time = new Date().getMilliseconds();
+                                insertBodyStr += "<span>其他:</span>";
+                                insertBodyStr += "<input type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                insertBodyStr += ">";
+                                
+                            }
+
                             break;
                         default:
                     }
@@ -1265,10 +1323,9 @@
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             break;
                         case "sign":
-
                             let signImgID = document.getElementById("mainPlaceHolder_adminSign").value;
                             let time = new Date();
-                            let today = time.getFullYear() + "/" + Number( time.getMonth() + 1);
+                            let today = time.getFullYear() + "/" + Number(time.getMonth() + 1);
                             today += "/" + time.getDate();
                             if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
                                 updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1314,13 +1371,13 @@
                             break;
                         case "date":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
-                            updateBodyStr += "<input type=\"date\"onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
+                            updateBodyStr += "<input type=\"date\"onchange=\"changeTableJsonData(event)\" class=\"Upload form-control mb-3\"name=\"";
                             updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\">";
                             break;
                         case "file":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             updateBodyStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
-                            updateBodyStr += "<input type=\"file\" class=\"form-control mb-3\"name=\"";
+                            updateBodyStr += "<input type=\"file\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
                             updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\">";
                             updateBodyStr += "上傳檔案";
                             updateBodyStr += "</span>";
@@ -1542,6 +1599,14 @@
                                 //insertBodyStr += "</label>";
                                 updateBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers== true) {
+                                updateBodyStr += "<span>其他:</span>";
+                                updateBodyStr += "<input onchange=\"changeTableJsonData(event)\" type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value+"\"";
+                                updateBodyStr += ">";
+                            }
+
                             break;
                         case "RadioMixFilling":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1596,6 +1661,13 @@
                                 //insertBodyStr += "</label>";
                                 updateBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers == true) {
+                                updateBodyStr += "<span>其他:</span>";
+                                updateBodyStr += "<input onchange=\"changeTableJsonData(event)\" type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value + "\"";
+                                updateBodyStr += ">";
+                            }
                             break;
                         case "RadioMixCheckbox":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1647,6 +1719,13 @@
                                 }
                                 updateBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers == true) {
+                                updateBodyStr += "<span>其他:</span>";
+                                updateBodyStr += "<input onchange=\"changeTableJsonData(event)\" type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value + "\"";
+                                updateBodyStr += ">";
+                            }
                             break;
                         default:
                     }
@@ -1682,6 +1761,15 @@
             updateBody.innerHTML = updateBodyStr;
             $("#modal-update").modal('hide');
         }
+        //row 上傳檔案顯示換檔案名稱
+        function appenUploadName(event) {
+            let thisName = event.currentTarget;
+            let parentBox = event.currentTarget.parentNode;
+            let id = "UploadName" + event.currentTarget.name
+            let Uploadname = document.getElementById(id);
+            console.log("UploadName" + Uploadname);
+            Uploadname.innerText = thisName.value;
+        }
         //row 新增
         function Insert(event) {
             let date = new Date();
@@ -1692,13 +1780,14 @@
             let DataObj = new Object();
 
             const dataObj = GetJsonData();
-
+            let remove = false;
+            let isfile = false
             for (var i = 0; i < dataObj.Groups.length; i++) {
                 if (dataObj.Groups[i].GroupID == GroupId) {
                     DataObj = dataObj.Groups[i].Rows[1];//複製的Rows
                 }
             }
-            let remove = false;
+            
             let All = 0;
 
             for (let i = 0; i < DataObj.Cols.length; i++) {
@@ -1709,15 +1798,12 @@
             if (All == DataObj.Cols.length) {
                 remove = true;
             }
-
-
             for (var i = 0; i < dataObj.Groups.length; i++) {
                 if (dataObj.Groups[i].GroupID == GroupId) {
                     if (remove) {
                         DataObj.index = dataObj.Groups[i].Rows.length;
                         dataObj.Groups[i].Rows.push(DataObj);
                         dataObj.Groups[i].Rows = dataObj.Groups[i].Rows.slice(0, 2);
-
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                     } else {
                         dataObj.Groups[i].Rows.push(DataObj);
@@ -1779,6 +1865,23 @@
                                 let Qtype = dataObj2.Groups[i].Rows[sn].Cols[c].QuestionType;//題目的
                                 console.log("Qtype" + Qtype);
                                 switch (Qtype) {
+                                    case "file":
+                                        index = c + 1;
+                                        let fileName = inputs[d].value;
+                                        var re = /\.(jpg|png|doc|pdf|docx)$/i;
+                                        if (!re.test(fileName)) {
+                                            alert("檔案格式錯誤!!請檢查!!")
+                                            break;
+                                        } else {
+                                            let now = date.getFullYear("yyyy") + String(date.getMonth() + 1).padStart(2, '0') + String(date.getDate()).padStart(2, '0') + String(date.getHours()).padStart(2, '0') + String(date.getMinutes()).padStart(2, '0') + String(date.getSeconds()).padStart(2, '0') + String(date.getMilliseconds()).padStart(3, '0');
+                                            fileName = fileName.substring("12");
+                                            fileName = now + "_" + fileName;
+                                            Upload(fileName);
+                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
+                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": index, "value": fileName, "lastUpdate": today });
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+                                        }
+                                        break;
                                     case "text":
                                         index = c + 1;
                                         dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
@@ -1909,6 +2012,8 @@
                                             let SmaeRadios = document.getElementsByName(inputs[d].name);
                                             let Radios = [];
                                             let Txts = [];
+                                            let others = document.querySelectorAll(".other");
+                                            let other;
                                             if (!remove) {
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
                                             }
@@ -1918,41 +2023,56 @@
                                                 }
                                             });
                                             SmaeRadios.forEach(function (item) {
-                                                if (item.type == "text") {
+                                                if (item.type == "text" && !item.classList.contains("other")) {
                                                     Txts.push(item);
+                                                } else if (item.type == "text" && item.classList.contains("other")) {
+                                                    other = item;
                                                 }
                                             });
-
+                                            others.forEach(function (item) {
+                                                if (item.dataset.qid == inputs[d].name) {
+                                                    other = item;
+                                                }
+                                            })
                                             if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length) {
                                                 for (var o = 0; o < dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length; o++) {
                                                     dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[o].index, "value": false, "lastUpdate": today, "Answers": [] });
                                                 }
                                             }
                                             for (var r = 0; r < Radios.length; r++) {
-                                                if (Radios[r].checked) {
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = true;
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].lastUpdate = today;
-                                                    for (var t = 0; t < Txts.length; t++) {
-                                                        if (Txts[t].dataset.radioindex == Radios[r].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
-                                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": Txts[t].value, "lastUpdate": today });
+                                                if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length>r) {
+                                                    if (Radios[r].checked) {
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = true;
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].lastUpdate = today;
+                                                        for (var t = 0; t < Txts.length; t++) {
+                                                            if (Txts[t].dataset.radioindex == Radios[r].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
+                                                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": Txts[t].value, "lastUpdate": today });
+                                                            }
                                                         }
-                                                    }
-                                                } else {
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = false;
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].lastUpdate = today;
-                                                    //
-                                                    for (var t = 0; t < Txts.length; t++) {
-                                                        if (Txts[t].dataset.radioindex == Radios[r].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
-                                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": "", "lastUpdate": today });
-                                                        }
+                                                    } else {
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = false;
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].lastUpdate = today;
+                                                        //
+                                                        for (var t = 0; t < Txts.length; t++) {
+                                                            if (Txts[t].dataset.radioindex == Radios[r].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
+                                                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": "", "lastUpdate": today });
+                                                            }
 
+                                                        }
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                                     }
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+
                                                 }
+                                            }
+                                            if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers == true) {
+                                                dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": other.value, "lastUpdate": today });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+
                                             }
                                             //給新QuestionID
                                             //dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID = dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID + today;
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+
                                         }
                                         break;
                                     case "RadioMixCheckbox":
@@ -1961,9 +2081,18 @@
                                             let Smaeradios = document.getElementsByName(inputs[d].name);
                                             let Radios = [];
                                             let Ckbs = [];
+                                            let others = document.querySelectorAll(".other");
+                                            let other;
                                             if (!remove) {
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
                                             }
+                                            others.forEach(function (item) {
+                                                if (item.dataset.qid == inputs[d].name) {
+                                                    other = item;
+                                                }
+                                            })
+
+
                                             Smaeradios.forEach(function (item) {
                                                 if (item.type == "radio") {
                                                     Radios.push(item);
@@ -1974,39 +2103,51 @@
                                                     Ckbs.push(item);
                                                 }
                                             });
+                                            Smaeradios.forEach(function (item) {
+                                                if (item.type == "text") {
+                                                    other = item;
+                                                }
+                                            });
                                             if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length) {
                                                 for (var o = 0; o < dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length; o++) {
                                                     dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[o].index, "value": false, "lastUpdate": "", "Answers": [] });
                                                 }
                                             }
                                             for (var r = 0; r < Radios.length; r++) {
-                                                if (Radios[r].checked) {
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = true;
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].lastUpdate = today;
-                                                    for (var b = 0; b < Ckbs.length; b++) {
-                                                        if (Ckbs[b].dataset.radioindex == Radios[r].value && dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[r].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
-                                                            if (Ckbs[b].checked) {
-                                                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Ckbs[b].dataset.checkboxindex), "value": true, "lastUpdate": today });
-                                                            } else {
+                                                if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length >r) {
+                                                    if (Radios[r].checked) {
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = true;
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].lastUpdate = today;
+                                                        for (var b = 0; b < Ckbs.length; b++) {
+                                                            if (Ckbs[b].dataset.radioindex == Radios[r].value && dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[r].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
+                                                                if (Ckbs[b].checked) {
+                                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Ckbs[b].dataset.checkboxindex), "value": true, "lastUpdate": today });
+                                                                } else {
+                                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Ckbs[b].dataset.checkboxindex), "value": false, "lastUpdate": today });
+                                                                }
+                                                            }
+                                                        }
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+
+                                                    } else {
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = false;
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[0].lastUpdate = today;
+                                                        for (var b = 0; b < Ckbs.length; b++) {
+                                                            if (Ckbs[b].dataset.radioindex == Radios[r].value && dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[r].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
                                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Ckbs[b].dataset.checkboxindex), "value": false, "lastUpdate": today });
                                                             }
                                                         }
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                                     }
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
 
-                                                } else {
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].value = false;
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[0].lastUpdate = today;
-                                                    for (var b = 0; b < Ckbs.length; b++) {
-                                                        if (Ckbs[b].dataset.radioindex == Radios[r].value && dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[r].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.length) {
-                                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers[r].Answers.push({ "index": Number(Ckbs[b].dataset.checkboxindex), "value": false, "lastUpdate": today });
-                                                        }
-                                                    }
+                                                }
+                                                if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers == true) {
+                                                    dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": other.value, "lastUpdate": today });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                                 }
+
                                                 //給新QuestionID
                                                 //dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID = dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID + today;
-
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                             }
                                         }
@@ -2024,9 +2165,18 @@
                                             let Smaecheckboxs = document.getElementsByName(inputs[d].name);
                                             let Checkboxs = [];
                                             let Txts = [];
+                                            let other;
+                                            let others = document.querySelectorAll(".other");
                                             if (!remove) {
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
                                             }
+                                            others.forEach(function (item) {
+                                                if (item.dataset.qid == inputs[d].name) {
+                                                    other = item;
+                                                }
+                                            })
+
+
                                             Smaecheckboxs.forEach(function (item) {
                                                 if (item.type == "checkbox") {
                                                     Checkboxs.push(item);
@@ -2034,8 +2184,10 @@
                                             });
                                             console.log("Checkboxs" + Checkboxs.length)
                                             Smaecheckboxs.forEach(function (item) {
-                                                if (item.type == "text") {
+                                                if (item.type == "text" && !item.classList.contains("other")) {
                                                     Txts.push(item);
+                                                } else if (item.type == "text" && item.classList.contains("other")) {
+                                                    other = item;
                                                 }
                                             });
                                             if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length) {
@@ -2045,28 +2197,37 @@
                                             }
                                             for (var b = 0; b < Checkboxs.length; b++) {
                                                 if (Checkboxs[b].checked) {
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].value = true;
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].lastUpdate = today;
-                                                    for (var t = 0; t < Txts.length; t++) {
-                                                        if (Txts[t].dataset.checkboxindex == Checkboxs[b].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.length) {
-                                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": Txts[t].value, "lastUpdate": today });
+                                                    if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length>b) {
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].value = true;
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].lastUpdate = today;
+                                                        for (var t = 0; t < Txts.length; t++) {
+                                                            if (Txts[t].dataset.checkboxindex == Checkboxs[b].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.length) {
+                                                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": Txts[t].value, "lastUpdate": today });
+                                                            }
                                                         }
                                                     }
                                                 } else {
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].value = false;
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].lastUpdate = today;
-                                                    for (var t = 0; t < Txts.length; t++) {
-                                                        if (Txts[t].dataset.checkboxindex == Checkboxs[b].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.length) {
-                                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": "", "lastUpdate": today });
+                                                    if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length > b) {
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].value = false;
+                                                        dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].lastUpdate = today;
+                                                        for (var t = 0; t < Txts.length; t++) {
+                                                            if (Txts[t].dataset.checkboxindex == Checkboxs[b].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.length) {
+                                                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value": "", "lastUpdate": today });
+                                                            }
                                                         }
+                                                        //if (Txts[t].dataset.checkboxindex == Checkboxs[b].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.length) {
+                                                        //    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value":"", "lastUpdate": today });
+                                                        //}
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                                     }
-                                                    //if (Txts[t].dataset.checkboxindex == Checkboxs[b].value && Txts.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.length) {
-                                                    //    dataObj2.Groups[i].Rows[sn].Cols[c].Answers[b].Answers.push({ "index": Number(Txts[t].dataset.textindex), "value":"", "lastUpdate": today });
-                                                    //}
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                                 }
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                             }
+                                            if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers == true) {
+                                                dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": other.value, "lastUpdate": today });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+                                            }
+
                                             //給新QuestionID
                                             //dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID = dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID + today;
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
@@ -2118,7 +2279,7 @@
                         console.log("dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID" + dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID)
                         let row = lastRow + 1;
                         let col = c + 1;
-                        dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID = dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID + row + col ;
+                        dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID = dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID + row + col;
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                     }
                 }
@@ -2138,7 +2299,6 @@
         }
         //row 刪除 
         function DeleteRow(event) {
-            console.log()
             var dataObj = GetJsonData();
             let gid = event.currentTarget.dataset.gid;
             let row = Number(event.currentTarget.dataset.row);
@@ -2168,12 +2328,57 @@
             let date = new Date();
             let today = date.getTime();
             switch (thischangeType) {
+                case "file":
+                case "image":
+                    for (var i = 0; i < dataObj.Groups.length; i++) {
+                        if (dataObj.Groups[i].GroupType != "normal") {
+                            for (var j = 0; j < dataObj.Groups[i].Rows.length; j++) {
+                                for (var q = 0; q < dataObj.Groups[i].Rows[j].Cols.length; q++) {
+                                    //檢查檔名
+                                    let fileName = thischange.value;
+                                    var re = /\.(jpg|png|doc|pdf|docx)$/i;  //允許的副檔名
+                                    console.log("file");
+                                    //let AppendFileName = document.querySelector("#MainContent_AppendFile");
+                                    if (!re.test(fileName)) {
+                                        alert("檔案格式錯誤!!請檢查!!")
+                                        break;
+                                    } else {
+                                        if (dataObj.Groups[i].Rows[j].Cols[q].QuestionID == event.currentTarget.name) {
+                                            let now = date.getFullYear("yyyy") + String(date.getMonth() + 1).padStart(2, '0') + String(date.getDate()).padStart(2, '0') + String(date.getHours()).padStart(2, '0') + String(date.getMinutes()).padStart(2, '0') + String(date.getSeconds()).padStart(2, '0') + String(date.getMilliseconds()).padStart(3, '0');
+                                            fileName = fileName.substring("12");
+                                            fileName = now + "_" + fileName;
+                                            Upload(fileName);
+                                            if (dataObj.Groups[i].Rows[j].Cols[q].Answers.length > 0) {
+                                                dataObj.Groups[i].Rows[j].Cols[q].QuestionID = dataObj.Groups[i].Rows[j].Cols[q].QuestionID + j + today;
+                                                dataObj.Groups[i].Rows[j].Cols[q].Answers[0].value = fileName;
+                                                dataObj.Groups[i].Rows[j].Cols[q].Answers[0].lastUpdate = today;
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            } else {
+                                            //    let obj = dataObj.Groups[i].Rows[j];
+                                            //    obj.Cols[q].QuestionID = dataObj.Groups[i].Rows[1].Cols[q].QuestionID + j + today;
+                                            //    obj.Cols[q].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today });
+                                            //    //dataObj.Groups[i].Rows[1].Cols[q].QuestionID = dataObj.Groups[i].Rows[1].Cols[q].QuestionID + j + today;
+                                            //    //dataObj.Groups[i].Rows[1].Cols[q].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today });
+                                            //    dataObj.Groups[i].Rows.push(obj);
+                                            //    //dataObj.Groups[i].Rows.splice(1, 1);
+                                            //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                    break;
+
                 case "text":
                 case "number":
                 case "date":
                 case "select-one":
                     for (let t = 0; t < dataObj.Groups.length; t++) {
-                        if (dataObj.Groups[t].GroupType !="normal") {
+                        if (dataObj.Groups[t].GroupType != "normal") {
                             for (let i = 0; i < dataObj.Groups[t].Rows.length; i++) {
                                 for (let c = 0; c < dataObj.Groups[t].Rows[i].Cols.length; c++) {
                                     if (dataObj.Groups[t].Rows[i].Cols[c].QuestionID == thischangeQ && dataObj.Groups[t].Rows[i].Cols[c].QuestionType == "text") {
@@ -2212,7 +2417,11 @@
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                     }
                                     else if (dataObj.Groups[t].Rows[i].Cols[c].QuestionType == "RadioMixFilling" && dataObj.Groups[t].Rows[i].Cols[c].QuestionID == thischangeQ) {
-                                        console.log("dataObj.Groups[t].Rows[i].Cols[c].QuestionID" + thischangeQ);
+                                        if (thischange.classList.contains("other")) {
+                                            dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].value = thischange.value;
+                                            dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].lastUpdate = today;
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                        }
                                         let radioindex = thischange.dataset.radioindex;
                                         let textindex = thischange.dataset.textindex;
                                         for (let o = 0; o < dataObj.Groups[t].Rows[i].Cols[c].Answers.length; o++) {
@@ -2223,18 +2432,28 @@
                                                             dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].value = thischange.value;
                                                             dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].lastUpdate = today;
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                                        } else {
-                                                            dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].value = "";
-                                                            dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].lastUpdate = today;
-                                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-
                                                         }
                                                     }
                                                 }
+                                            } else {
+                                                for (var a = 0; a < dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers.length; a++) {
+                                                    console.log("RadioMixFilling");
+                                                    dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].value = "";
+                                                    dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].lastUpdate = today;
+                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+
+                                                }
+
                                             }
                                         }
                                     }
                                     else if (dataObj.Groups[t].Rows[i].Cols[c].QuestionType == "CheckboxMixFilling" && dataObj.Groups[t].Rows[i].Cols[c].QuestionID == thischange.name) {//Checkbox下面的filling
+                                        if (thischange.classList.contains("other")) {
+                                            dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].value = thischange.value;
+                                            dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].lastUpdate = today;
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                        }
+
                                         let checkboxindex = thischange.dataset.checkboxindex;
                                         let textindex = thischange.dataset.textindex;
                                         for (let o = 0; o < dataObj.Groups[t].Rows[i].Cols[c].Answers.length; o++) {
@@ -2257,10 +2476,10 @@
                                             }
                                         }
                                     }
-                                    else if (thischange.classList.contains("otherAns")) {
+                                    else if (thischange.classList.contains("other")) {
+                                        console.log("other");
                                         for (let c = 0; c < dataObj.Groups[t].Rows[i].Cols.length; c++) {
                                             if (dataObj.Groups[t].Rows[i].Cols[c].hasOtherAnswers && dataObj.Groups[t].Rows[i].Cols[c].QuestionID == thischange.name) {
-                                                let otherAnsIndex = dataObj.Groups[t].Rows[i].Cols[c].otherAnswer.length;
                                                 dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].value = thischange.value;
                                                 dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -2277,7 +2496,7 @@
                 case "radio":
                 case "RadioMixFilling":
                     for (let i = 0; i < dataObj.Groups.length; i++) {
-                        if (dataObj.Groups[i].GroupType !="normal") {
+                        if (dataObj.Groups[i].GroupType != "normal") {
                             for (let r = 0; r < dataObj.Groups[i].Rows.length; r++) {
                                 for (let c = 0; c < dataObj.Groups[i].Rows[r].Cols.length; c++) {
                                     if (dataObj.Groups[i].Rows[r].Cols[c].QuestionID == thischange.name) {
@@ -2303,6 +2522,15 @@
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
 
                                                         }
+                                                    } else if (dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers.length > 0 && dataObj.Groups[i].Rows[r].Cols[c].QuestionType == "RadioMixFilling") {
+
+                                                        for (var aa = 0; aa < dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers.length; aa++) {
+                                                            dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers[aa].value == "";
+                                                            dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers[aa].lastUpdate = today;
+                                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+
+                                                        }
+
                                                     }
                                                 }
                                             }
@@ -2321,6 +2549,13 @@
                                 for (let c = 0; c < dataObj.Groups[i].Rows[r].Cols.length; c++) {
                                     if (dataObj.Groups[i].Rows[r].Cols[c].QuestionID == thischange.name) {
                                         if (dataObj.Groups[i].Rows[r].Cols[c].QuestionType == "RadioMixCheckbox" && dataObj.Groups[i].Rows[r].Cols[c].QuestionID == thischange.name) {
+                                            if (thischange.classList.contains("other")) {
+                                                console.log("other");
+                                                dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].value = thischange.value;
+                                                dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].lastUpdate = today;
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            }
+
                                             if (thischange.checked) {
                                                 let checkboxindex = thischange.dataset.checkboxindex;
                                                 let radioindex = thischange.dataset.radioindex;
@@ -2366,14 +2601,18 @@
                                                 }
                                             } else {
                                                 for (var a = 0; a < dataObj.Groups[i].Rows[r].Cols[c].Answers.length; a++) {
+                                                    console.log("yy")
                                                     if (dataObj.Groups[i].Rows[r].Cols[c].Answers[a].index == thischange.value) {
-                                                        let Ansans = dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers.length;
                                                         dataObj.Groups[i].Rows[r].Cols[c].Answers[a].value = false;
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                        if (dataObj.Groups[i].Rows[r].Cols[c].QuestionType =="CheckboxMixFilling") {
+                                                            let Ansans = dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers.length;
+                                                            for (var aa = 0; aa < Ansans; aa++) {
+                                                                console.log("Ansans" + Ansans);
+                                                                dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers[aa].value = "";
+                                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                            }
 
-                                                        for (var aa = 0; aa < Ansans; aa++) {
-                                                            console.log("Ansans" + Ansans);
-                                                            dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers[aa].value = "";
-                                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                                         }
                                                         dataObj.Groups[i].Rows[r].Cols[c].Answers[a].lastUpdate = today;
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -2400,6 +2639,43 @@
             let date = new Date();
             let today = date.getTime();
             switch (thischange.type) {
+                case "file":
+                case "image":
+                    for (var i = 0; i < dataObj.Groups.length; i++)  {
+                        if (dataObj.Groups[i].GroupType == "normal") {
+                            for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
+                                //檢查檔名
+                                let fileName = thischange.value;
+                                var re = /\.(jpg|png|doc|pdf|docx)$/i;  //允許的副檔名
+                                console.log("file");
+                                //let AppendFileName = document.querySelector("#MainContent_AppendFile");
+                                if (!re.test(fileName)) {
+                                    alert("檔案格式錯誤!!請檢查!!")
+                                    break;
+                                } else {
+                                    if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name) {
+                                        let now = date.getFullYear("yyyy") + String(date.getMonth() + 1).padStart(2, '0') + String(date.getDate()).padStart(2, '0') + String(date.getHours()).padStart(2, '0') + String(date.getMinutes()).padStart(2, '0') + String(date.getSeconds()).padStart(2, '0') + String(date.getMilliseconds()).padStart(3, '0');
+                                        fileName = fileName.substring("12");
+                                        fileName = now + "_" + fileName;
+                                        
+                                        Upload(fileName);
+                                        if (dataObj.Groups[i].Questions[j].Answers.length > 0) {
+                                            dataObj.Groups[i].Questions[j].Answers[0].value = fileName;
+                                            dataObj.Groups[i].Questions[j].Answers[0].lastUpdate = today;
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            alert("檔案上傳成功!")
+                                        } else {
+                                            dataObj.Groups[i].Questions[j].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today });
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            alert("檔案上傳成功!")
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    break;
                 case "text":
                 case "number":
                 case "date":
@@ -2410,6 +2686,7 @@
                         if (dataObj.Groups[i].GroupType == "normal") {
                             for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
                                 if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name) {
+                                    dataObj.Groups[i].Questions[j].Answers.length = 0;
                                     dataObj.Groups[i].Questions[j].Answers.push({ "index": 1, "value": event.currentTarget.value, "lastUpdate": today });
                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                 }
@@ -2435,7 +2712,6 @@
                                     console.log("CheckboxMixFilling Filling")
                                     for (var ansO = 0; ansO < dataObj.Groups[i].Questions[j].AnswerOptions.length; ansO++) {
                                         if (dataObj.Groups[i].Questions[j].AnswerOptions[ansO].AnsText == ansValue[0]) {
-
                                             for (var f = 0; f < dataObj.Groups[i].Questions[j].Answers[ansO].Answers.length; f++) {
                                                 if (dataObj.Groups[i].Questions[j].Answers[ansO].Answers[f].index == ansValue[1]) {
                                                     console.log("CheckboxMixFilling Filling2")
@@ -2644,6 +2920,12 @@
             let Str;
             let Gid;
             let Row;
+            var singDate = document.querySelectorAll(".signDate");
+            for (var i = 0; i < singDate.length; i++) {
+                singDate[i].innerText = today;
+            }
+
+
             if (SignBoxFather.classList.contains("SignBoxinsertRow") || SignBoxFather.classList.contains("SignBoxRow")) {
                 GidandRowsIndex = SignBoxFather.querySelector(".Signbtn").dataset.gidandrow;
                 dataStaut = SignBoxFather.querySelector(".Signbtn").dataset.staut;
@@ -2669,10 +2951,12 @@
                                 if (SignImage.classList.contains(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID)) {
                                     if (JsonObj.Groups[g].Rows[Row].Cols[c].Answers.length < 0) {
                                         JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": time });
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+
                                     } else {
                                         JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].value = signImgID;
                                         JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].lastUpdate = time;
-
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                     }
                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                 }
@@ -2680,7 +2964,6 @@
                         }
                     }
                 } else {
-
                     SignBox.classList.remove("d-inline");
                     SignBox.classList.add("d-none");
                     event.currentTarget.innerText = "簽核"
@@ -2689,7 +2972,7 @@
                             for (var c = 0; c < JsonObj.Groups[g].Rows[Row].Cols.length; c++) {
                                 if (JsonObj.Groups[g].Rows[Row].Cols[c].Answers.length < 0) {
                                     if (SignImage.classList.contains(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID)) {
-                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": time });
+                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": null });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                     } else {
                                         JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].value = null;
@@ -2714,34 +2997,38 @@
                 SignImage.id = "sign" + signImgID;
                 SignBox.classList.add("d-inline");
                 event.currentTarget.innerText = "取消簽核";
-                var singDate = document.querySelector(".signDate");
-                singDate.innerText = today;
 
                 if (isTable) {
                     for (var i = 0; i < JsonObj.Groups.length; i++) {
-                        for (var k = 0; k < JsonObj.Groups[i].Rows.length; k++) {
-                            for (var c = 0; c < JsonObj.Groups[i].Rows[k].Cols.length; c++) {
-                                if (SignImage.classList.contains(JsonObj.Groups[i].Rows[k].Cols[c].QuestionID)) {
-                                    JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].value = signImgID;
-                                    JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].lastUpdate = time;
-                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                        if (JsonObj.Groups[i].GroupType != "normal") {
+                            for (var k = 0; k < JsonObj.Groups[i].Rows.length; k++) {
+                                for (var c = 0; c < JsonObj.Groups[i].Rows[k].Cols.length; c++) {
+                                    if (SignImage.classList.contains(JsonObj.Groups[i].Rows[k].Cols[c].QuestionID)) {
+                                        JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].value = signImgID;
+                                        JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].lastUpdate = time;
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                                    }
                                 }
                             }
+
                         }
                     }
                 } else {
                     for (var i = 0; i < JsonObj.Groups.length; i++) {
-                        for (var k = 0; k < JsonObj.Groups[i].Rows.length; k++) {
-                            if (SignImage.classList.contains(JsonObj.Groups[i].Rows[k].QuestionID)) {
-                                if (JsonObj.Groups[i].Questions[k].Answers.length == 0) {
-                                    JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": time });
-                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
-                                } else {
-                                    JsonObj.Groups[i].Questions[k].Answers[0].value = signImgID;
-                                    JsonObj.Groups[i].Questions[k].Answers[0].lastUpdate = time;
-                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                        if (JsonObj.Groups[i].GroupType == "normal") {
+                            for (var k = 0; k < JsonObj.Groups[i].Questions.length; k++) {
+                                if (SignImage.classList.contains(JsonObj.Groups[i].Questions[k].QuestionID)) {
+                                    if (JsonObj.Groups[i].Questions[k].Answers.length == 0) {
+                                        JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": time });
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                                    } else {
+                                        JsonObj.Groups[i].Questions[k].Answers[0].value = signImgID;
+                                        JsonObj.Groups[i].Questions[k].Answers[0].lastUpdate = time;
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                                    }
                                 }
                             }
+
                         }
                     }
                 }
@@ -2769,18 +3056,22 @@
                         }
                     }
                 } else {
+                    console.log("normal")
                     for (var i = 0; i < JsonObj.Groups.length; i++) {
-                        for (var k = 0; k < JsonObj.Groups[i].Questions.length; k++) {
-                            if (SignImage.classList.contains(JsonObj.Groups[i].Questions[k].QuestionID)) {
-                                if (JsonObj.Groups[i].Questions[k].Answers.length < 0) {
-                                    JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": time });
-                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
-                                } else {
-                                    JsonObj.Groups[i].Questions[k].Answers.length = 0;
-                                    JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": time });
-                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                        if (JsonObj.Groups[i].GroupType == "normal") {
+                            for (var k = 0; k < JsonObj.Groups[i].Questions.length; k++) {
+                                if (SignImage.classList.contains(JsonObj.Groups[i].Questions[k].QuestionID)) {
+                                    if (JsonObj.Groups[i].Questions[k].Answers.length < 0) {
+                                        JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": null, "lastUpdate": null });
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                                    } else {
+                                        JsonObj.Groups[i].Questions[k].Answers.length = 0;
+                                        JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": null, "lastUpdate": null });
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                                    }
                                 }
                             }
+
                         }
                     }
                 }
@@ -3104,21 +3395,22 @@
             ImageInput.setAttribute("type", "file");
             ImageInput.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionText);
             ImageInput.setAttribute("id", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
-            //if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0] != null) {
-            //    let filename = document.createElement("span");
-            //    filename.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
-            //    ImageInput.classList.add("d-none")
-            //    ImageBox.append(filename);
-            //}
-            //let ImageConfirm = document.createElement("Input");
-            //ImageConfirm.setAttribute("type", "button");
-            //ImageConfirm.setAttribute("onclick","AppendFileName(event)")
-            //ImageConfirm.classList.add("btn", "btn-primary");
-            //ImageConfirm.innerText = "檔案確認";
             ImageInput.setAttribute("onchange", "changeJsonData(event)");
-            ImageInput.classList.add("col-6", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID, "Upload");
+            ImageInput.classList.add("Upload");
+            if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0] != null) {
+                let filename = document.createElement("span");
+                filename.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
+                filename.classList.add("mr-1");
+                let download = document.createElement("a");
+                download.href = "Upload/" + DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
+                download.classList.add("btn", "btn-default", "btn-sm", "mr-3");
+                let icon = document.createElement("i");
+                icon.classList.add("fas", "fa-cloud-download-alt");
+                ImageBox.append(filename);
+                download.append(icon);
+                ImageBox.append(download);
+            }
             ImageBox.append(ImageInput);
-            /*ImageBox.append(ImageConfirm);*/
             let Newline = document.createElement('div');
             Newline.classList.add("col-12");
             Parent.append(Newline);
@@ -3165,7 +3457,9 @@
             if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers.length > 0) {
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value != null) {
                     signImage.src = "ShowAdminImg.aspx?id=" + DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
-                    signdate.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].lastUpdate;
+                    let last = new Date(DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].lastUpdate);
+
+                    signdate.innerText = last.Format("yyyy-MM-dd");
                     SignImageBox.classList.remove("d-none");
                     SignImageBox.classList.add("d-inline");
                 } else {

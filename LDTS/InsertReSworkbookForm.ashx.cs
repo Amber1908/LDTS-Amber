@@ -28,7 +28,7 @@ namespace LDTS
             if (!string.IsNullOrEmpty(json))
             {
                 var standardWorkBook = new JavaScriptSerializer().Deserialize<ReStandarWorkBookForm>(json);
-                if (RelationService.InsertReSworkbookForm(standardWorkBook))
+                if (Service.RelationService.InsertReSworkbookForm(standardWorkBook))
                 {
                     message = "關聯設定成功!";
                 }

@@ -27,7 +27,7 @@ namespace LDTS
             if (!string.IsNullOrEmpty(json))
             {
                 ReProcessStandardWorkBook standardWorkBook = new JavaScriptSerializer().Deserialize<ReProcessStandardWorkBook>(json);
-                RelationService.DeleteReProcessStandardWorkBookByID(standardWorkBook.PID);
+                Service.RelationService.DeleteReProcessStandardWorkBookByID(standardWorkBook.PID);
             }
         }
 

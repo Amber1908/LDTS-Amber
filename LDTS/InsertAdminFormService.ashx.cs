@@ -44,7 +44,7 @@ namespace LDTS
                     message = "權限設定失敗!";
                     this.SendResponse(context, message);
                 }
-                List<ReProcessQuestion> reProcessForms = RelationService.GetAllReProcesssQuestion();
+                List<ReProcessQuestion> reProcessForms = Service.RelationService.GetAllReProcesssQuestion();
                 List<ReAdminProcess> reAdminProcesses = new List<ReAdminProcess>();
                 List<int> fids = reAdimForm.Select(x => x.QID).ToList();
                 foreach (var reProcessForm in reProcessForms)
@@ -62,7 +62,7 @@ namespace LDTS
                         }
                     }
                 }
-                if (RelationService.InsertReAdminProcesses(reAdminProcesses))
+                if (Service.RelationService.InsertReAdminProcesses(reAdminProcesses))
                 {
                     message = "權限設定成功!";
                 }

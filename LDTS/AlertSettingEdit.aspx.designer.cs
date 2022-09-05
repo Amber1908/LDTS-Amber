@@ -21,16 +21,7 @@ namespace LDTS
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ALID;
-
-        /// <summary>
-        /// ALTitle 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ALTitle;
+        protected global::System.Web.UI.WebControls.TextBox ALID;
 
         /// <summary>
         /// Status 控制項。
@@ -42,6 +33,15 @@ namespace LDTS
         protected global::System.Web.UI.WebControls.RadioButtonList Status;
 
         /// <summary>
+        /// ALTitle 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ALTitle;
+
+        /// <summary>
         /// SEND 控制項。
         /// </summary>
         /// <remarks>
@@ -51,13 +51,22 @@ namespace LDTS
         protected global::System.Web.UI.WebControls.Button SEND;
 
         /// <summary>
-        /// RadioButtonList1 控制項。
+        /// ALType 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
+        protected global::System.Web.UI.WebControls.RadioButtonList ALType;
+
+        /// <summary>
+        /// ALFactor 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField ALFactor;
 
         /// <summary>
         /// formselect 控制項。

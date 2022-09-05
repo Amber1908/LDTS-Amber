@@ -868,7 +868,7 @@
                     for (var i = 1; i <= GRowCount; i++) {
                         jsonObjectString += `{"index": ${i}, "Cols": [`;
                         for (var j = 1; j <= GColCount; j++) {
-                            jsonObjectString += `{"index": 1, "hasOtherAnswers": false, "QuestionID": "", "QuestionText": "", "QuestionType": "", "AnswerOptions": []},`;
+                            jsonObjectString += `{"index": 1, "hasOtherAnswers": false, "QuestionID": "", "QuestionText": "", "QuestionType": "", "AnswerOptions": [], "Answers": [], "otherAnswer": []},`;
                         }
                         jsonObjectString += `]},`;
                     }
@@ -878,7 +878,7 @@
                     for (var i = 1; i <= 2; i++) {
                         jsonObjectString += `{"index": ${i}, "Cols": [`;
                         for (var j = 1; j <= GColCount; j++) {
-                            jsonObjectString += `{"index": 1, "hasOtherAnswers": false, "QuestionID": "", "QuestionText": "", "QuestionType": "", "AnswerOptions": []},`;
+                            jsonObjectString += `{"index": 1, "hasOtherAnswers": false, "QuestionID": "", "QuestionText": "", "QuestionType": "", "AnswerOptions": [], "Answers": [], "otherAnswer": []},`;
                         }
                         jsonObjectString += `]},`;
                     }

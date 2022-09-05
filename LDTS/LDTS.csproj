@@ -65,6 +65,7 @@
     <Reference Include="System.IO.Packaging, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.6.0.0\lib\net461\System.IO.Packaging.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -93,6 +94,7 @@
     <Content Include="AlertSettingList.aspx" />
     <Content Include="Ao.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="DeleteRelation.aspx" />
     <Content Include="dist\css\adminlteLDTS.css" />
     <Content Include="dist\css\adminlte.min.css" />
     <Content Include="dist\css\alt\adminlte.components.css" />
@@ -2022,12 +2024,15 @@
     <Content Include="plugins\uplot\uPlot.iife.min.js" />
     <Content Include="plugins\uplot\uPlot.min.css" />
     <Content Include="Process.aspx" />
+    <Content Include="ProcessAdd.aspx" />
     <Content Include="Relation.aspx" />
     <Content Include="ReportQuestionEdit.aspx" />
     <Content Include="RestPassWord.aspx" />
     <Content Include="Service\ImageService.asmx" />
     <Content Include="ShowAdminImg.aspx" />
     <Content Include="showimage.aspx" />
+    <Content Include="StandarWorkbook.aspx" />
+    <Content Include="StandarWorkbookAdd.aspx" />
     <Content Include="Template\Read.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2089,6 +2094,13 @@
     </Compile>
     <Compile Include="DeleteOldreSworkbookForm.ashx.cs">
       <DependentUpon>DeleteOldreSworkbookForm.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteRelation.aspx.cs">
+      <DependentUpon>DeleteRelation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteRelation.aspx.designer.cs">
+      <DependentUpon>DeleteRelation.aspx</DependentUpon>
     </Compile>
     <Compile Include="FormGeneration.aspx.cs">
       <DependentUpon>FormGeneration.aspx</DependentUpon>
@@ -2176,6 +2188,13 @@
     <Compile Include="Process.aspx.designer.cs">
       <DependentUpon>Process.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ProcessAdd.aspx.cs">
+      <DependentUpon>ProcessAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProcessAdd.aspx.designer.cs">
+      <DependentUpon>ProcessAdd.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relation.aspx.cs">
       <DependentUpon>Relation.aspx</DependentUpon>
@@ -2183,6 +2202,9 @@
     </Compile>
     <Compile Include="Relation.aspx.designer.cs">
       <DependentUpon>Relation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RelationService.ashx.cs">
+      <DependentUpon>RelationService.ashx</DependentUpon>
     </Compile>
     <Compile Include="ReportQuestionEdit.aspx.cs">
       <DependentUpon>ReportQuestionEdit.aspx</DependentUpon>
@@ -2227,12 +2249,29 @@
     <Compile Include="showimage.aspx.designer.cs">
       <DependentUpon>showimage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="StandarWorkbook.aspx.cs">
+      <DependentUpon>StandarWorkbook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StandarWorkbook.aspx.designer.cs">
+      <DependentUpon>StandarWorkbook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StandarWorkbookAdd.aspx.cs">
+      <DependentUpon>StandarWorkbookAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StandarWorkbookAdd.aspx.designer.cs">
+      <DependentUpon>StandarWorkbookAdd.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Unit.aspx.cs">
       <DependentUpon>Unit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Unit.aspx.designer.cs">
       <DependentUpon>Unit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Upload.ashx.cs">
+      <DependentUpon>Upload.ashx</DependentUpon>
     </Compile>
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\PublicUtil.cs" />
@@ -2382,6 +2421,8 @@
     <Content Include="plugins\summernote\summernote.js.map" />
     <Content Include="plugins\summernote\summernote.min.js.map" />
     <Content Include="plugins\toastr\toastr.js.map" />
+    <Content Include="Upload.ashx" />
+    <Content Include="RelationService.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

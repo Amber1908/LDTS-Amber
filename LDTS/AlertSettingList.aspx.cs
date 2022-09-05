@@ -20,7 +20,7 @@ namespace LDTS
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 ot = e.Row.Cells[2].Text;
-                switch(ot)
+                switch (ot)
                 {
                     case "1":
                         e.Row.Cells[2].Text = "年";
@@ -49,10 +49,11 @@ namespace LDTS
                 ot = e.Row.Cells[4].Text;
                 ots = ot.Split(',');
                 ot = "<ul>";
-                foreach(var s in ots)
+                foreach (var s in ots)
                 {
                     ReportQuestion rq = ReportQuestiovService.GetReportQuestions(s);
-                    ot += $"<li class='formnamelist'>{rq.Title}</li>";
+                    if(rq != null)
+                        ot += $"<li class='formnamelist' style=\"cursor: pointer;\">{rq.Title}</li>";
                 }
                 ot += "</ul>";
                 e.Row.Cells[4].Text = ot;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
@@ -193,6 +194,123 @@ namespace LDTS.Service
             catch (Exception ex)
             {
                 logger.ERROR("GetAllAlerts: " + ex.Message);
+                alts = new List<AlertSetting>();
+            }
+            return alts;
+        }
+
+        /// <summary>
+        /// 查詢顯示提醒設定
+        /// </summary>
+        /// <returns></returns>
+        public static List<AlertSetting> checkAlerts(Admin admin)
+        {
+            List<AlertSetting> alts = new List<AlertSetting>();
+            List<AlertSetting> altsTemp = new List<AlertSetting>();
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand(@"select * from AlertSetting where Status=1", sqc);
+                    sqc.Open();
+                    SqlDataReader sd = sqlCommand.ExecuteReader();
+
+                    while (sd.Read())
+                    {
+                        alts.Add(new AlertSetting()
+                        {
+                            ALID = sd.IsDBNull(sd.GetOrdinal("ALID")) ? 0 : sd.GetInt32(sd.GetOrdinal("ALID")),
+                            ALTitle = sd.IsDBNull(sd.GetOrdinal("ALTitle")) ? "" : sd.GetString(sd.GetOrdinal("ALTitle")),
+                            ALType = sd.IsDBNull(sd.GetOrdinal("ALType")) ? 0 : sd.GetInt32(sd.GetOrdinal("ALType")),
+                            ALFactor = sd.IsDBNull(sd.GetOrdinal("ALFactor")) ? "" : sd.GetString(sd.GetOrdinal("ALFactor")),
+                            ALForm = sd.IsDBNull(sd.GetOrdinal("ALForm")) ? "" : sd.GetString(sd.GetOrdinal("ALForm")),
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status")),
+                            CreateDate = sd.IsDBNull(sd.GetOrdinal("CreateDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("CreateDate")),
+                            CreateMan = sd.IsDBNull(sd.GetOrdinal("CreateMan")) ? "" : sd.GetString(sd.GetOrdinal("CreateMan"))
+                        });
+                    }
+
+                    sd.Close();
+
+                    // check showtime
+                    string[] stt, sttt;
+                    DateTime sdate, edate;
+                    foreach (AlertSetting alt in alts)
+                    {
+                        switch (alt.ALType)
+                        {
+                            case 1:
+                            case 2:
+                                sttt = alt.ALFactor.Split(',');
+                                foreach (var st1 in sttt)
+                                {
+                                    stt = st1.Split('-');
+                                    sdate = DateTime.Parse($"{DateTime.Now.Year}/{stt[0]}");
+                                    edate = DateTime.Parse($"{DateTime.Now.Year}/{stt[1]}");
+                                    if (sdate.Date <= DateTime.Now.Date && DateTime.Now.Date <= edate.Date)
+                                    {
+                                        altsTemp.Add(alt);
+                                        break;
+                                    }
+                                }
+                                break;
+                            case 3:
+                                sttt = alt.ALFactor.Split(',');
+                                foreach (var st1 in sttt)
+                                {
+                                    stt = st1.Split('-');
+                                    if (int.Parse(stt[0]) <= DateTime.Now.Day && DateTime.Now.Day <= int.Parse(stt[1]))
+                                    {
+                                        altsTemp.Add(alt);
+                                        break;
+                                    }
+                                }
+                                break;
+                            case 4:
+                                stt = alt.ALFactor.Split(',');
+                                foreach (string st in stt)
+                                {
+                                    if (int.Parse(st) == (int)DateTime.Now.DayOfWeek)
+                                    {
+                                        altsTemp.Add(alt);
+                                        break;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+
+                    // check user
+                    alts = new List<AlertSetting>();
+                    List<ReAdminForm> rafs = AoService.GetReAdminForms();
+                    ArrayList rafss = new ArrayList();
+                    foreach(var raf in rafs)
+                    {
+                        if(raf.admin_id.Equals(admin.admin_id))
+                        {
+                            rafss.Add(raf.QID.ToString());
+                        }
+                    }
+                    foreach (AlertSetting alt in altsTemp)
+                    {
+                        if (alt.ALForm.Length < 1)
+                            continue;
+
+                        sttt = alt.ALForm.Split(',');
+                        foreach(var st in sttt)
+                        {
+                            if(rafss.Contains(st))
+                            {
+                                alts.Add(alt);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ERROR("checkAlerts: " + ex.Message);
                 alts = new List<AlertSetting>();
             }
             return alts;

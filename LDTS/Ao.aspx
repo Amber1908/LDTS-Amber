@@ -188,13 +188,21 @@
                                 str += '<div class="col-1 checkSign SWB-F-Checkbox">';
                                 str += '<div class="row d-flex justify-content-start ml-1">';
                                 str += '<label for="SFsign';
-                                str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form!=null) {
+                                    str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                }
                                 str += '"><i class="fas fal fa-user-edit pr-1" style="font-size: 20px"></i></label></div>';
                                 str += '<div class="row d-flex ml-1">';
                                 str += '<input type="checkbox" name="status" class="SWBCheckBox Sign" id="SFsign';
-                                str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form!=null) {
+                                    str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                }
                                 str += '" ';
-                                str += 'value="status_2,F_id:' + DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID+'"';
+                                if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form != null) {
+                                    str += 'value="status_2,F_id:' + DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID + '"';
+                                } else {
+                                    str += 'value="status_2,F_id:' + 0 + '"';
+                                }
                                 if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].status == 2) {
                                     str += 'checked';
                                 }
@@ -204,13 +212,26 @@
                                 str += '<div class="col-1 pb-2 checkEdit SWB-F-Checkbox">';
                                 str += '<div class="row d-flex justify-content-start">';
                                 str += '<label for="SFEdit';
-                                str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form != null) {
+                                    str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                } else {
+                                    str += 0;
+                                }
                                 str += '"><i class="fas fa-pen-alt pr-1 pl-2" style="font-size: 20px"></i></label></div>';
                                 str += '<div class="row d-flex ml-1">';
                                 str += '<input type="checkbox" class="SWBCheckBox SWBEditCheckBox Edit" name="status" id="SFEdit';
-                                str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form != null) {
+                                    str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID;
+                                } else {
+                                    str +=0;
+                                }
                                 str += '"';
-                                str += 'value="status_1,F_id:' + DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID+'"';
+                                if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form != null) {
+                                    str += 'value="status_1,F_id:' + DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID + '"';
+                                }
+                                else {
+                                    str += 0;
+                                }
                                 if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].status == 1 || DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].status ==2) {
                                     str += 'checked';
                                 }
@@ -219,7 +240,9 @@
                                 //標準書下面的表單 表單名稱
                                 str += '<div class="col-7 s-fname-box pb-2 pt-2">';
                                 str += '<a class="text-justify align-bottom" style="font-size: 25px;color:gray" id="S-Fname">';
-                                str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.Title;
+                                if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form!=null) {
+                                    str += DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.Title;
+                                }
                                 str += '</a >';
                                 str += '</div>';
                                 str += '</div>';
@@ -240,13 +263,22 @@
                         str += '<div class="col-1 checkSign F-Checkbox">';
                         str += '<div class="row d-flex justify-content-start ml-1">';
                         str += '<label for="P-fsignAll';
-                        str += DataObj[i].ChildrenForms[g].form.QID;
+                        if (DataObj[i].ChildrenForms[g].form!=null) {
+                            str += DataObj[i].ChildrenForms[g].form.QID;
+                        }
                         str += '"><i class="fas fal fa-user-edit pr-1" style="font-size: 20px"></i></label></div>';
                         str += '<div class="row d-flex ml-1">';
                         str += '<input type="checkbox" class="myCheckbox Sign" name="status" id="P-fsignAll';
-                        str += DataObj[i].ChildrenForms[g].form.QID;
+                        if (DataObj[i].ChildrenForms[g].form!=null) {
+                            str += DataObj[i].ChildrenForms[g].form.QID;
+                        }
                         str += '"';
-                        str += 'value="status_2,F_id:' + DataObj[i].ChildrenForms[g].form.QID + '"';
+                        if (DataObj[i].ChildrenForms[g].form != null) {
+                            str += 'value="status_2,F_id:' + DataObj[i].ChildrenForms[g].form.QID + '"';
+                        } else {
+                            str += 'value="status_2,F_id:' +0 + '"';
+                        }
+                        
                         if (DataObj[i].ChildrenForms[g].status == 2) {
                             str += 'checked';
                         }
@@ -256,14 +288,21 @@
                         str += '<div class="col-1 pb-2 checkEdit F-Checkbox">';
                         str += '<div class="row d-flex justify-content-start">';
                         str += '<label for="P-fEditAll';
-                        str += DataObj[i].ChildrenForms[g].form.QID;
+                        if (DataObj[i].ChildrenForms[g].form!=null) {
+                            str += DataObj[i].ChildrenForms[g].form.QID;
+                        }
                         str += '"><i class="fas fa-pen-alt pr-1 pl-2" style="font-size: 20px"></i></label>';
                         str += '</div>';
                         str += '<div class="row d-flex ml-1">';
                         str += '<input type="checkbox" class="myCheckbox EditCheckBox Edit" name="status" id="P-fEditAll';
-                        str += DataObj[i].ChildrenForms[g].form.QID;
+                        if (DataObj[i].ChildrenForms[g].form != null) {
+                            str += DataObj[i].ChildrenForms[g].form.QID;
+                        }
                         str += '"';
-                        str += 'value="status_1,F_id:' + DataObj[i].ChildrenForms[g].form.QID+'"';
+                        if (DataObj[i].ChildrenForms[g].form!=null) {
+                            str += 'value="status_1,F_id:' + DataObj[i].ChildrenForms[g].form.QID + '"';
+                        }
+                        
                         if (DataObj[i].ChildrenForms[g].status == 2 || DataObj[i].ChildrenForms[g].status==1) {
                             str += 'checked';
                         }
@@ -272,7 +311,9 @@
                         //程序書-表單 名稱
                         str += '<div class="col-7 fname-box-box pb-2">';
                         str += '<a class="text-justify align-bottom " style="font-size: 30px" id="Fname">';
-                        str += DataObj[i].ChildrenForms[g].form.Title;
+                        if (DataObj[i].ChildrenForms[g].form != null) {
+                            str += DataObj[i].ChildrenForms[g].form.Title;
+                        }
                         str += '</a >';
                         str += '</div>';
                         str += '</div>';//P-F-row

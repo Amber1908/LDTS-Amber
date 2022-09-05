@@ -101,7 +101,7 @@ namespace LDTS
                         sidebarMenuString += "</p>";
                         sidebarMenuString += "</a>";
                         List<StandardWorkBook> standardWorks = StandarWorkBookService.GetAllStandarwookbooks();
-                        List<int> RePreSids = RelationService.GetAllReProcessStandardWorkBooks().Where(x => x.PID == process.PID).Select(x => x.SID).ToList();
+                        List<int> RePreSids = Service.RelationService.GetAllReProcessStandardWorkBooks().Where(x => x.PID == process.PID).Select(x => x.SID).ToList();
                         List<StandardWorkBook> standardWorkBooks = new List<StandardWorkBook>();
                         foreach (var Sid in RePreSids)
                         {

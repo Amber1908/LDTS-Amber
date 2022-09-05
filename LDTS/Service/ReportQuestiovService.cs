@@ -95,6 +95,33 @@ namespace LDTS.Service
             }
             return result;
         }
+        /// <summary>
+        /// 刪除表單範本By qid
+        /// </summary>
+        public static bool DeleteReportQuestionById(int qid)
+        {
+            bool result = false;
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("", sqc);
+                    sqc.Open();
+                    sqlCommand.CommandText = @"DELETE from ReportQuestion WHERE QID=@QID ";
+                    sqlCommand.Parameters.Add("@QID", System.Data.SqlDbType.NVarChar);
+                    sqlCommand.Parameters["@QID"].Value = qid;
+                    if (sqlCommand.ExecuteNonQuery() > 0)
+                        result = true;
+                }
+
+            }
+            catch (Exception e)
+            {
+                logger.FATAL(e.Message);
+                return result;
+            }
+            return result;
+        }
 
         /// <summary>
         /// 查詢所有表單範本

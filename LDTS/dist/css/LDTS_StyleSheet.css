@@ -37,3 +37,11 @@
     display: block;
     width: 100%;
 }
+.relaHover:hover {
+    color: #4e73df !important;
+}
+.Active {
+    font-weight: bolder;
+    font-size: 18px;
+    color: #4e73df !important;
+}

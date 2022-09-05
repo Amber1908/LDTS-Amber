@@ -37,7 +37,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-3">
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover text-nowrap" DataSourceID="SqlDataSource1" EmptyDataText="無提醒資料" OnRowDataBound="GridView1_RowDataBound">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-hover text-nowrap" DataSourceID="SqlDataSource1" DataKeyNames="ALID" EmptyDataText="無提醒資料" OnRowDataBound="GridView1_RowDataBound">
                                 <Columns>
                                     <asp:BoundField DataField="ALID" HeaderText="代碼">
                                         <ItemStyle Width="60px" />

@@ -28,7 +28,7 @@ namespace LDTS
             if (!string.IsNullOrEmpty(json))
             {
                 ReStandarWorkBookForm reStandarWorkBookForm = new JavaScriptSerializer().Deserialize<ReStandarWorkBookForm>(json);
-                RelationService.DeleteReStandarWorkBookFormByID(reStandarWorkBookForm.SID);
+                Service.RelationService.DeleteReStandarWorkBookFormByID(reStandarWorkBookForm.SID);
             }
         }
 
