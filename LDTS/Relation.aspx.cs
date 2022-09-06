@@ -147,7 +147,7 @@ namespace LDTS
                 Fstr += "<div class=\"card-header\"style=\"height: 29px\"> ";
                 Fstr += "<span class=\"d-flex justify-content-end\">";
                 Fstr += "<a  style=\"text-decoration:none; position: absolute \" href=\"";//
-                Fstr += "ReportQuestionEdit?aid=" + reportQuestion.QID + "\">";
+                Fstr += "FormGeneration?QID=" + reportQuestion.QID + "\">";
                 Fstr += "<i style=\"position: relative; top: -5px; right: 20px\" class=\"fas fa-edit\"></i>";
                 Fstr += "</a>";
                 Fstr += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";

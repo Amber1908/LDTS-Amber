@@ -879,10 +879,12 @@
                                             }
                                             break;
                                         case "sign":
-                                            let time = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].lastUpdate);
-                                            let strTime = time.Format("yyyy-MM-dd");
-                                            tampleteStr += "<img style=\"width:20%\" id=\"sign\" src=\"" + "ShowAdminImg.aspx?id=" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
-                                            tampleteStr += "<span>" + strTime + "</span>";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].Answers[0].value != 0) {
+                                                let time = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].lastUpdate);
+                                                let strTime = time.Format("yyyy-MM-dd");
+                                                tampleteStr += "<img style=\"width:20%\" id=\"sign\" src=\"" + "ShowAdminImg.aspx?id=" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
+                                                tampleteStr += "<span>" + strTime + "</span>";
+                                            } 
                                             break;
                                         case "filling":
                                             let fillingStr = Obj.Groups[i].Rows[w].Cols[c].QuestionText;
@@ -1330,7 +1332,8 @@
                             if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
                                 updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                                 updateBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
-                                updateBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\"  onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                updateBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"" + Obj.Groups[i].GroupID+"#"+w+"\" onchange=\"changeTableJsonData(event)\"  onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+
                                 updateBodyStr += "取消簽核";
                                 updateBodyStr += "</div>";
                                 updateBodyStr += "<div class=\"ml-5  SignImageBox \">";//SignImageBox
@@ -1735,8 +1738,40 @@
 
         }
         //row 編輯
-        function Update() {
+        function Update(event) {
             const dataObj = GetJsonData();
+            //img
+
+            let GroupId = event.currentTarget.id;
+            let imgs = event.currentTarget.parentNode.parentNode.getElementsByTagName("img");
+            let SignImageBox = event.currentTarget.parentNode.parentNode.querySelectorAll(".SignImageBox");
+            for (var m = 0; m < imgs.length; m++) {
+                for (var i = 0; i < dataObj.Groups.length; i++) {
+                    if (dataObj.Groups[i].GroupID == GroupId) {
+                        let sn = dataObj.Groups[i].Rows.length - 1;
+                        for (let c = 0; c < dataObj.Groups[i].Rows[sn].Cols.length; c++) {
+                            if (dataObj.Groups[i].Rows[sn].Cols[c].QuestionID == imgs[m].name && SignImageBox[m].classList.contains("d-inline")) {
+                                dataObj.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
+                                let sid = imgs[m].id;
+                                sid = sid.substring(4);
+                                console.log("img" + sid);
+
+                                dataObj.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": sid, "lastUpdate": today });
+                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+
+                            } else {
+                                dataObj.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
+                                dataObj.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": null });
+                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+
+
+                            }
+                        }
+                    }
+                }
+                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+            }
+
             //let fade = document.querySelector(".modal-backdrop");
             //fade.classList.remove("modal-open");
             document.body.classList.remove("modal-open");
@@ -1753,6 +1788,8 @@
             for (var i = 0; i < allRow.length; i++) {
                 allRow[i].innerHTML = "";
             }
+
+
             let ansEditForm = document.querySelector(".ansEditForm");
             ansEditForm.innerHTML = "";
             GroupsTemplate(dataObj);
@@ -1760,6 +1797,7 @@
             let updateBodyStr = "";
             updateBody.innerHTML = updateBodyStr;
             $("#modal-update").modal('hide');
+
         }
         //row 上傳檔案顯示換檔案名稱
         function appenUploadName(event) {
@@ -1787,12 +1825,14 @@
                     DataObj = dataObj.Groups[i].Rows[1];//複製的Rows
                 }
             }
-            
             let All = 0;
-
             for (let i = 0; i < DataObj.Cols.length; i++) {
                 if (DataObj.Cols[i].Answers.length == 0) {
                     All++;
+                } else {
+                    if (DataObj.Cols[i].QuestionType == "file") {
+                        DataObj.Cols[i].Answers.length = 0
+                    }
                 }
             }
             if (All == DataObj.Cols.length) {
@@ -2929,9 +2969,9 @@
             if (SignBoxFather.classList.contains("SignBoxinsertRow") || SignBoxFather.classList.contains("SignBoxRow")) {
                 GidandRowsIndex = SignBoxFather.querySelector(".Signbtn").dataset.gidandrow;
                 dataStaut = SignBoxFather.querySelector(".Signbtn").dataset.staut;
-                Str = GidandRowsIndex.split("_");
+                Str = GidandRowsIndex.split("#");
                 Gid = Str[0];
-                Row = Str[1] - 1;
+                Row = Str[1]-1;
             }
 
 
@@ -2946,15 +2986,18 @@
                     var singDate = document.querySelector(".signDate");
                     singDate.innerText = today;
                     for (var g = 0; g < JsonObj.Groups.length; g++) {
+                        console.log(JsonObj.Groups[g].GroupID);
+                        
                         if (JsonObj.Groups[g].GroupID == Gid) {
                             for (var c = 0; c < JsonObj.Groups[g].Rows[Row].Cols.length; c++) {
                                 if (SignImage.classList.contains(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID)) {
-                                    if (JsonObj.Groups[g].Rows[Row].Cols[c].Answers.length < 0) {
-                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": time });
+                                    console.log(c);
+                                    if (JsonObj.Groups[g].Rows[Row].Cols[c].Answers.length == 2) {
+                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": time });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
 
                                     } else {
-                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].value = signImgID;
+                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].value = 0;
                                         JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].lastUpdate = time;
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                     }
@@ -2966,21 +3009,21 @@
                 } else {
                     SignBox.classList.remove("d-inline");
                     SignBox.classList.add("d-none");
-                    event.currentTarget.innerText = "簽核"
+                    event.currentTarget.innerText = "簽核";
                     for (var g = 0; g < JsonObj.Groups.length; g++) {
+                        console.log("if" + Gid)
                         if (JsonObj.Groups[g].GroupID == Gid) {
                             for (var c = 0; c < JsonObj.Groups[g].Rows[Row].Cols.length; c++) {
-                                if (JsonObj.Groups[g].Rows[Row].Cols[c].Answers.length < 0) {
-                                    if (SignImage.classList.contains(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID)) {
-                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": signImgID, "lastUpdate": null });
-                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
-                                    } else {
-                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].value = null;
-                                        JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].lastUpdate = null;
-                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
-
-                                    }
-                                }
+                                console.log(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID);
+                                if (SignImage.classList.contains(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID)) {
+                                    JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": null });
+                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                                } /*else {*/
+                                //    console.log("if" + Gid)
+                                //    JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].value ="";
+                                //    JsonObj.Groups[g].Rows[Row].Cols[c].Answers[0].lastUpdate = null;
+                                //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
+                                //}
                             }
                         }
                     }
@@ -2993,11 +3036,12 @@
                     isTable = true;
                     console.log("table2513");
                 }
+
                 SignBox.classList.remove("d-none");
                 SignImage.id = "sign" + signImgID;
                 SignBox.classList.add("d-inline");
                 event.currentTarget.innerText = "取消簽核";
-
+               
                 if (isTable) {
                     for (var i = 0; i < JsonObj.Groups.length; i++) {
                         if (JsonObj.Groups[i].GroupType != "normal") {
@@ -3014,6 +3058,7 @@
                         }
                     }
                 } else {
+                    
                     for (var i = 0; i < JsonObj.Groups.length; i++) {
                         if (JsonObj.Groups[i].GroupType == "normal") {
                             for (var k = 0; k < JsonObj.Groups[i].Questions.length; k++) {
@@ -3035,6 +3080,7 @@
 
             }
             else {
+                console.log("簽名")
                 if (SignBoxFather.classList.contains("tableSign")) {//table
                     SignBoxFather.classList.add("d-flex", "justify-content-end");
                     event.currentTarget.classList.remove("mr-1");

@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -14,7 +14,9 @@ namespace LDTS.Service
     public class RelationService
     {
         static readonly Logger logger = new Logger("RelationService");
-
+        /// <summary>
+        ///InsertReSworkbookForm 新增標準作業書跟表單關聯
+        /// </summary>
         public static bool InsertReSworkbookForm(ReStandarWorkBookForm reStandarWorkBookForm)
         {
             bool result = false;
@@ -40,38 +42,9 @@ namespace LDTS.Service
             }
             return result;
         }
-        public static bool InsertReProcessStandardWorkBooks(List<ReProcessStandardWorkBook> standardWorkBooks)
-        {
-            bool result = false;
-            List<ReProcessStandardWorkBook> reProcessStandardWorkBooks = new List<ReProcessStandardWorkBook>();
-                try
-            {
-                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
-                {
-                    foreach (var standardWorkBook in standardWorkBooks)
-                    {
-                        SqlCommand sqlCommand = new SqlCommand("", sqc);
-                        sqc.Open();
-                        sqlCommand.CommandText = @"INSERT INTO ReProcessStandardWorkBook(PID, SID) VALUES(@PID,@SID)";
-                        sqlCommand.Parameters.AddWithValue("@PID", standardWorkBook.PID);
-                        sqlCommand.Parameters.AddWithValue("@SID", standardWorkBook.SID);
-                        if (sqlCommand.ExecuteNonQuery() > 0)
-                        {
-                            result = true;
-                        }
-                        sqc.Close();
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                logger.FATAL(e.Message);
-            }
-            return result;
-
-        }
-
+        /// <summary>
+        ///InsertReProcessStandardWorkBooks 新增標準作業書跟程序書關聯
+        /// </summary>
         public static bool InsertReProcessStandardWorkBook(ReProcessStandardWorkBook standardWorkBook)
         {
             bool result = false;
@@ -97,7 +70,7 @@ namespace LDTS.Service
             }
             return result;
         }
-        public static bool InsertReAdminProcesses(List<ReAdminProcess>reAdminProcesses)
+        public static bool InsertReAdminProcesses(List<ReAdminProcess> reAdminProcesses)
         {
             bool result = true;
             List<ReAdminProcess> processes = reAdminProcesses;
@@ -120,7 +93,7 @@ namespace LDTS.Service
                     }
                 }
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 logger.FATAL(e.Message);
                 return result;
@@ -276,8 +249,8 @@ namespace LDTS.Service
         public static bool DeleteReProcessFormByID(int pid)
         {
             bool result = false;
-            List<ReProcessQuestion> forms =GetAllReProcesssQuestion().Where(X=>X.PID==pid).ToList();
-            if (forms.Count!=0)
+            List<ReProcessQuestion> forms = GetAllReProcesssQuestion().Where(X => X.PID == pid).ToList();
+            if (forms.Count != 0)
             {
                 try
                 {
@@ -302,6 +275,76 @@ namespace LDTS.Service
             }
             return result;
         }
+        /// <summary>
+        /// 刪除程序書跟表單關聯By qid
+        /// </summary>
+        /// <param name="qid"></param>
+        /// <returns></returns>
+        public static bool DeleteReProcessQuestionByQID(int qid)
+        {
+            List<ReProcessQuestion> processQuestions = GetAllReProcesssQuestion();
+            bool result = false;
+            if (processQuestions.Count!=0)
+            {
+                try
+                {
+                    using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                    {
+                        SqlCommand sqlCommand = new SqlCommand("", sqc);
+                        sqc.Open();
+                        sqlCommand.CommandText = @"DELETE from ReProcessQuestion WHERE QID=@QID ";
+                        sqlCommand.Parameters.Add("@QID", System.Data.SqlDbType.NVarChar);
+                        sqlCommand.Parameters["@QID"].Value = qid;
+                        if (sqlCommand.ExecuteNonQuery() > 0)
+                            result = true;
+                        sqc.Close();
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.FATAL(e.Message);
+                    return result = false;
+                }
+
+            }
+            return result;
+        }
+        /// <summary>
+        /// 刪除標準作業書跟表單關聯By qid
+        /// </summary>
+        /// <param name="qid"></param>
+        /// <returns></returns>
+        /// 
+        public static bool DeleteReStandardWorkBookFormByQid(int qid)
+        {
+            List<ReStandarWorkBookForm> reStandarWorkBookForms = GetAllreSWorkBookForm();
+            bool result = false;
+            if (reStandarWorkBookForms.Count!=0)
+            {
+                try
+                {
+                    using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                    {
+                        SqlCommand sqlCommand = new SqlCommand("", sqc);
+                        sqc.Open();
+                        sqlCommand.CommandText = @"DELETE from ReStandarWorkBookForm WHERE QID=@QID ";
+                        sqlCommand.Parameters.Add("@QID", System.Data.SqlDbType.NVarChar);
+                        sqlCommand.Parameters["@QID"].Value = qid;
+                        if (sqlCommand.ExecuteNonQuery() > 0)
+                            result = true;
+                        sqc.Close();
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.FATAL(e.Message);
+                    return result = false;
+                }
+
+            }
+            return result;
+
+        }
         public static bool DeleteReProcessStandardWorkBookByID(int pid)
         {
             bool result = false;
@@ -322,7 +365,7 @@ namespace LDTS.Service
             catch (Exception e)
             {
                 logger.FATAL(e.Message);
-                return result =false;
+                return result = false;
             }
             return result;
         }
@@ -352,7 +395,7 @@ namespace LDTS.Service
             catch (Exception e)
             {
                 logger.FATAL(e.Message);
-                return reProcessForms =null;
+                return reProcessForms = null;
             }
             return reProcessForms;
         }

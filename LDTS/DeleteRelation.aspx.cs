@@ -49,6 +49,7 @@ namespace LDTS
                     Response.Redirect("Relation.aspx");
                         break;
                 case "sid":
+                   
                     id = Convert.ToInt32(Request.QueryString["sid"]);
                     String SWB = StandarWorkBookService.GetAllStandarwookbooks().Where(x => x.SID == id).Select(x => x.Sname).FirstOrDefault();
                     List<int> processIdS = Service.RelationService.GetAllReProcessStandardWorkBooks().Where(x => x.SID == id).Select(x=>x.PID).ToList();
@@ -74,12 +75,28 @@ namespace LDTS
                 default:
                     break;
                 case "qid":
+                    //還要刪除上面的關聯設定 
                     id = Convert.ToInt32(Request.QueryString["qid"]);
+                    List<int> reProcesses = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == id).Select(x=>x.PID).ToList();
+                    List<int> reSwb = Service.RelationService.GetAllreSWorkBookForm().Where(x => x.QID == id).Select(x => x.SID).ToList();
                     ReportQuestion answer =ReportQuestiovService.GetReportQuestions(Request.QueryString["qid"]);
-                    if (ReportQuestiovService.DeleteReportQuestionById(id))
+                    bool hasSwb = reSwb.Count > 0 ? true : false;
+                    bool hasPro= reProcesses.Count > 0 ? true : false;
+                    bool flag = false;
+                    if (hasSwb)
                     {
-                        LDTSservice.InsertRecord(admin, "刪除表單:" + answer.Title);
-                        Session["MsgResult"] = "刪除表單" + answer.Title + "成功";
+                        flag =Service.RelationService.DeleteReStandardWorkBookFormByQid(id);
+                    }
+                    if (hasPro)
+                    {
+                        flag = Service.RelationService.DeleteReProcessQuestionByQID(id);
+                    }
+                    if (ReportQuestiovService.DeleteReportQuestionById(id)&& flag)
+                    {
+                        LDTSservice.InsertRecord(admin, "刪除表單範本:" + answer.Title);
+                        Session["MsgResult"] = "刪除表單單範本" + answer.Title + "成功";
+                        AlertMsg.Text = "<script language='javascript'>alert('刪除表單範本成功!!');location.href='Default.aspx';</script>";
+                        this.Page.Controls.Add(AlertMsg);
                         Response.Redirect("Relation.aspx");
                     }
                     else
