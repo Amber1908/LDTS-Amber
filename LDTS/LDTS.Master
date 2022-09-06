@@ -12,9 +12,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
     <!-- Theme style -->
-    <link rel="stylesheet" href="/dist/css/adminlte.css" />
+    <link rel="stylesheet" href="dist/css/adminlte.css" />
     <!-- LDTS style -->
-    <link href="/dist/css/LDTS_StyleSheet.css" rel="stylesheet" />
+    <link href="dist/css/LDTS_StyleSheet.css" rel="stylesheet" />
     <!-- Customer Css -->
     <asp:ContentPlaceHolder ID="headPlaceHolder" runat="server">
     </asp:ContentPlaceHolder>
