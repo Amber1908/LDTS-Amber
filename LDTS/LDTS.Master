@@ -33,9 +33,9 @@
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="Default" class="nav-link">Home</a>
                     </li>
-                    <li class="nav-item d-none d-sm-inline-block">
+<%--                    <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link">待簽核表單</a>
-                    </li>
+                    </li>--%>
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link">關聯表單搜尋</a>
                     </li>
@@ -46,31 +46,39 @@
                     <!-- Notifications Dropdown Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="far fa-bell"></i>
-                            <span class="badge badge-warning navbar-badge">15</span>
+                            <i class="fas fa-th-large"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <span class="dropdown-item dropdown-header">15 Notifications</span>
+                            
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-envelope mr-2"></i>4 new messages
-           
-                            <span class="float-right text-muted text-sm">3 mins</span>
+                            <a href="PersonnelManagement.aspx" class="dropdown-item">
+                                <i class="fa fa-solid fa-user mr-1"></i>人員管理
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-users mr-2"></i>8 friend requests
-           
-                            <span class="float-right text-muted text-sm">12 hours</span>
+                            <a href="Unit.aspx" class="dropdown-item">
+                                <i class="fas fa-users mr-2"></i>單位資訊
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-file mr-2"></i>3 new reports
-           
-                            <span class="float-right text-muted text-sm">2 days</span>
+                            <a href="FormGeneration" class="dropdown-item">
+                                <i class="fa fa-sticky-note mr-2"></i>表單產生器
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                            <a href="Ao" class="dropdown-item">
+                               
+                                 <i class="mr-2 fas fa-tasks"></i>權限管理
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a id="RelationItem" runat="server" class="dropdown-item" href="Relation.aspx">
+                               <i class="fas fa-project-diagram mr-2"></i>程序書關聯設定
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="AlertSettingList" class="dropdown-item">
+                                <i class="fa fa-bell mr-2"></i>提醒設定
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="AdminWorkRecord.aspx" class="dropdown-item">
+                                <i class="fa fa-regular fa-address-book mr-2"></i>操作紀錄
+                            </a>
                         </div>
                     </li>
 
@@ -79,12 +87,11 @@
                             <i class="fas fa-expand-arrows-alt"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
+<%--                    <li class="nav-item">
                         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                             <i class="fas fa-th-large"></i>
                         </a>
-                    </li>
-
+                    </li>--%>
                     <li class="nav-item user-panel pb-2 d-flex ml-4">
                         <img id="adminMug" runat="server" src="dist/img/user2-160x160.jpg" class=" img-circle elevation-2" style="height:35px;" alt="User Image">
                     </li>
@@ -153,16 +160,16 @@
             </footer>
 
             <!-- Control Sidebar -->
-            <aside class="control-sidebar control-sidebar-dark layoutNavbarLDTS">
+<%--            <aside class="control-sidebar control-sidebar-dark layoutNavbarLDTS">
                 <!-- Control sidebar content goes here -->
-                <div class="row m-3"><a href="PersonnelManagement.aspx">人員管理</a></div>
-                <div class="row m-3"><a href="Unit.aspx">單位資訊</a></div>
-                <div class="row m-3"><a href="FormGeneration">表單產生器</a></div>
-                <div class="row m-3"><a href="Ao">權限管理</a></div>
-                <div class="row m-3"><a id="RelationItem" runat="server" href="Relation.aspx">程序書關聯設定</a></div>
-                <div class="row m-3"><a href="AlertSettingList">提醒設定</a></div>
-                <div class="row m-3"><a href="AdminWorkRecord.aspx">操作紀錄</a></div>
-            </aside>
+                <div class="row m-3"></div>
+                <div class="row m-3"></div>
+                <div class="row m-3"></div>
+                <div class="row m-3"></div>
+                <div class="row m-3"></div>
+                <div class="row m-3"></div>
+                <div class="row m-3"></div>
+            </aside>--%>
             <!-- /.control-sidebar -->
         </div>
         <!-- ./wrapper -->

@@ -30,7 +30,7 @@ namespace LDTS
             adminName.Text = loginAdmin.admin_name;
             if (!loginAdmin.admin_ao.Contains("form"))
             {
-                RelationItem.Visible = false;
+                
             }
             if (!IsPostBack)
             {

@@ -1843,7 +1843,7 @@
                     if (remove) {
                         DataObj.index = dataObj.Groups[i].Rows.length;
                         dataObj.Groups[i].Rows.push(DataObj);
-                        dataObj.Groups[i].Rows = dataObj.Groups[i].Rows.slice(0, 2);
+                        //dataObj.Groups[i].Rows = dataObj.Groups[i].Rows.slice(0, 2);
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                     } else {
                         dataObj.Groups[i].Rows.push(DataObj);
@@ -1908,18 +1908,21 @@
                                     case "file":
                                         index = c + 1;
                                         let fileName = inputs[d].value;
-                                        var re = /\.(jpg|png|doc|pdf|docx)$/i;
-                                        if (!re.test(fileName)) {
-                                            alert("檔案格式錯誤!!請檢查!!")
-                                            break;
-                                        } else {
-                                            let now = date.getFullYear("yyyy") + String(date.getMonth() + 1).padStart(2, '0') + String(date.getDate()).padStart(2, '0') + String(date.getHours()).padStart(2, '0') + String(date.getMinutes()).padStart(2, '0') + String(date.getSeconds()).padStart(2, '0') + String(date.getMilliseconds()).padStart(3, '0');
-                                            fileName = fileName.substring("12");
-                                            fileName = now + "_" + fileName;
-                                            Upload(fileName);
-                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
-                                            dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": index, "value": fileName, "lastUpdate": today });
-                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+                                        console.log("fileName" + fileName);
+                                        if (fileName!="") {
+                                            var re = /\.(jpg|png|doc|pdf|docx)$/i;
+                                            if (!re.test(fileName)) {
+                                                alert("檔案格式錯誤!!請檢查!!")
+                                                break;
+                                            } else {
+                                                let now = date.getFullYear("yyyy") + String(date.getMonth() + 1).padStart(2, '0') + String(date.getDate()).padStart(2, '0') + String(date.getHours()).padStart(2, '0') + String(date.getMinutes()).padStart(2, '0') + String(date.getSeconds()).padStart(2, '0') + String(date.getMilliseconds()).padStart(3, '0');
+                                                fileName = fileName.substring("12");
+                                                fileName = now + "_" + fileName;
+                                                Upload(fileName);
+                                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
+                                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": index, "value": fileName, "lastUpdate": today });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+                                            }
                                         }
                                         break;
                                     case "text":
@@ -2378,32 +2381,35 @@
                                     let fileName = thischange.value;
                                     var re = /\.(jpg|png|doc|pdf|docx)$/i;  //允許的副檔名
                                     console.log("file");
-                                    //let AppendFileName = document.querySelector("#MainContent_AppendFile");
-                                    if (!re.test(fileName)) {
-                                        alert("檔案格式錯誤!!請檢查!!")
-                                        break;
-                                    } else {
-                                        if (dataObj.Groups[i].Rows[j].Cols[q].QuestionID == event.currentTarget.name) {
-                                            let now = date.getFullYear("yyyy") + String(date.getMonth() + 1).padStart(2, '0') + String(date.getDate()).padStart(2, '0') + String(date.getHours()).padStart(2, '0') + String(date.getMinutes()).padStart(2, '0') + String(date.getSeconds()).padStart(2, '0') + String(date.getMilliseconds()).padStart(3, '0');
-                                            fileName = fileName.substring("12");
-                                            fileName = now + "_" + fileName;
-                                            Upload(fileName);
-                                            if (dataObj.Groups[i].Rows[j].Cols[q].Answers.length > 0) {
-                                                dataObj.Groups[i].Rows[j].Cols[q].QuestionID = dataObj.Groups[i].Rows[j].Cols[q].QuestionID + j + today;
-                                                dataObj.Groups[i].Rows[j].Cols[q].Answers[0].value = fileName;
-                                                dataObj.Groups[i].Rows[j].Cols[q].Answers[0].lastUpdate = today;
-                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                            } else {
-                                            //    let obj = dataObj.Groups[i].Rows[j];
-                                            //    obj.Cols[q].QuestionID = dataObj.Groups[i].Rows[1].Cols[q].QuestionID + j + today;
-                                            //    obj.Cols[q].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today });
-                                            //    //dataObj.Groups[i].Rows[1].Cols[q].QuestionID = dataObj.Groups[i].Rows[1].Cols[q].QuestionID + j + today;
-                                            //    //dataObj.Groups[i].Rows[1].Cols[q].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today });
-                                            //    dataObj.Groups[i].Rows.push(obj);
-                                            //    //dataObj.Groups[i].Rows.splice(1, 1);
-                                            //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                    if (fileName != null) {
+                                        //let AppendFileName = document.querySelector("#MainContent_AppendFile");
+                                        if (!re.test(fileName)) {
+                                            alert("檔案格式錯誤!!請檢查!!")
+                                            break;
+                                        } else {
+                                            if (dataObj.Groups[i].Rows[j].Cols[q].QuestionID == event.currentTarget.name) {
+                                                let now = date.getFullYear("yyyy") + String(date.getMonth() + 1).padStart(2, '0') + String(date.getDate()).padStart(2, '0') + String(date.getHours()).padStart(2, '0') + String(date.getMinutes()).padStart(2, '0') + String(date.getSeconds()).padStart(2, '0') + String(date.getMilliseconds()).padStart(3, '0');
+                                                fileName = fileName.substring("12");
+                                                fileName = now + "_" + fileName;
+                                                Upload(fileName);
+                                                if (dataObj.Groups[i].Rows[j].Cols[q].Answers.length > 0) {
+                                                    dataObj.Groups[i].Rows[j].Cols[q].QuestionID = dataObj.Groups[i].Rows[j].Cols[q].QuestionID + j + today;
+                                                    dataObj.Groups[i].Rows[j].Cols[q].Answers[0].value = fileName;
+                                                    dataObj.Groups[i].Rows[j].Cols[q].Answers[0].lastUpdate = today;
+                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                } else {
+                                                    //    let obj = dataObj.Groups[i].Rows[j];
+                                                    //    obj.Cols[q].QuestionID = dataObj.Groups[i].Rows[1].Cols[q].QuestionID + j + today;
+                                                    //    obj.Cols[q].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today });
+                                                    //    //dataObj.Groups[i].Rows[1].Cols[q].QuestionID = dataObj.Groups[i].Rows[1].Cols[q].QuestionID + j + today;
+                                                    //    //dataObj.Groups[i].Rows[1].Cols[q].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today });
+                                                    //    dataObj.Groups[i].Rows.push(obj);
+                                                    //    //dataObj.Groups[i].Rows.splice(1, 1);
+                                                    //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                }
                                             }
                                         }
+
                                     }
 
                                 }
