@@ -72,22 +72,6 @@ namespace LDTS
                             Ao.Text = "0";
                         }
                     }
-                    //if (adminForm != null)
-                    //{
-                    //    //1.編輯2.編輯加簽核
-                    //    if (adminForm.status==1)
-                    //    {
-                    //        Ao.Text ="1";
-                    //    }
-                    //    else
-                    //    {
-                    //        Ao.Text = "2";
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    Ao.Text = "0";
-                    //}
                 }
                 else if (ReportAnswerSid != 0)
                 {

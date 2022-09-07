@@ -2026,6 +2026,7 @@
     <Content Include="Process.aspx" />
     <Content Include="ProcessAdd.aspx" />
     <Content Include="Relation.aspx" />
+    <Content Include="ReportAnswerSearch.aspx" />
     <Content Include="ReportQuestionEdit.aspx" />
     <Content Include="RestPassWord.aspx" />
     <Content Include="Service\ImageService.asmx" />
@@ -2205,6 +2206,12 @@
     </Compile>
     <Compile Include="RelationService.ashx.cs">
       <DependentUpon>RelationService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportAnswerSearch.aspx.cs">
+      <DependentUpon>ReportAnswerSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportAnswerSearch.aspx.designer.cs">
+      <DependentUpon>ReportAnswerSearch.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReportQuestionEdit.aspx.cs">
       <DependentUpon>ReportQuestionEdit.aspx</DependentUpon>

@@ -38,8 +38,10 @@
                             <div class="ansStatus form-group">
                                 <label for="Stauts" style="font-size: 12px; color: #00000080">表單狀態</label>
                                 <select id="Stauts" class="form-control select2 select2-hidden-accessible" style="width: 100%;" runat="server">
-                                    <option value="1">尚未簽核</option>
-                                    <option value="2">已簽核</option>
+                                    <option value="1">正常</option>
+                                    <option value="2">待簽核</option>
+                                    <option value="3">已簽核</option>
+                                    <option value="4">結案</option>
                                 </select>
                             </div>
                             <div class="ansDesc form-group">
@@ -129,7 +131,8 @@
                     var allsign = document.getElementsByClassName("Signbtn");
                     for (var i = 0; i < allsign.length; i++) {
                         console.log(allsign.length);
-                        allsign[i].removeAttribute("onclick");
+                            allsign[i].removeAttribute("onclick");
+                    //    allsign[i].classList.add("d-none");
                     }
                     break;
                 case "0":

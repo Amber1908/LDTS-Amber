@@ -194,5 +194,63 @@ namespace LDTS.Service
             }
             return reportAnswer;
         }
+        public static string MatchStatus(int status)
+        {
+            switch (status)
+            {
+                case 0:
+                    return "作廢";
+                case 1:
+                    return "正常";
+                case 2:
+                    return "待簽核";
+                case 3:
+                    return "已簽核";
+                case 4:
+                    return "結案";
+                default:
+                    return "";
+            }
+        }
+        public static List<ReportAnswer> GetAnswersByKey(string key)
+        {
+            List<ReportAnswer> reportAnswers = new List<ReportAnswer>();
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("", sqc);
+                    sqc.Open();
+                    sqlCommand.CommandText = @"Select * from ReportAnswer where Status > 0 and (Keyword like @Keyword or Title like @Keyword or ExtendName like @Keyword)";
+                    sqlCommand.Parameters.AddWithValue("@Keyword", "%" + key + "%");
+                    SqlDataReader sd = sqlCommand.ExecuteReader();
+                    while (sd.Read())
+                    {
+                        reportAnswers.Add(new ReportAnswer()
+                        {
+                            AID = sd.IsDBNull(sd.GetOrdinal("AID")) ? 0 : sd.GetInt32(sd.GetOrdinal("AID")),
+                            QID = sd.IsDBNull(sd.GetOrdinal("QID")) ? 0 : sd.GetInt32(sd.GetOrdinal("QID")),
+                            Title = sd.IsDBNull(sd.GetOrdinal("Title")) ? "" : sd.GetString(sd.GetOrdinal("Title")),
+                            ExtendName = sd.IsDBNull(sd.GetOrdinal("ExtendName")) ? string.Empty : sd.GetString(sd.GetOrdinal("ExtendName")),
+                            Description = sd.IsDBNull(sd.GetOrdinal("Description")) ? "" : sd.GetString(sd.GetOrdinal("Description")),
+                            OutputJson = sd.IsDBNull(sd.GetOrdinal("OutputJson")) ? "" : sd.GetString(sd.GetOrdinal("OutputJson")),
+                            CreateDate = sd.IsDBNull(sd.GetOrdinal("CreateDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("CreateDate")),
+                            CreateMan = sd.IsDBNull(sd.GetOrdinal("CreateMan")) ? "" : sd.GetString(sd.GetOrdinal("CreateMan")),
+                            AppendFile = sd.IsDBNull(sd.GetOrdinal("AppendFile")) ? "" : sd.GetString(sd.GetOrdinal("AppendFile")),
+                            OutputTemplate = sd.IsDBNull(sd.GetOrdinal("OutputTemplate")) ? "" : sd.GetString(sd.GetOrdinal("OutputTemplate")),
+                            Version = sd.IsDBNull(sd.GetOrdinal("Version")) ? "" : sd.GetString(sd.GetOrdinal("Version")),
+                            Keyword = sd.IsDBNull(sd.GetOrdinal("Keyword")) ? "" : sd.GetString(sd.GetOrdinal("Keyword")),
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status"))
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.ERROR(e.Message);
+            }
+            return reportAnswers;
+        }
+
     }
 }
