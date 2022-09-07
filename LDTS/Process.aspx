@@ -5,9 +5,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceHolder" runat="server">
     <section class="processes content-header">
         <div class="processesContainer container-fluid">
-            <div class="processesTitle row mb-2">
+            <div  class="processesTitle row mb-2">
                 <div class="col-sm-6">
-                    <h1>程序書</h1>
+                    <h1 id="title" runat="server">程序書</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -21,7 +21,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="processesMain col-md-3">
+                <div id="processesInf" runat="server" class="processesMain col-md-3">
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
@@ -73,10 +73,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="processesList col-md-9" runat="server" id="ProcessContainer">
+                <div  class="processesList col-md-9" runat="server" id="ProcessContainer">
                 </div>
             </div>
         </div>
+        <asp:TextBox runat="server" ID="Ao" CssClass="d-none" ></asp:TextBox>
     </section>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">

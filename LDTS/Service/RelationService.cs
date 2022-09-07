@@ -187,6 +187,41 @@ namespace LDTS.Service
 
             return reProcessStandardWorkBooks;
         }
+        /// <summary>
+        /// 取得所有Admin相關的表單 
+        /// </summary>
+        /// <returns></returns>
+        public  static List<ReAdminForm> GetAllreAdminFormByAdminId(string AdminId)
+        {
+            List<ReAdminForm> reAdminForms = new List<ReAdminForm>();
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("", sqc);
+                    sqc.Open();
+                    sqlCommand.CommandText = @"Select * from ReAdminForm where admin_id=@admin_id";
+                    sqlCommand.Parameters.AddWithValue("@admin_id", AdminId);
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                    while (sqlDataReader.Read())
+                    {
+                        reAdminForms.Add(new ReAdminForm()
+                        {
+                            admin_id = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("admin_id")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("admin_id")),
+                            QID=sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("QID"))?0:sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("QID")),
+                            status=sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("status"))?1:sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("status"))
+                        }) ;
+                    }
+                    sqc.Close();
+                }
+            } 
+            catch (Exception e)
+            {
+                logger.FATAL(e.Message);
+                return reAdminForms;
+            }
+            return reAdminForms;
+        }
         public static List<ReStandarWorkBookForm> GetAllreSWorkBookForm()
         {
             List<ReStandarWorkBookForm> reStandarWorkBookForms = new List<ReStandarWorkBookForm>();

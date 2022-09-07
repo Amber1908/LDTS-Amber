@@ -48,25 +48,46 @@ namespace LDTS
                     ExtendName.Value = reportAnswer.ExtendName;
                     Stauts.Value = reportAnswer.Status.ToString();
                     desc.Text = reportAnswer.Description;
-                    int Qsid = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).QID;
-                    List<ReAdminForm> adminForms= AoService.GetReAdminForms().Where(x => x.QID == Qsid).ToList();
-                    ReAdminForm adminForm= adminForms.Where(x=>x.admin_id== loginAdmin.admin_id).FirstOrDefault();
-                    if (adminForm != null)
+                    //int Qsid = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).QID;
+                    List<ReAdminForm> adminForms = Service.RelationService.GetAllreAdminFormByAdminId(loginAdmin.admin_id).ToList();
+                    //有權限的reportQ
+                    List<int> reportQuestions = ReportQuestiovService.GetAllReportQuestions().Where(x => x.QID == reportAnswer.QID).Select(x=>x.QID).ToList();
+                    foreach (var reportQuestion in reportQuestions)
                     {
-                        //1.編輯2.編輯加簽核
-                        if (adminForm.status==1)
+                        if (adminForms.Any(x=>x.QID==reportQuestion))
                         {
-                            Ao.Text ="1";
+                            ReAdminForm adminForm = adminForms.Where(x => x.QID == reportQuestion).FirstOrDefault();
+                            //1.編輯2.編輯加簽核
+                            if (adminForm.status == 1)
+                            {
+                                Ao.Text = "1";
+                            }
+                            else
+                            {
+                                Ao.Text = "2";
+                            }
                         }
                         else
                         {
-                            Ao.Text = "2";
+                            Ao.Text = "0";
                         }
                     }
-                    else
-                    {
-                        Ao.Text = "0";
-                    }
+                    //if (adminForm != null)
+                    //{
+                    //    //1.編輯2.編輯加簽核
+                    //    if (adminForm.status==1)
+                    //    {
+                    //        Ao.Text ="1";
+                    //    }
+                    //    else
+                    //    {
+                    //        Ao.Text = "2";
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Ao.Text = "0";
+                    //}
                 }
                 else if (ReportAnswerSid != 0)
                 {

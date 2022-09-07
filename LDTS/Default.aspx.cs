@@ -60,7 +60,7 @@ namespace LDTS
                 showTodo += "</div>";
                 showTodo += $"<span class=\"text\">{als.ALTitle}</span>";
                 showTodo += $"<small class=\"badge {badge}\"><i class=\"far fa-clock\"></i> {days} day</small>";
-                showTodo += $"<div class=\"tools\"><a href=\"AlertSettingEdit?ALID={als.ALID}\"><i class=\"fas fa-edit\"></i></a></div>";
+                showTodo += $"<div class=\"tools\"><a href=\"Process?ALID={als.ALID}\"><i class=\"fas fa-edit\"></i></a></div>";
                 showTodo += "</li>";
             }
 
