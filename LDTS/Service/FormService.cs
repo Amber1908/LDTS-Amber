@@ -42,7 +42,6 @@ namespace LDTS.Service
                         reportQuestion.CreateDate = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("CreateDate")) ? (DateTime)SqlDateTime.Null : sqlDataReader.GetDateTime(sqlDataReader.GetOrdinal("CreateDate"));
                         reportQuestion.CreateMan = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("CreateMan")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("CreateMan"));
                         reportQuestion.Version = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Version")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("Version"));
-                        reportQuestion.TemplateFile = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("TemplateFile")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("TemplateFile"));
                         reportQuestion.Status = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Status")) ? 0 : sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("Status"));
                     }
                     sqc.Close();

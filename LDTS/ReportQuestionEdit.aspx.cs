@@ -39,6 +39,24 @@ namespace LDTS
                     desc.Text = reportQuestion.Description;
                     jsonData.Value = reportQuestion.OutputJson;
                     Stauts.Value = reportQuestion.Status.ToString();
+                    
+                    //表單範本的權限
+                    List<ReAdminForm> reQuestions = Service.RelationService.GetAllreAdminFormByAdminId(loginAdmin.admin_id).ToList();
+                    if (reQuestions != null)
+                    {
+                        ReAdminForm reQuestion = reQuestions.Where(x => x.QID == ReportQuestionId).FirstOrDefault();
+                        switch (reQuestion.status)
+                        {
+                            case 2:
+                                Ao.Text = "2";
+                                break;
+                            case 1:
+                                Ao.Text = "1";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
                 else if (ReportAnswerId != 0)
                 {
@@ -48,6 +66,7 @@ namespace LDTS
                     ExtendName.Value = reportAnswer.ExtendName;
                     Stauts.Value = reportAnswer.Status.ToString();
                     desc.Text = reportAnswer.Description;
+                    keyword.Value = reportAnswer.Keyword;
                     //int Qsid = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).QID;
                     List<ReAdminForm> adminForms = Service.RelationService.GetAllreAdminFormByAdminId(loginAdmin.admin_id).ToList();
                     //有權限的reportQ
@@ -111,6 +130,8 @@ namespace LDTS
                 reportAnswer.ExtendName = ExtendName.Value;
                 reportAnswer.OutputJson = jsonData.Value;
                 reportAnswer.Status = Convert.ToInt32(Stauts.Value);
+                reportAnswer.Keyword = keyword.Value;
+                reportAnswer.LastupMan = loginAdmin.admin_name;
                 int aid = ReportAnswerService.InsertReportAnswer(reportAnswer);
                 if (aid != 0)
                 {
@@ -137,6 +158,10 @@ namespace LDTS
                 reportAnswer.OutputJson = jsonData.Value;
                 reportAnswer.Status = Convert.ToInt32(Stauts.Value);
                 reportAnswer.AppendFile = AppendFile.Value;
+                reportAnswer.Keyword = keyword.Value;
+                reportAnswer.LastupMan = loginAdmin.admin_name;
+                DateTime thisDay = DateTime.Now;
+                reportAnswer.LastupDate = thisDay;
                 if (ReportAnswerService.UpdateReportAnswer(reportAnswer))
                 {
                     LDTSservice.InsertRecord(loginAdmin, "編輯表單:" + reportAnswer.ExtendName);
@@ -146,6 +171,12 @@ namespace LDTS
                 }
             }
 
+        }
+
+        protected void Printbtn_Click(object sender, EventArgs e)
+        {
+            int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);
+            Response.Redirect("OutputWord.ashx?AID="+ ReportAnswerId);
         }
     }
 }

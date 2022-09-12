@@ -31,49 +31,70 @@
             <div class="row m-2">
                 <div class="card border-secondary w-100 mb-3">
                     <div class="card-body">
-                        <table class="col-md-12" cellpadding="5">
-                            <tr>
-                                <td width="40%">
-                                    <div class="form-group">
-                                        <label for="FormTitle">表單名稱</label>
-                                        <asp:TextBox ID="FormTitle" runat="server" CssClass="form-control" placeholder="表單名稱"></asp:TextBox>
-                                    </div>
-                                </td>
-                                <td width="80px">
-                                    <div class="form-group">
-                                        <label for="Version">表單版本</label>
-                                        <asp:TextBox ID="Version" runat="server" CssClass="form-control" Text="1.0"></asp:TextBox>
-                                    </div>
-                                </td>
-                                <td>
+                        <div class="row">
+                            <table class="col-md-9" cellpadding="5">
+                                <tr>
+                                    <td width="60%">
+                                        <div class="form-group">
+                                            <label for="FormTitle">表單名稱</label>
+                                            <asp:TextBox ID="FormTitle" runat="server" CssClass="form-control" placeholder="表單名稱"></asp:TextBox>
+                                        </div>
+                                    </td>
+                                    <td width="15%">
+                                        <div class="form-group">
+                                            <label for="Version">表單版本</label>
+                                            <asp:TextBox ID="Version" runat="server" CssClass="form-control" Text="1.0"></asp:TextBox>
+                                        </div>
+                                    </td>
+                                    <%--                                <td >
                                     <div class="form-group">
                                         <label for="PrintTemplate">表單列印範本</label>
                                         <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
                                         <asp:FileUpload ID="PrintTemplate" runat="server" CssClass="form-control" placeholder="表單列印範本"></asp:FileUpload>
                                     </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <label for="Status">表單狀態</label>
-                                        <asp:RadioButtonList ID="Status" runat="server" RepeatDirection="Horizontal">
-                                            <asp:ListItem Text="正常" Value="1" Selected="True"></asp:ListItem>
-                                            <asp:ListItem Text="停用" Value="2"></asp:ListItem>
-                                        </asp:RadioButtonList>
-                                    </div>
-                                </td>
-                                <td width="60px">
-                                    <asp:Button ID="SaveForm" runat="server" Text="儲存" CssClass="btn btn-primary mt-3" OnClick="SaveForm_Click" OnClientClick="return ValidForm();" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <div class="form-group">
-                                        <label for="Description">備註</label>
-                                        <asp:TextBox ID="Description" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" placeholder="備註"></asp:TextBox>
-                                    </div>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table>
+                                </td>--%>
+                                    <td width="20%">
+                                        <div class="form-group">
+                                            <label for="Status">表單狀態</label>
+                                            <asp:RadioButtonList ID="Status" runat="server" RepeatDirection="Horizontal">
+                                                <asp:ListItem Text="正常" Value="1" Selected="True"></asp:ListItem>
+                                                <asp:ListItem Text="停用" Value="2"></asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <asp:Button ID="SaveForm" runat="server" Text="儲存" CssClass="btn btn-primary mt-3" OnClick="SaveForm_Click" OnClientClick="return ValidForm();" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="form-group">
+                                            <label for="Description">備註</label>
+                                            <asp:TextBox ID="Description" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" placeholder="備註"></asp:TextBox>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="formVerList pt-1 col-md-3">
+                                <div class="form-group">
+                                    <label for="PrintTemplate">表單列印範本</label>
+                                    <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
+                                    <asp:FileUpload ID="PrintTemplate" runat="server" CssClass="form-control" placeholder="表單列印範本"></asp:FileUpload>
+                                </div>
+                                <div id="Verlist" runat="server">
+<%--                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>表單版本</th>
+                                                <th>下載</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>--%>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="form-inline">
@@ -1035,7 +1056,8 @@
                     const signInput = $("#signInput").val();
                     const signCheck = $('#signCheck').is(":checked");
                     item = {
-                        index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${signInput}`, QuestionType: "sign", rotate: signCheck, AnswerOptions: [], Answers: [], otherAnswer: [] };
+                        index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${signInput}`, QuestionType: "sign", rotate: signCheck, AnswerOptions: [], Answers: [], otherAnswer: []
+                    };
                     $("#signModal").modal('hide');
                     break;
                 case "filling":

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LDTS.Models;
 using LDTS.Service;
 using LDTS.Utils;
@@ -23,9 +24,31 @@ namespace LDTS
                         Description.Text = rq.Description;
                         Status.SelectedValue = rq.Status.ToString();
                         OutputJson.Text = rq.OutputJson;
-                        TemplateFile.Value = rq.TemplateFile;
                     }
+                    List<ReportQuestionFile> vers = ReportQuestiovService.GetAllReportFilesById(Convert.ToInt32(Request["QID"])); ;
+                    string verStr = "";
+                    verStr += "<table class=\"table table-bordered\">";
+                    verStr += "<thead><tr><th>表單版本</th><th>下載</th></tr></thead>";
+                    verStr += "<tbody>";
+                    foreach (var ver in vers)
+                    {
+                        //版本號
+                        verStr += "<tr>";
+                        verStr += "<td>";
+                        verStr += ver.Version;
+                        verStr += "</td>";
+                        verStr += "<td>";
+                        verStr += "<a href=\"/Upload/" + ver.TemplateFile + "\">";
+                        verStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
+                        verStr += "</a>";
+                        verStr += "</td>";
+                        verStr += "</tr>";
+                    }
+                    verStr += "</tbody>";
+                    verStr += "</table>";
+                    Verlist.InnerHtml = verStr;
                 }
+
             }
         }
 
@@ -46,14 +69,20 @@ namespace LDTS
                     OutputJson = OutputJson.Text,
                     CreateMan = "Admin",
                     Version = Version.Text,
-                    TemplateFile = TemplateFileName,
                     Status = int.Parse(Status.SelectedValue)
                 };
-
+                
                 if (rq.QID == 0)
                 {
                     int Qid = ReportQuestiovService.InsertReportQuestion(rq);
-                    if (Qid > 0)
+                    ReportQuestionFile file = new ReportQuestionFile()
+                    {
+                        QID = Qid,
+                        Version = rq.Version,
+                        TemplateFile= TemplateFileName
+                    };
+                    bool result = ReportQuestiovService.InsertReportQuestionFile(file);
+                    if (Qid > 0 && result)
                     {
                         Response.Write($"<script>alert('表單新增完成');location.href='FormGeneration?QID={Qid}';</script>");
                     }
@@ -64,7 +93,24 @@ namespace LDTS
                 }
                 else
                 {
-                    if (ReportQuestiovService.UpdateReportQuestion(rq))
+                    ReportQuestionFile report = new ReportQuestionFile()
+                    {
+                        Version = Version.Text,
+                        QID = Convert.ToInt32(QID.Value),
+                        TemplateFile = TemplateFileName
+                    };
+
+                    bool isUpdate = ReportQuestiovService.GetReportQuestionFile(report.QID.ToString(), report.Version).Count>0?true:false;
+                    bool result = false;
+                    if (isUpdate)
+                    {
+                        result = ReportQuestiovService.UpdateReportQuestionFile(report);
+                    }
+                    else
+                    {
+                        result = ReportQuestiovService.InsertReportQuestionFile(report);
+                    }
+                    if (ReportQuestiovService.UpdateReportQuestion(rq)&& result)
                     {
                         Response.Write($"<script>alert('表單儲存完成');location.href='FormGeneration?QID={rq.QID}';</script>");
                     }

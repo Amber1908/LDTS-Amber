@@ -15,6 +15,5 @@ namespace LDTS.Models
         public int Status { get; set; }
         public string Description { get; set; }
         public string Version { get; set; }
-        public string TemplateFile { get; set; }
     }
 }

@@ -20,5 +20,7 @@ namespace LDTS.Models
         public string Version { get; set; }
         public string OutputTemplate { get; set; }
         public int Status { get; set; }
+        public DateTime LastupDate { get; set; }
+        public string LastupMan { get; set; }
     }
 }

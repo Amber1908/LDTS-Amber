@@ -45,3 +45,10 @@
     font-size: 18px;
     color: #4e73df !important;
 }
+.signRotated {
+    transform: rotate(90deg);
+    
+}
+.ml_1{
+    margin-left:-10px;
+}

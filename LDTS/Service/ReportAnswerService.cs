@@ -40,7 +40,9 @@ namespace LDTS.Service
                             OutputTemplate = sd.IsDBNull(sd.GetOrdinal("OutputTemplate")) ? "" : sd.GetString(sd.GetOrdinal("OutputTemplate")),
                             Version = sd.IsDBNull(sd.GetOrdinal("Version")) ? "" : sd.GetString(sd.GetOrdinal("Version")),
                             Keyword = sd.IsDBNull(sd.GetOrdinal("Keyword")) ? "" : sd.GetString(sd.GetOrdinal("Keyword")),
-                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status"))
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status")),
+                            LastupDate=sd.IsDBNull(sd.GetOrdinal("LastupDate"))? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("LastupDate")),
+                            LastupMan=sd.IsDBNull(sd.GetOrdinal("LastupMan"))? string.Empty : sd.GetString(sd.GetOrdinal("LastupMan"))
                         });
                     }
                 }
@@ -60,7 +62,7 @@ namespace LDTS.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
-                    sqlCommand.CommandText = @"UPDATE ReportAnswer SET Title=@Title,ExtendName=@ExtendName,Description=@Description,OutputJson=@OutputJson,AppendFile=@AppendFile,OutputTemplate=@OutputTemplate,Status=@Status ,Keyword=@Keyword WHERE AID=@AID";
+                    sqlCommand.CommandText = @"UPDATE ReportAnswer SET Title=@Title,ExtendName=@ExtendName,Description=@Description,OutputJson=@OutputJson,AppendFile=@AppendFile,OutputTemplate=@OutputTemplate,Status=@Status ,Keyword=@Keyword,LastupDate=@LastupDate,LastupMan=@LastupMan WHERE AID=@AID";
                     sqlCommand.Parameters.AddWithValue("@AppendFile", reportAnswer.AppendFile);
                     sqlCommand.Parameters.AddWithValue("@OutputTemplate", DBNull.Value);
                     sqlCommand.Parameters.AddWithValue("@Keyword", DBNull.Value);
@@ -70,6 +72,9 @@ namespace LDTS.Service
                     sqlCommand.Parameters.AddWithValue("@Title", reportAnswer.Title);
                     sqlCommand.Parameters.AddWithValue("@ExtendName", reportAnswer.ExtendName);
                     sqlCommand.Parameters.AddWithValue("@OutputJson", reportAnswer.OutputJson);
+                    sqlCommand.Parameters.AddWithValue("@LastupDate", reportAnswer.LastupDate);
+                    sqlCommand.Parameters.AddWithValue("@LastupMan", reportAnswer.LastupMan);
+
                     if (sqlCommand.ExecuteNonQuery() > 0)
                     {
                         result = true;
@@ -126,7 +131,14 @@ namespace LDTS.Service
                         sqlCommand.Parameters.AddWithValue("@OutputTemplate", reportAnswer.OutputTemplate);
                     }
                     sqlCommand.Parameters.AddWithValue("@Status", reportAnswer.Status);
-
+                    if (reportAnswer.LastupMan ==null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@LastupMan", DBNull.Value);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@LastupMan", reportAnswer.LastupMan);
+                    }
                     SqlParameter AID = new SqlParameter("@AID", SqlDbType.Int)
                     {
                         Direction = ParameterDirection.Output
@@ -180,7 +192,9 @@ namespace LDTS.Service
                             OutputTemplate = sd.IsDBNull(sd.GetOrdinal("OutputTemplate")) ? "" : sd.GetString(sd.GetOrdinal("OutputTemplate")),
                             Version = sd.IsDBNull(sd.GetOrdinal("Version")) ? "" : sd.GetString(sd.GetOrdinal("Version")),
                             Keyword = sd.IsDBNull(sd.GetOrdinal("Keyword")) ? "" : sd.GetString(sd.GetOrdinal("Keyword")),
-                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status"))
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status")),
+                            LastupDate = sd.IsDBNull(sd.GetOrdinal("LastupDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("LastupDate")),
+                            LastupMan = sd.IsDBNull(sd.GetOrdinal("LastupMan")) ? string.Empty : sd.GetString(sd.GetOrdinal("LastupMan"))
                         };
                     }
 
@@ -240,7 +254,9 @@ namespace LDTS.Service
                             OutputTemplate = sd.IsDBNull(sd.GetOrdinal("OutputTemplate")) ? "" : sd.GetString(sd.GetOrdinal("OutputTemplate")),
                             Version = sd.IsDBNull(sd.GetOrdinal("Version")) ? "" : sd.GetString(sd.GetOrdinal("Version")),
                             Keyword = sd.IsDBNull(sd.GetOrdinal("Keyword")) ? "" : sd.GetString(sd.GetOrdinal("Keyword")),
-                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status"))
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status")),
+                            LastupDate = sd.IsDBNull(sd.GetOrdinal("LastupDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("LastupDate")),
+                            LastupMan = sd.IsDBNull(sd.GetOrdinal("LastupMan")) ? string.Empty : sd.GetString(sd.GetOrdinal("LastupMan"))
                         });
                     }
                 }

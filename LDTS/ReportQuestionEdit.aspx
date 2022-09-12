@@ -35,9 +35,14 @@
                                 <label for="ExtendName" style="font-size: 12px; color: #00000080">自訂義名稱</label>
                                 <input type="text" runat="server" id="ExtendName" class="form-control form-control-border" value="未命名" />
                             </div>
+                            <div class="ansKeyword form-group">
+                                <label for="keyword" style="font-size: 12px; color: #00000080">關鍵字設定</label>
+                                <input type="text" runat="server" id="keyword" class="form-control form-control-border" />
+                            </div>
                             <div class="ansStatus form-group">
                                 <label for="Stauts" style="font-size: 12px; color: #00000080">表單狀態</label>
                                 <select id="Stauts" class="form-control select2 select2-hidden-accessible" style="width: 100%;" runat="server">
+                                    <option value="0">作廢</option>
                                     <option value="1">正常</option>
                                     <option value="2">待簽核</option>
                                     <option value="3">已簽核</option>
@@ -48,6 +53,10 @@
                                 <label for="desc" style="font-size: 12px; color: #00000080">表單描述</label>
                                 <asp:TextBox TextMode="MultiLine" ID="desc" runat="server" Rows="5" CssClass="form-control"></asp:TextBox>
                             </div>
+                            <div class="ansSave form-group float-right">
+                                <asp:Button runat="server" ID="Printbtn" CssClass="btn btn-danger" Text="列印" OnClick="Printbtn_Click" />
+                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary" Text="儲存" OnClick="SaveButton_Click" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,9 +66,6 @@
                             <div class="ansEditForm form-horizontal">
                             </div>
                         </div>
-                    </div>
-                    <div class="ansApplication d-flex justify-content-end mb-5">
-                        <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary" Text="儲存" OnClick="SaveButton_Click" />
                     </div>
                 </div>
             </div>
@@ -124,6 +130,8 @@
                 breadcrumbItem[1].cloneNode.innerText = "標準作業書";
             }
             var ao = document.getElementById("mainPlaceHolder_Ao");
+            var savebtn = document.getElementById("mainPlaceHolder_SaveButton");
+            
             switch (ao.value) {
                 case "2":
                     break;
@@ -131,22 +139,35 @@
                     var allsign = document.getElementsByClassName("Signbtn");
                     for (var i = 0; i < allsign.length; i++) {
                         console.log(allsign.length);
-                            allsign[i].removeAttribute("onclick");
-                    //    allsign[i].classList.add("d-none");
+                    //        allsign[i].removeAttribute("onclick");
+                        allsign[i].classList.add("d-none");
                     }
                     break;
                 case "0":
                     var allinputs = document.getElementsByTagName("input");
                     var allsign = document.getElementsByClassName("Signbtn");
+                    var downloads = document.getElementsByClassName("download");
+                    var selects = document.getElementsByTagName("select");
+                    var txtbox = document.getElementsByTagName("textarea");
                     console.log(allsign.length);
+                    for (var i = 0; i < txtbox.length; i++) {
+                        txtbox[i].disabled = true;
+                    }
+                    for (var i = 0; i < selects.length; i++) {
+                        selects[i].disabled = true;
+                    }
+                    for (var i = 0; i < downloads.length; i++) {
+                        downloads[i].classList.add("d-none");
+                    }
                     for (var i = 0; i < allsign.length; i++) {
-                        allsign[i].removeAttribute("onclick");
+                        allsign[i].classList.add("d-none");
                     }
                     for (var i = 0; i < allinputs.length; i++) {
                         console.log(allinputs[i].type);
                         //inputBrothers[d].disabled = true;
                         allinputs[i].disabled = true;
                     }
+                    savebtn.classList.add("d-none");
                     break;
                 default:
             }
@@ -358,14 +379,21 @@
                                             Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
                                         TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                       
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
                                             TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
                                         }
                                         TampleteStr += ">";
                                         break;
                                     case "number":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
                                             Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
@@ -384,6 +412,9 @@
                                         TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionText;
                                         break;
                                     case "date":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
                                             Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": "" });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
@@ -402,12 +433,14 @@
 
                                         break;
                                     case "radio":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
                                                 Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
-
                                             TampleteStr += "<div class=\"form-check\">"
                                             TampleteStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" class=\" mr-1\"name=\"";
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
@@ -432,6 +465,9 @@
                                         break;
                                     case "checkbox":
                                         //case "CheckboxMixImage":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
                                                 Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
@@ -459,7 +495,44 @@
                                             TampleteStr += "</div>";
                                         }
                                         break;
+                                    case "CheckboxMixImage":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
+                                        for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
+                                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                            }
+                                            TampleteStr += "<div class=\"form-check\">"
+                                            TampleteStr += "<input type=\"checkbox\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            TampleteStr += "value=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
+                                            TampleteStr += "\"id=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
+                                            TampleteStr += "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
+                                                    TampleteStr += "checked";
+                                                }
+                                            }
+                                            TampleteStr += ">"; 
+                                            TampleteStr += "<label for=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
+                                            TampleteStr += "\"class=\"mb-5\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</label>";
+                                            TampleteStr += "<img style =\"height:50px\"src=\"ShowAdminImg?id=" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].image + "\"" + "/>";
+
+                                            TampleteStr += "</div>";
+                                        }
+
+                                        break;
                                     case "sign":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
                                             Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
@@ -473,15 +546,18 @@
                                             TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
                                             TampleteStr += "取消簽核";
                                             TampleteStr += "</div>";
-                                            TampleteStr += "<div class=\"ml-5 \">";//SignImageBox
-                                            TampleteStr += "<img style=\"width:40%\" src=\"";//img
+                                            TampleteStr += "<div class=\"mt-5 d-inline\">";//SignImageBox
+                                            TampleteStr += "<img style=\"width:155% \" src=\"";//img
                                             TampleteStr += "ShowAdminImg?id=" + signImgID + "\"";
                                             TampleteStr += "id=\"sign" + signImgID + "\"";
                                             TampleteStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
+                                            if (Obj.Groups[i].Rows[w].Cols[c].rotate == true) {
+                                                TampleteStr +=" "+"signRotated mt-4 mb-3 ml_1";
+                                            }
                                             TampleteStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
                                             TampleteStr += "\">";//img
                                             TampleteStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                                            TampleteStr += "\" class=\"d-flex justify-content-end signDate\">";
+                                            TampleteStr += "\" class=\"d-flex justify-content-end signDate mt-3\">";
                                             TampleteStr += today;
                                             TampleteStr += "</span>";
                                             TampleteStr += "</div>";//SignImageBox
@@ -491,15 +567,15 @@
                                             TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
                                             TampleteStr += "簽核";
                                             TampleteStr += "</div>";
-                                            TampleteStr += "<div class=\"ml-5 d-none\">";//SignImageBox
-                                            TampleteStr += "<img style=\"width:40%\" src=\"";//img
+                                            TampleteStr += "<div class=\"mt-5 d-none\">";//SignImageBox
+                                            TampleteStr += "<img style=\"width:80%\" src=\"";//img
                                             TampleteStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
                                             TampleteStr += "id=\"sign" + signImgID + "\"";
                                             TampleteStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
                                             TampleteStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
                                             TampleteStr += "\">";//img
                                             TampleteStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                                            TampleteStr += "\" class=\"d-flex justify-content-end signDate\">";
+                                            TampleteStr += "\" class=\"d-flex justify-content-end signDate mt-3\">";
                                             TampleteStr += today;
                                             TampleteStr += "</span>";
                                             TampleteStr += "</div>";//SignImageBox
@@ -537,6 +613,9 @@
                                         }
                                         break;
                                     case "file"://要可以下載檔案
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         TampleteStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
                                         TampleteStr += "<input  onchange=\"changeTableJsonData(event)\" type=\"file\" class=\"Upload form-control mb-3\"name=\"";
                                         TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\">";
@@ -545,12 +624,15 @@
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
                                             TampleteStr += "</br>";
                                             TampleteStr += "<span class=\"ml-3\">" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "</span>"
-                                            TampleteStr += "<a class=\"btn btn-default btn-sm ml-3\" href=\"Upload" + "/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
+                                            TampleteStr += "<a class=\"download btn btn-default btn-sm ml-3\" href=\"Upload" + "/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
                                             TampleteStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
                                             TampleteStr += "</a>";
                                         }
                                         break;
                                     case "CheckboxMixFilling":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
                                                 Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "Answers": [] });
@@ -619,6 +701,9 @@
                                         }
                                         break;
                                     case "RadioMixFilling":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
                                                 Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "Answers": [] });
@@ -683,12 +768,15 @@
 
                                         break;
                                     case "RadioMixCheckbox":
+                                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
+                                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
+                                        }
+
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
                                                 Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "Answers": [] });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
-
                                             TampleteStr += "<div class=\"form-check\">"
                                             TampleteStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" onclick=\"CleanOptionforTable(event)\" class=\" mr-1\"name=\"";
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
@@ -851,7 +939,7 @@
                                         case "file":
                                         case "image":
                                             tampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value+"</span>";
-                                            tampleteStr += "<a  class=\"ml-1 btn btn-default btn-sm \" href=\"Upload/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value +"\">";
+                                            tampleteStr += "<a  class=\"ml-1 btn btn-default btn-sm download\" href=\"Upload/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value +"\">";
                                             tampleteStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
                                             tampleteStr += "</a>";
                                             break;
@@ -874,10 +962,17 @@
                                             break;
                                         case "radio":
                                         case "checkbox":
+                                            for (var r = 0; r < Obj.Groups[i].Rows[1].Cols[c].Answers.length; r++) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[r].value == true) {
+                                                    tampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnsText + "</br>";
+                                                }
+                                            }
+                                            break;
                                         case "CheckboxMixImage":
                                             for (var r = 0; r < Obj.Groups[i].Rows[1].Cols[c].Answers.length; r++) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].Answers[r].value == true) {
                                                     tampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnsText + "</br>";
+                                                    tampleteStr += "<img style=\"height:50px\"src=\"ShowAdminImg?id=" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].image + "\"" + "/>" + "</br>";
                                                 }
                                             }
                                             break;
@@ -909,7 +1004,6 @@
                                                 }
                                             }
                                             break;
-                                        
                                         case "CheckboxMixFilling":
                                         case "RadioMixFilling":
                                             for (var r = 0; r < Obj.Groups[i].Rows[w].Cols[c].Answers.length; r++) {
@@ -1020,7 +1114,7 @@
                             insertBodyStr += "簽核";
                             insertBodyStr += "</div>";
                             insertBodyStr += "<div class=\"ml-5  SignImageBox d-none\">";//SignImageBox
-                            insertBodyStr += "<img src=\"";//img
+                            insertBodyStr += "<img style=\"height:80px\" src=\"";//img
                             insertBodyStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
                             insertBodyStr += "id=\"sign" + signImgID + "\"";
                             insertBodyStr += "class=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID;
@@ -1378,14 +1472,25 @@
                         case "date":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             updateBodyStr += "<input type=\"date\"onchange=\"changeTableJsonData(event)\" class=\"Upload form-control mb-3\"name=\"";
-                            updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\">";
+                            updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                            if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
+                                let time = new Date(Obj.Groups[i].Rows[w].Cols[r].Answers[0].value);
+                                time= time.Format("yyyy-MM-dd");
+                                updateBodyStr += "value=\"" + time + "\"";
+                            }
+                            updateBodyStr += ">";
                             break;
                         case "file":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             updateBodyStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
                             updateBodyStr += "<input type=\"file\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
                             updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\">";
-                            updateBodyStr += "上傳檔案";
+                            if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
+                                updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].Answers[0].value;
+                            } else {
+                                updateBodyStr += "上傳檔案";
+                            }
+                           
                             updateBodyStr += "</span>";
                             break;
                         case "text":
@@ -1828,15 +1933,20 @@
                     DataObj = dataObj.Groups[i].Rows[1];//複製的Rows
                 }
             }
+
+            //for (let i = 0; i < DataObj.Cols.length; i++) {
+            //    if (DataObj.Cols[i].QuestionType == "file") {
+            //        //if (DataObj.Cols[i].Answers.length>0) {
+            //        //    DataObj.Cols[i].Answers.length = 0
+            //        //}
+            //    }
+            //}
+
             let All = 0;
             for (let i = 0; i < DataObj.Cols.length; i++) {
                 if (DataObj.Cols[i].Answers.length == 0) {
                     All++;
-                } else {
-                    if (DataObj.Cols[i].QuestionType == "file") {
-                        DataObj.Cols[i].Answers.length = 0
-                    }
-                }
+                } 
             }
             if (All == DataObj.Cols.length) {
                 remove = true;
@@ -1846,12 +1956,16 @@
                     if (remove) {
                         DataObj.index = dataObj.Groups[i].Rows.length;
                         dataObj.Groups[i].Rows.push(DataObj);
-                        //dataObj.Groups[i].Rows = dataObj.Groups[i].Rows.slice(0, 2);
+                        dataObj.Groups[i].Rows = dataObj.Groups[i].Rows.slice(0, 2);
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                    } else {
+                    } else if (isfile) {
+                        dataObj.Groups[i].Rows.push(DataObj);
+                        dataObj.Groups[i].Rows = dataObj.Groups[i].Rows.slice(0,2);
+                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                    }
+                    else {
                         dataObj.Groups[i].Rows.push(DataObj);
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-
                     }
                 }
             }
@@ -1926,6 +2040,7 @@
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": index, "value": fileName, "lastUpdate": today });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                             }
+                                            inputs[d].value ="";
                                         }
                                         break;
                                     case "text":
@@ -2338,11 +2453,6 @@
             insertBody.innerHTML = insertBodyStr;
             $("#modal-insert").modal('hide');
         }
-        function changeRowJsonData(event) {
-            var dataObj = GetJsonData();
-            let thischangeRow = event.currentTarget;
-
-        }
         //row 刪除 
         function DeleteRow(event) {
             var dataObj = GetJsonData();
@@ -2449,7 +2559,7 @@
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
 
                                     }
-                                    else if (dataObj.Groups[t].Rows[i].Cols[c].QuestionID == thischangeQ && dataObj.Groups[t].Rows[i].Cols[c].QuestionType == "select-one") {
+                                    else if (dataObj.Groups[t].Rows[i].Cols[c].QuestionID == thischangeQ && dataObj.Groups[t].Rows[i].Cols[c].QuestionType == "select") {
                                         dataObj.Groups[t].Rows[i].Cols[c].Answers[0].value = thischange.value;
                                         dataObj.Groups[t].Rows[i].Cols[c].Answers[0].lastUpdate = today;
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -3057,6 +3167,10 @@
                             for (var k = 0; k < JsonObj.Groups[i].Rows.length; k++) {
                                 for (var c = 0; c < JsonObj.Groups[i].Rows[k].Cols.length; c++) {
                                     if (SignImage.classList.contains(JsonObj.Groups[i].Rows[k].Cols[c].QuestionID)) {
+                                        if (JsonObj.Groups[i].Rows[k].Cols[c].rotate) {
+                                            SignImage.classList.add("signRotated", "mt-5", "mb-3","ml_1");
+                                            SignImage.style.width = "150%";
+                                        }
                                         JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].value = signImgID;
                                         JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].lastUpdate = time;
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
@@ -3458,7 +3572,7 @@
                 filename.classList.add("mr-1");
                 let download = document.createElement("a");
                 download.href = "Upload/" + DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
-                download.classList.add("btn", "btn-default", "btn-sm", "mr-3");
+                download.classList.add("btn", "btn-default", "btn-sm", "mr-3","download");
                 let icon = document.createElement("i");
                 icon.classList.add("fas", "fa-cloud-download-alt");
                 ImageBox.append(filename);
@@ -3480,7 +3594,8 @@
             DateInput.setAttribute("onchange", "changeJsonData(event)");
             DateInput.classList.add("form-control", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
             if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0] != null) {//顯示答案
-                let date = DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
+                let date = new Date(DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value);
+                date = date.Format("yyyy-MM-dd")
                 DateInput.setAttribute("value", date);
                 DateInput.innerText = date;
             }
@@ -3513,7 +3628,6 @@
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value != null) {
                     signImage.src = "ShowAdminImg.aspx?id=" + DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
                     let last = new Date(DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].lastUpdate);
-
                     signdate.innerText = last.Format("yyyy-MM-dd");
                     SignImageBox.classList.remove("d-none");
                     SignImageBox.classList.add("d-inline");
@@ -3540,6 +3654,9 @@
 
             SignImageBox.append(signImage);
             SignImageBox.append(signdate);
+            let colBox = document.createElement("div");
+            colBox.classList.add("col-3");
+            Parent.append(colBox);
 
         }
         function CreateNormalTypeFilling(DataObj, GroupSn, QusetionSn, Parent) {

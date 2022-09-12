@@ -40,7 +40,6 @@ namespace LDTS
                         }
                     }
                 }
-                
                 if (PID!=0)
                 {
                     //有權限的表單
@@ -97,40 +96,40 @@ namespace LDTS
                         ProcessContainerStr += "<tbody>";
                         foreach (var ans in answers)
                         {
-                            Models.AdminWorkRecord admin_Works = LDTSservice.GetAdminWorks().Where(x => x.work_content.Contains(ans.ExtendName)).LastOrDefault();
-                            string admin_id = "";
-                            DateTime Update = new DateTime();
-                            if (admin_Works != null)
-                            {
-                                admin_id = admin_Works.admin_id;
-                                Update = admin_Works.createtime;
-                            }
                             ProcessContainerStr += "<tr>";
                             ProcessContainerStr += "<td>";
                             ProcessContainerStr += ans.ExtendName;
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
-                            ProcessContainerStr += Update;
+                            ProcessContainerStr += ans.LastupDate;
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
-                            ProcessContainerStr += admin_id;
+                            ProcessContainerStr += ans.LastupMan;
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
-                            ProcessContainerStr += ans.Status == 1 ? "未簽核" : "已簽核";
+                            ProcessContainerStr +=ReportAnswerService.MatchStatus(ans.Status);
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
                             ProcessContainerStr += ans.Version;
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
                             ProcessContainerStr += "<a href=\"" + "ReportQuestionEdit.aspx?aid=" + ans.AID + "\">";
-                            hasAdd=reAdminAns.Any(x => x.AID == ans.AID);
                             ProcessContainerStr += reAdminAns.Any(x=>x.AID== ans.AID)?"<i class=\" fas fa-edit\"></i>": "<i class=\"fas fa-eye\"></i>";
+                            hasAdd = reAdminAns.Any(x => x.AID == ans.AID);
                             ProcessContainerStr += "</a>";
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "</tr>";
                         }
                         ProcessContainerStr += "<tbody>";
                         ProcessContainerStr += "</table>";
+                        if (answers.Count==0)
+                        {
+                            hasAdd = reAdminForms.Any(x => x.QID == reportQuestion.QID);
+                        }
+                        if (reportQuestion.Status==2)
+                        {
+                            hasAdd = false;
+                        }
                         if (hasAdd)
                         {
                             ProcessContainerStr += "<div class=\"d-flex justify-content-center\">";
@@ -143,7 +142,6 @@ namespace LDTS
                             ProcessContainerStr += "</div>";
                             ProcessContainerStr += "</div>";
                         }
-
                         ProcessContainerStr += "</div>";//card-body
                         ProcessContainerStr += "</div>";//prossesCard 
                     }
@@ -167,9 +165,13 @@ namespace LDTS
                     {
                         for (int i = 0; i < Reports.Count; i++)
                         {
-                            if (reportAnswer.QID== Reports[i].QID)
+                            if (Reports[i]!=null)
                             {
-                                questionsReadables.Add(Reports[i]);
+                                if (reportAnswer.QID == Reports[i].QID)
+                                {
+                                    questionsReadables.Add(Reports[i]);
+                                }
+
                             }
                         }
                     }
@@ -205,28 +207,18 @@ namespace LDTS
                         ProcessContainerStr += "<tbody>";
                         foreach (var answer in answers)
                         {
-                            Models.AdminWorkRecord admin_Works = LDTSservice.GetAdminWorks().Where(x => x.work_content.Contains(answer.ExtendName)).LastOrDefault();
-                            string admin_id = "";
-                            DateTime Update = new DateTime();
-                            if (admin_Works != null)
-                            {
-                                admin_id = admin_Works.admin_id;
-                                Update = admin_Works.createtime;
-                            }
                             ProcessContainerStr += "<tr>";
                             ProcessContainerStr += "<td>";
-
                             ProcessContainerStr += answer.ExtendName;
-
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
-                            ProcessContainerStr += Update;
+                            ProcessContainerStr += answer.LastupDate;
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
-                            ProcessContainerStr += admin_id;
+                            ProcessContainerStr += answer.LastupMan;
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
-                            ProcessContainerStr += answer.Status == 1 ? "未簽核" : "已簽核";
+                            ProcessContainerStr +=ReportAnswerService.MatchStatus(answer.Status);
                             ProcessContainerStr += "</td>";
                             ProcessContainerStr += "<td>";
                             ProcessContainerStr += answer.Version;

@@ -2160,6 +2160,7 @@
     <Compile Include="Models\ReportAnswer.cs" />
     <Compile Include="Models\ReportAnswerJson.cs" />
     <Compile Include="Models\ReportQuestion.cs" />
+    <Compile Include="Models\ReportQuestionFile.cs" />
     <Compile Include="Models\ReProcessQuestion.cs" />
     <Compile Include="Models\ReProcessStandardWorkBook.cs" />
     <Compile Include="Models\ReStandarWorkBookForm.cs" />
@@ -2209,6 +2210,7 @@
     </Compile>
     <Compile Include="ReportAnswerSearch.aspx.cs">
       <DependentUpon>ReportAnswerSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ReportAnswerSearch.aspx.designer.cs">
       <DependentUpon>ReportAnswerSearch.aspx</DependentUpon>
@@ -2430,6 +2432,7 @@
     <Content Include="plugins\toastr\toastr.js.map" />
     <Content Include="Upload.ashx" />
     <Content Include="RelationService.ashx" />
+    <Content Include="Upload\IDT20220824144426305.docx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
