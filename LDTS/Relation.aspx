@@ -61,7 +61,7 @@
                         <span id="formAdd" runat="server" class="info-box-number ">新增表單範本</span>
                     </div>
                 </div>
-                <div class="info-box report">
+<%--                <div class="info-box report">
                     <span class="info-box-icon bg-success ">
                         <span id="save" runat="server" class="btn" style="left: 0px; bottom: 0px">
                             <i class="fas fa-check"></i>
@@ -70,7 +70,7 @@
                     <div class="info-box-content ">
                         <span class="info-box-number ">儲存設定</span>
                     </div>
-                </div>
+                </div>--%>
             </div>
             <div class="card card-row card-primary" style="padding-left: 0px; padding-right: 0px">
                 <div class="card-header ">
@@ -114,12 +114,16 @@
                 </div>
             </div>
         </div>
+                    <div  id="save" runat="server" class="btn btn-primary float-right " style="position:fixed;right:2vw; bottom:12vh">
+                儲存
+            </div>
+
     </section>
-    <asp:TextBox runat="server" TextMode="MultiLine" CssClass="" ID="AllReProcessForms"></asp:TextBox>
-    <asp:TextBox runat="server" TextMode="MultiLine" CssClass="" ID="AllReProSwb"></asp:TextBox>
-    <asp:TextBox runat="server" TextMode="MultiLine" CssClass="" ID="AllReSwbF"></asp:TextBox>
-    <input type="text" id="processID" runat="server" class="" value="" />
-    <input type="text" id="sworkbookID" runat="server" class="" value="" />
+    <asp:TextBox runat="server" TextMode="MultiLine" CssClass="d-none" ID="AllReProcessForms"></asp:TextBox>
+    <asp:TextBox runat="server" TextMode="MultiLine" CssClass="d-none" ID="AllReProSwb"></asp:TextBox>
+    <asp:TextBox runat="server" TextMode="MultiLine" CssClass="d-none" ID="AllReSwbF"></asp:TextBox>
+    <input type="text" id="processID" runat="server" class="d-none" value="" />
+    <input type="text" id="sworkbookID" runat="server" class="d-none" value="" />
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">

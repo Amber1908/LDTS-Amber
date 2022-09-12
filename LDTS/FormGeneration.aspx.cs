@@ -27,7 +27,7 @@ namespace LDTS
                     }
                     List<ReportQuestionFile> vers = ReportQuestiovService.GetAllReportFilesById(Convert.ToInt32(Request["QID"])); ;
                     string verStr = "";
-                    verStr += "<table class=\"table table-bordered\">";
+                    verStr += "<table class=\"table table-bordered table-head-fixed text-nowrap\">";
                     verStr += "<thead><tr><th>表單版本</th><th>下載</th></tr></thead>";
                     verStr += "<tbody>";
                     foreach (var ver in vers)
