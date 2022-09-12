@@ -81,7 +81,7 @@
                                     <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
                                     <asp:FileUpload ID="PrintTemplate" runat="server" CssClass="form-control" placeholder="表單列印範本"></asp:FileUpload>
                                 </div>
-                                <div id="Verlist" runat="server">
+                                <div class="table-responsive p-0" id="Verlist" runat="server" style="height: 150px;">
 <%--                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
