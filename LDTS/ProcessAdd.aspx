@@ -21,7 +21,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="processesMain col-md-4">
+                <div class="processesMain col-md-6">
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-start mb-3">

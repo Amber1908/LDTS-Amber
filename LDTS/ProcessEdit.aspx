@@ -21,7 +21,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div id="proInfo" runat="server" class="proEditMain col-md-4">
+                <div id="proInfo" runat="server" class="proEditMain col-md-6">
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
@@ -50,14 +50,14 @@
                                     </div>
                                     <div class="processesUploadCardBody card-body">
                                         <div class="processesUploadMainUpload form-group row">
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <div class="input-group">
                                                     <div class="processesUploadName custom-file">
                                                         <asp:FileUpload ID="processesUpload" CssClass="custom-file-input Upload" runat="server" />
                                                         <asp:Label ID="processesUploadName" runat="server" CssClass="custom-file-label">選擇檔案</asp:Label>
                                                     </div>
                                                     <div class="input-group-append">
-                                                        <asp:Button runat="server" ID="uploadfile" CssClass="input-group-text" Text="確認" />
+                                                        <asp:Button runat="server" ID="uploadfile" CssClass="input-group-text" Text="確認" OnClick="uploadfile_Click" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -67,7 +67,7 @@
                             </div>
                             <div class="processesApplication form-group">
                                 <asp:Button runat="server" ID="DeletePro" CssClass="btn btn-danger float-lg-right" Text="刪除" OnClick="DeletePro_Click" />
-                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right mr-2" Text="儲存" OnClick="SaveButton_Click"/>
+                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right mr-2" Text="儲存" OnClick="SaveButton_Click" />
                                 <a href="#" runat="server" id="download" class="btn btn-default float-right mr-2"><i class="fas fa-cloud-download-alt">下載程序書</i></a>
                             </div>
                         </div>
@@ -78,4 +78,15 @@
     </section>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">
+        <script>
+        var processesUploadName = document.getElementById("mainPlaceHolder_processesUploadName");
+        var processesUpload = document.getElementById("mainPlaceHolder_processesUpload");
+        processesUpload.addEventListener("change", function () {
+            if (processesUpload.value.length > 0) {
+                processesUploadName.innerText = processesUpload.value;
+            }
+        });
+
+        </script>
+
 </asp:Content>
