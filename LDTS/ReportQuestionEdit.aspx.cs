@@ -119,6 +119,7 @@ namespace LDTS
             ReportAnswer reportAnswer = new ReportAnswer();
             Admin loginAdmin = (Admin)Session["LDTSAdmin"];
             int ReportQuestionId = Convert.ToInt32(Request.QueryString["qid"]);//Insert
+            int ReportQuestionSqid = Convert.ToInt32(Request.QueryString["sqid"]);
             int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);//Update
             if (ReportQuestionId != 0)
             {
@@ -170,6 +171,34 @@ namespace LDTS
                     this.Page.Controls.Add(AlertMsg);
                 }
             }
+            else if (ReportQuestionSqid!=0)
+            {
+                reportAnswer.AppendFile = AppendFile.Value;
+                reportAnswer.QID = ReportQuestionSqid;
+                reportAnswer.Title = Qtitle.Text;
+                reportAnswer.CreateMan = loginAdmin.admin_id;
+                reportAnswer.Description = desc.Text;
+                reportAnswer.ExtendName = ExtendName.Value;
+                reportAnswer.OutputJson = jsonData.Value;
+                reportAnswer.Status = Convert.ToInt32(Stauts.Value);
+                reportAnswer.Keyword = keyword.Value;
+                reportAnswer.LastupMan = loginAdmin.admin_name;
+                int aid = ReportAnswerService.InsertReportAnswer(reportAnswer);
+                if (aid != 0)
+                {
+                    LDTSservice.InsertRecord(loginAdmin, "新增表單:" + reportAnswer.ExtendName);
+                    Literal AlertMsg = new Literal();
+                    AlertMsg.Text = "<script language='javascript'>alert('新增表單成功!!!');location.href='ReportQuestionEdit.aspx?aid=" + aid + "';</script>";
+                    this.Page.Controls.Add(AlertMsg);
+                }
+                else
+                {
+                    Literal AlertMsg = new Literal();
+                    AlertMsg.Text = "<script language='javascript'>alert('新增表單失敗!!!');location.href='ReportQuestionEdit.aspx?aid=" + aid + "';</script>";
+                    this.Page.Controls.Add(AlertMsg);
+                }
+
+            }
 
         }
 
@@ -177,6 +206,8 @@ namespace LDTS
         {
             int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);
             int ReportQID = Convert.ToInt32(Request.QueryString["qid"]);
+            int ReportAnswerSid = Convert.ToInt32(Request.QueryString["said"]);
+
             string OutputTemplate = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).OutputTemplate;
             if (OutputTemplate!=string.Empty&& OutputTemplate !=null)
             {

@@ -83,7 +83,6 @@ namespace LDTS
                         ProcessContainerStr += "</div>";//prossesCardHeader 
                         ProcessContainerStr += "<div class=\"card-body\" style=\"display:block;\">";
                         //找用這個Qid產出的表單有幾個 
-                        //顯示異動時間跟人員 用ExtendName搜尋
                         List<ReportAnswer> answers = ReportAnswerService.GetAnswers().Where(x => x.QID == reportQuestion.QID).ToList();
                         bool hasAdd = false;
                         //USER 權限 

@@ -84,7 +84,7 @@ namespace LDTS
                 Processstring += "<div class=\"card-header\"style=\"height: 29px\"> ";
                 Processstring += "<span class=\"d-flex justify-content-end\">";
                 Processstring += "<a style=\"text-decoration:none; position: absolute \" href=\"";//
-                Processstring += "Process?pid="+ process.PID+"\">";
+                Processstring += "ProcessEdit?pid="+ process.PID+"\">";
                 Processstring += "<i style=\"position: relative; top: -5px;\" class=\"fas fa-edit\"></i>";
                 Processstring += "</a>";
                 Processstring += "</span>";
@@ -111,7 +111,7 @@ namespace LDTS
                 Sstr += "<div class=\"card-header\"style=\"height: 29px\"> ";
                 Sstr += "<span class=\"d-flex justify-content-end\">";
                 Sstr += "<a style=\"text-decoration:none; position: absolute \" href=\"";//
-                Sstr += "StandarWorkbook?sid=" + standarWorkBook.SID + "\">";
+                Sstr += "StandarWorkbookEdit?sid=" + standarWorkBook.SID + "\">";
                 Sstr += "<i style=\"position: relative; top: -5px; right: 20px\" class=\"fas fa-edit\"></i>";
                 Sstr += "</a>";
                 Sstr += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";

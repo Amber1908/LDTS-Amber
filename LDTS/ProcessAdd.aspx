@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="processesUploadCardBody card-body">
                                         <div class="processesUploadMainUpload form-group row">
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <div class="input-group">
                                                     <div class="processesUploadName custom-file">
                                                     <asp:HiddenField ID="TemplateFile" runat="server" Value="" />

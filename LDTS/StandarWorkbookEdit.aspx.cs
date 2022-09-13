@@ -122,7 +122,23 @@ namespace LDTS
 
         protected void DeleteSwb_Click(object sender, EventArgs e)
         {
-
+            int id = Convert.ToInt32(Request.QueryString["sid"]);
+            StandardWorkBook standard = StandarWorkBookService.GetStandardWorkBookById(id);
+            //還要刪除有關連的程序書
+            bool hasDelRePro = Service.RelationService.DeleteReReProcessStandardWorkBookBySID(id);
+            if (StandarWorkBookService.DeleteStandarwookBookById(id) && hasDelRePro) 
+            {
+                Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+                string work = "刪除標準作業書:" + standard.Sname;
+                LDTSservice.InsertRecord(loginAdmin, work);
+                Response.Redirect("Relation.aspx");
+            }
+            else
+            {
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('刪除失敗!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
         }
     }
 }

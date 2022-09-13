@@ -380,7 +380,32 @@ namespace LDTS.Service
             return result;
 
         }
-        public static bool DeleteReProcessStandardWorkBookByID(int pid)
+        public static bool DeleteReReProcessStandardWorkBookBySID(int sid)
+        {
+            bool result = false;
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("", sqc);
+                    sqc.Open();
+                    sqlCommand.CommandText = @"DELETE from ReProcessStandardWorkBook WHERE SID=@SID ";
+                    sqlCommand.Parameters.Add("@SID", System.Data.SqlDbType.NVarChar);
+                    sqlCommand.Parameters["@SID"].Value = sid;
+                    if (sqlCommand.ExecuteNonQuery() > 0)
+                        result = true;
+                    sqc.Close();
+
+                }
+            }
+            catch (Exception e)
+            {
+                logger.FATAL(e.Message);
+                return result = false;
+            }
+            return result;
+        }
+        public static bool DeleteReProcessStandardWorkBookByPID(int pid)
         {
             bool result = false;
             try

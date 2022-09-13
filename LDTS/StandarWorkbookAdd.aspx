@@ -20,7 +20,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="StandarWorkbookMain col-md-4">
+                <div class="StandarWorkbookMain col-md-6">
                     <div class="card card-info card-outline">
                         <div class="card-body box-profile">
                             <div class="text-start mb-3">
@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="swbUploadCardBody card-body">
                                         <div class="swbUploadMainUpload form-group row">
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <div class="input-group">
                                                     <div class="swbUploadName custom-file">
                                                         <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
