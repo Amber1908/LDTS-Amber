@@ -36,6 +36,28 @@ namespace LDTS
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             //修改
+            int id =Convert.ToInt32( Request.QueryString["sid"]);
+            StandardWorkBook workBook = StandarWorkBookService.GetStandardWorkBookById(id);
+            workBook.Sname = sName.Text;
+            workBook.Sindex = Convert.ToInt32(sIndex.Text);
+            workBook.Description = desc.Text;
+            if (StandarWorkBookService.UpdateStandarwookbook(workBook))
+            {
+                Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+                string work = "編輯標準作業書:" + workBook.Sname;
+                LDTSservice.InsertRecord(loginAdmin, work);
+
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('編輯成功!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
+            else
+            {
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('編輯失敗!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
+
         }
     }
 }
