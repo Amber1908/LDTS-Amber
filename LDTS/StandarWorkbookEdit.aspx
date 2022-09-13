@@ -67,8 +67,8 @@
                             </div>
                             <div class="swbApplication form-group">
                                 <asp:Button runat="server" ID="DeleteSwb" CssClass="btn btn-danger float-lg-right" Text="刪除" />
-                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right" Text="儲存" OnClick="SaveButton_Click" />
-                                <a href="#" runat="server" id="download" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>
+                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right mr-2" Text="儲存" OnClick="SaveButton_Click" />
+                                <a href="#" runat="server" id="download" class="btn btn-default float-right mr-2"><i class="fas fa-cloud-download-alt">下載程序書</i></a>
                             </div>
                         </div>
                     </div>
