@@ -10,7 +10,7 @@ using LDTS.Utils;
 
 namespace LDTS
 {
-    public partial class ProcessEdit1 : System.Web.UI.Page
+    public partial class ProcessEdit1: System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,7 +29,6 @@ namespace LDTS
                 proName.Text = Pname;
                 desc.Text = ProcessService.GetProceById(PID).Description;
                 proIndex.Text = ProcessService.GetProceById(PID).Pindex.ToString();
-
             }
         }
 

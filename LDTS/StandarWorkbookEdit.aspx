@@ -7,7 +7,7 @@
         <div class="StandarWorkbookContainer container-fluid">
             <div class="StandarWorkbookTitle row mb-2">
                 <div class="col-sm-6">
-                    <h1>標準作業書</h1>
+                    <h1 id="title" runat="server">標準作業書</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -67,7 +67,7 @@
                             </div>
                             <div class="swbApplication form-group">
                                 <asp:Button runat="server" ID="DeleteSwb" CssClass="btn btn-danger float-lg-right" Text="刪除" />
-                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right" Text="儲存" />
+                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right" Text="儲存" OnClick="SaveButton_Click" />
                                 <a href="#" runat="server" id="download" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>
                             </div>
                         </div>
