@@ -2026,6 +2026,7 @@
     <Content Include="plugins\uplot\uPlot.min.css" />
     <Content Include="Process.aspx" />
     <Content Include="ProcessAdd.aspx" />
+    <Content Include="ProcessEdit.aspx" />
     <Content Include="Relation.aspx" />
     <Content Include="ReportAnswerSearch.aspx" />
     <Content Include="ReportQuestionEdit.aspx" />
@@ -2197,6 +2198,13 @@
     </Compile>
     <Compile Include="ProcessAdd.aspx.designer.cs">
       <DependentUpon>ProcessAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessEdit.aspx.cs">
+      <DependentUpon>ProcessEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProcessEdit.aspx.designer.cs">
+      <DependentUpon>ProcessEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relation.aspx.cs">
