@@ -36,7 +36,7 @@ namespace LDTS
                     }
                     if (Service.RelationService.GetAllReProcessStandardWorkBooks().Where(x => x.PID == id).FirstOrDefault() != null)
                     {
-                        if (!Service.RelationService.DeleteReProcessStandardWorkBookByID(id))//刪除程序書有關的標準書
+                        if (!Service.RelationService.DeleteReProcessStandardWorkBookByPID(id))//刪除程序書有關的標準書
                         {
                             Session["MsgResult"] = "err3刪除程序書" + process + "失敗";
                             Response.Redirect("Relation.aspx");
@@ -56,7 +56,7 @@ namespace LDTS
                     bool isDelete = false;
                     foreach (var pid in processIdS)//刪除標準作業書有關的process
                     {
-                        isDelete = Service.RelationService.DeleteReProcessStandardWorkBookByID(pid);
+                        isDelete = Service.RelationService.DeleteReProcessStandardWorkBookByPID(pid);
                     }
                     if (Service.RelationService.GetAllreSWorkBookForm().Where(x=>x.SID==id).FirstOrDefault()!=null)//刪有關的表單
                     {

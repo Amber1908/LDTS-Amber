@@ -285,7 +285,7 @@
                         if (forms[i].checked) {
                             let dataf = new Object();
                             dataf.sid = SID;
-                            dataf.form_id = forms[i].value;
+                            dataf.QID = forms[i].value;//form_id改QID
                             $.ajax({
                                 type: "post",
                                 url: "InsertReSworkbookForm.ashx",

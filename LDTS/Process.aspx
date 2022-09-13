@@ -24,56 +24,12 @@
                 <div id="processesInf" runat="server" class="processesMain col-md-3">
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <div class="text-center">
-                                <a href="#" runat="server" id="download" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>
-                                <i class="fas fa-book" style="font-size: 30px"></i>
-                            </div>
-                            <div class="processesMainName form-group text-center p-2">
-                                <asp:Label ID="ProcessName" runat="server" Font-Size="Large"></asp:Label>
-                            </div>
-                            <div class="processesName form-group">
-                                <label for="processesIndex" style="font-size: 12px; color: #00000080">程序書索引號</label>
-                                <asp:TextBox TextMode="Number" ID="proIndex" runat="server" CssClass="form-control form-control-border"></asp:TextBox>
-                            </div>
-
-                            <div class="processesName form-group">
-                                <label for="processesName" style="font-size: 12px; color: #00000080">程序書名稱</label>
-                                <asp:TextBox ID="proName" runat="server" CssClass="form-control form-control-border">未命名</asp:TextBox>
-                            </div>
-                            <div class="processesDesc form-group">
-                                <label for="desc" style="font-size: 12px; color: #00000080">程序書描述</label>
-                                <asp:TextBox TextMode="MultiLine" ID="desc" runat="server" Rows="5" CssClass="form-control"></asp:TextBox>
-                            </div>
-                            <div class="processesUpload">
-                                <div class="personEditUploadCard card">
-                                    <div class="personEditUploadCardHeader card-header p-2">
-                                        <h6 class="pt-1">上傳程序書</h6>
-                                    </div>
-                                    <div class="processesUploadCardBody card-body">
-                                        <div class="processesUploadMainUpload form-group row">
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    <div class="processesUploadName custom-file">
-                                                        <asp:FileUpload ID="processesUpload" CssClass="custom-file-input Upload" runat="server" />
-                                                        <asp:Label ID="processesUploadName" runat="server" CssClass="custom-file-label">選擇檔案</asp:Label>
-                                                    </div>
-                                                    <div class="input-group-append">
-                                                        <asp:Button runat="server" ID="uploadfile" CssClass="input-group-text" Text="確認" OnClick="uploadfile_Click" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="processesApplication form-group">
-                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right" Text="儲存" OnClick="SaveButton_Click" />
-                            </div>
-
+                            <!--表單範本目錄-->
                         </div>
                     </div>
                 </div>
                 <div  class="processesList col-md-9" runat="server" id="ProcessContainer">
+                            <!--表單清單列表-->
                 </div>
             </div>
         </div>

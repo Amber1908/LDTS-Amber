@@ -129,7 +129,7 @@ namespace LDTS.Service
             catch (Exception e)
             {
                 logger.FATAL(e.Message);
-                return process =null;
+                return process = new Process(); 
             }
             return process;
         }

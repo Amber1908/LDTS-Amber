@@ -15,6 +15,7 @@ namespace LDTS.Service
     {
         static readonly Logger logger = new Logger("StandarWorkBookService");
 
+
         public static bool DeleteStandarwookBookById(int sid)
         {
             bool result = false;
@@ -100,6 +101,41 @@ namespace LDTS.Service
                 return result;
             }
             return result;
+        }
+        public static StandardWorkBook GetStandardWorkBookById(int SID)
+        {
+            StandardWorkBook standard = new StandardWorkBook();
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("", sqc);
+                    sqc.Open();
+                    sqlCommand.CommandText = @"Select * from StandardWorkBook where SID=@SID";
+                    sqlCommand.Parameters.Add("@SID", System.Data.SqlDbType.Int);
+                    sqlCommand.Parameters["@SID"].Value = SID;
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                    while (sqlDataReader.Read())
+                    {
+                        standard.SID= sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("SID")) ? 0 : sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("SID"));
+                        standard.Sname= sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Sname")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("Sname"));
+                        standard.Description= sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Description")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("Description"));
+                        standard.CreateMan = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("CreateMan")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("CreateMan"));
+                        standard.CreateDate= sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("CreateDate")) ? (DateTime)SqlDateTime.Null : sqlDataReader.GetDateTime(sqlDataReader.GetOrdinal("CreateDate"));
+                        standard.new_filename= sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("new_filename")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("new_filename"));
+                        standard.old_filename= sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("old_filename")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("old_filename"));
+                        standard.Sindex= sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Sindex")) ? 0 : sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("Sindex"));
+                    }
+                    sqc.Close();
+                }
+
+            }
+            catch (Exception e)
+            {
+                logger.FATAL(e.Message);
+                return standard =new StandardWorkBook();;
+            }
+            return standard;
         }
         public static List<StandardWorkBook> GetAllStandarwookbooks()
         {

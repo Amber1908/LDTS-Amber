@@ -85,7 +85,7 @@ namespace LDTS
                 }
                 else
                 {
-                    List<Process> processes = ProcessService.GetAllProcesses();
+                    List<Process> processes = ProcessService.GetAllProcesses().OrderBy(x=>x.Pindex).ToList();
                     sidebarMenuString += "<ul class=\"nav nav-pills nav-sidebar flex-column\" data-widget=\"treeview\" role=\"menu\" data-accordion=\"false\">";
                     //程序書
                     foreach (var process in processes)
@@ -118,7 +118,7 @@ namespace LDTS
                         sidebarMenuString += "</a>";
                         sidebarMenuString += "</li>";
                         sidebarMenuString += "</ul>";//標準書
-
+                        standardWorkBooks = standardWorkBooks.OrderBy(x => x.Sindex).ToList();
                         foreach (var Book in standardWorkBooks)
                         {
                             sidebarMenuString += "<ul class=\"nav nav-treeview pl-3 pr-1\">";//標準書

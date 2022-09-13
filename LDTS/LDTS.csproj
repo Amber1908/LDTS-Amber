@@ -2026,6 +2026,7 @@
     <Content Include="plugins\uplot\uPlot.min.css" />
     <Content Include="Process.aspx" />
     <Content Include="ProcessAdd.aspx" />
+    <Content Include="ProcessEdit.aspx" />
     <Content Include="Relation.aspx" />
     <Content Include="ReportAnswerSearch.aspx" />
     <Content Include="ReportQuestionEdit.aspx" />
@@ -2035,6 +2036,7 @@
     <Content Include="showimage.aspx" />
     <Content Include="StandarWorkbook.aspx" />
     <Content Include="StandarWorkbookAdd.aspx" />
+    <Content Include="StandarWorkbookEdit.aspx" />
     <Content Include="Template\Read.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2198,6 +2200,13 @@
     <Compile Include="ProcessAdd.aspx.designer.cs">
       <DependentUpon>ProcessAdd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ProcessEdit.aspx.cs">
+      <DependentUpon>ProcessEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProcessEdit.aspx.designer.cs">
+      <DependentUpon>ProcessEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relation.aspx.cs">
       <DependentUpon>Relation.aspx</DependentUpon>
@@ -2272,6 +2281,13 @@
     </Compile>
     <Compile Include="StandarWorkbookAdd.aspx.designer.cs">
       <DependentUpon>StandarWorkbookAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StandarWorkbookEdit.aspx.cs">
+      <DependentUpon>StandarWorkbookEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StandarWorkbookEdit.aspx.designer.cs">
+      <DependentUpon>StandarWorkbookEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Unit.aspx.cs">
       <DependentUpon>Unit.aspx</DependentUpon>

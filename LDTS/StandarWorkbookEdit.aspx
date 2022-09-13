@@ -1,17 +1,18 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/LDTS.Master" AutoEventWireup="true" CodeBehind="StandarWorkbookAdd.aspx.cs" Inherits="LDTS.StandarWorkbookAdd" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/LDTS.Master" AutoEventWireup="true" CodeBehind="StandarWorkbookEdit.aspx.cs" Inherits="LDTS.StandarWorkbookEdit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="headPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainPlaceHolder" runat="server">
-        <section class="StandarWorkbook content-header">
+    <section class="StandarWorkbook content-header">
         <div class="StandarWorkbookContainer container-fluid">
             <div class="StandarWorkbookTitle row mb-2">
                 <div class="col-sm-6">
-                    <h1>新增標準作業書</h1>
+                    <h1 id="title" runat="server">標準作業書</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="Default">Home</a></li>
-                        <li class="breadcrumb-item">新增標準作業書</li>
+                        <li class="breadcrumb-item">標準作業書</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +24,7 @@
                 <div class="StandarWorkbookMain col-md-6">
                     <div class="card card-info card-outline">
                         <div class="card-body box-profile">
-                            <div class="text-start mb-3">
+                            <div class="text-center">
                                 <i class="fas fa-book-open" style="font-size: 30px"></i>
                             </div>
                             <div class="StandarWorkbookMainName form-group text-center p-2">
@@ -33,7 +34,6 @@
                                 <label for="sIndex" style="font-size: 12px; color: #00000080">標準作業書索引號</label>
                                 <asp:TextBox TextMode="Number" ID="sIndex" runat="server" CssClass="form-control form-control-border"></asp:TextBox>
                             </div>
-
                             <div class="sName form-group">
                                 <label for="sName" style="font-size: 12px; color: #00000080">標準作業書名稱</label>
                                 <asp:TextBox ID="sName" runat="server" CssClass="form-control form-control-border">未命名</asp:TextBox>
@@ -53,12 +53,11 @@
                                                 <div class="input-group">
                                                     <div class="swbUploadName custom-file">
                                                         <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
-
                                                         <asp:FileUpload ID="swbUpload" CssClass="custom-file-input Upload" runat="server" />
                                                         <asp:Label ID="swbUploadName" runat="server" CssClass="custom-file-label">選擇檔案</asp:Label>
                                                     </div>
                                                     <div class="input-group-append">
-                                                        <asp:Button runat="server" ID="uploadfile" CssClass="input-group-text" Text="確認" />
+                                                        <asp:Button runat="server" ID="uploadfile" CssClass="input-group-text" Text="確認" OnClick="uploadfile_Click"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -67,10 +66,15 @@
                                 </div>
                             </div>
                             <div class="swbApplication form-group">
-                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right" Text="儲存" OnClick="SaveButton_Click" />
+                                <asp:Button runat="server" ID="DeleteSwb" CssClass="btn btn-danger float-lg-right" Text="刪除" OnClick="DeleteSwb_Click" />
+                                <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right mr-2" Text="儲存" OnClick="SaveButton_Click" />
+                                <a href="#" runat="server" id="download" class="btn btn-default float-right mr-2"><i class="fas fa-cloud-download-alt">下載程序書</i></a>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="StandarWorkbookList col-md-9" runat="server" id="SwbContainer">
+                    <!--表單清單列表-->
                 </div>
             </div>
         </div>
