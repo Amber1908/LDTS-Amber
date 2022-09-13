@@ -31,11 +31,48 @@ namespace LDTS
 
         protected void DeletePro_Click(object sender, EventArgs e)
         {
+            //刪除
+            int id =Convert.ToInt32( Request.QueryString["pid"]);
+            Process process = ProcessService.GetProceById(Convert.ToInt32(id));
 
+            if (ProcessService.DeleteProcessById(id))
+            {
+                Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+                string work = "刪除程序書:" + process.Pname;
+                LDTSservice.InsertRecord(loginAdmin, work);
+            }
+            else
+            {
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('刪除失敗!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
+            //修改
+            string id = Request.QueryString["pid"];
+            Process process = ProcessService.GetProceById(Convert.ToInt32(id));
+            process.Pname = proName.Text;
+            process.Pindex = Convert.ToInt32(proIndex.Text);
+            process.Description = desc.Text;
+            if (ProcessService.UpdateProcess(process))
+            {
+                Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+                string work = "編輯程序書:" + process.Pname;
+                LDTSservice.InsertRecord(loginAdmin, work);
+
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('編輯成功!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
+            else
+            {
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('編輯失敗!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
 
         }
     }
