@@ -57,7 +57,7 @@
                                                         <asp:Label ID="swbUploadName" runat="server" CssClass="custom-file-label">選擇檔案</asp:Label>
                                                     </div>
                                                     <div class="input-group-append">
-                                                        <asp:Button runat="server" ID="uploadfile" CssClass="input-group-text" Text="確認"/>
+                                                        <asp:Button runat="server" ID="uploadfile" CssClass="input-group-text" Text="確認" OnClick="uploadfile_Click"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="swbApplication form-group">
-                                <asp:Button runat="server" ID="DeleteSwb" CssClass="btn btn-danger float-lg-right" Text="刪除" />
+                                <asp:Button runat="server" ID="DeleteSwb" CssClass="btn btn-danger float-lg-right" Text="刪除" OnClick="DeleteSwb_Click" />
                                 <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right mr-2" Text="儲存" OnClick="SaveButton_Click" />
                                 <a href="#" runat="server" id="download" class="btn btn-default float-right mr-2"><i class="fas fa-cloud-download-alt">下載程序書</i></a>
                             </div>
