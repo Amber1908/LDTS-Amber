@@ -143,6 +143,8 @@ namespace LDTS
             //一組 表單
             foreach (var reportQuestion in reportQuestions)
             {
+                int aids = ReportAnswerService.GetAnswers().Where(x=>x.QID== reportQuestion.QID).Select(x=>x.AID).ToList().Count();
+
                 Fstr += "<div class=\"card card-outline card-primary\">";//card-outline
                 Fstr += "<div class=\"card-header\"style=\"height: 29px\"> ";
                 Fstr += "<span class=\"d-flex justify-content-end\">";
@@ -151,9 +153,9 @@ namespace LDTS
                 Fstr += "<i style=\"position: relative; top: -5px; right: 20px\" class=\"fas fa-edit\"></i>";
                 Fstr += "</a>";
                 Fstr += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";
-                Fstr += "DeleteRelation.aspx?qid="+ reportQuestion.QID;// delete 
+                Fstr += "DeleteRelation.aspx?qid="+ reportQuestion.QID;// delete aids>0? "</a>" : 
                 Fstr += "\"style=\" text-decoration:none\">";
-                Fstr += "<i style=\"position: relative; top: -5px\" class=\"fas fa-trash \"></i></a>";
+                Fstr +="<i style=\"position: relative; top: -5px\" class=\"fas fa-trash \"></i></a>";
                 Fstr += "</span>";
                 Fstr += "</div>";//card-header
                 Fstr += "<div class=\"card-body\">";//card-body

@@ -20,11 +20,11 @@ namespace LDTS
                 int PID = Convert.ToInt32(Request.QueryString["pid"]);
                 int ALID= Convert.ToInt32(Request.QueryString["ALID"]);
                 string Pname = ProcessService.GetProceById(PID).Pname;
-                download.HRef = "Upload/" + ProcessService.GetProceById(PID).new_filename;
+                //download.HRef = "Upload/" + ProcessService.GetProceById(PID).new_filename;
                 proName.Text = Pname;
-                ProcessName.Text = Pname;
-                desc.Text = ProcessService.GetProceById(PID).Description;
-                proIndex.Text = ProcessService.GetProceById(PID).Pindex.ToString();
+                //ProcessName.Text = Pname;
+                //desc.Text = ProcessService.GetProceById(PID).Description;
+                //proIndex.Text = ProcessService.GetProceById(PID).Pindex.ToString();
                 string ProcessContainerStr = "";
                 //跟PID有關的表單qid
                 List<int> reProcessQids = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.PID == PID).Select(x => x.QID).ToList();

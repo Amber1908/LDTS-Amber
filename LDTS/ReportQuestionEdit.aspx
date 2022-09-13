@@ -131,7 +131,7 @@
             }
             var ao = document.getElementById("mainPlaceHolder_Ao");
             var savebtn = document.getElementById("mainPlaceHolder_SaveButton");
-            
+            var Printbtn = document.getElementById("mainPlaceHolder_Printbtn");
             switch (ao.value) {
                 case "2":
                     break;
@@ -168,6 +168,7 @@
                         allinputs[i].disabled = true;
                     }
                     savebtn.classList.add("d-none");
+                    Printbtn.classList.add("d-none");
                     break;
                 default:
             }

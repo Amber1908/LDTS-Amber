@@ -166,7 +166,7 @@ namespace LDTS.Service
         /// </summary>
         public static ReportAnswer GetReportAnswer(string AID)
         {
-            ReportAnswer reportAnswer = null;
+            ReportAnswer reportAnswer = new ReportAnswer();
             try
             {
                 using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
@@ -204,7 +204,7 @@ namespace LDTS.Service
             catch (Exception ex)
             {
                 logger.ERROR(ex.Message);
-                reportAnswer = null;
+                reportAnswer = new ReportAnswer();
             }
             return reportAnswer;
         }

@@ -176,7 +176,24 @@ namespace LDTS
         protected void Printbtn_Click(object sender, EventArgs e)
         {
             int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);
-            Response.Redirect("OutputWord.ashx?AID="+ ReportAnswerId);
+            int ReportQID = Convert.ToInt32(Request.QueryString["qid"]);
+            string OutputTemplate = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).OutputTemplate;
+            if (OutputTemplate!=string.Empty&& OutputTemplate !=null)
+            {
+                Response.Redirect("OutputWord.ashx?AID=" + ReportAnswerId);
+            }
+            else if (ReportQID!= 0)
+            {
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('目前該表單範本還沒有建立表單!!!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
+            else
+            {
+                Literal AlertMsg = new Literal();
+                AlertMsg.Text = "<script language='javascript'>alert('目前沒有表單列印範本!!!');</script>";
+                this.Page.Controls.Add(AlertMsg);
+            }
         }
     }
 }
