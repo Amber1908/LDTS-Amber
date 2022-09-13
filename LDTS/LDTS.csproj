@@ -2036,6 +2036,7 @@
     <Content Include="showimage.aspx" />
     <Content Include="StandarWorkbook.aspx" />
     <Content Include="StandarWorkbookAdd.aspx" />
+    <Content Include="StandarWorkbookEdit.aspx" />
     <Content Include="Template\Read.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2280,6 +2281,13 @@
     </Compile>
     <Compile Include="StandarWorkbookAdd.aspx.designer.cs">
       <DependentUpon>StandarWorkbookAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StandarWorkbookEdit.aspx.cs">
+      <DependentUpon>StandarWorkbookEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StandarWorkbookEdit.aspx.designer.cs">
+      <DependentUpon>StandarWorkbookEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Unit.aspx.cs">
       <DependentUpon>Unit.aspx</DependentUpon>
