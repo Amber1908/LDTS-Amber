@@ -55,17 +55,16 @@
                             <a href="Unit.aspx" class="dropdown-item">
                                 <i class="fas fa-users mr-2"></i>單位資訊
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="FormGeneration" class="dropdown-item">
+                            <div id="FormDivider" class="formAo dropdown-divider" runat="server"></div>
+                            <a  href="FormGeneration" id="FormGeneration" runat="server" class="formAo dropdown-item">
                                 <i class="fa fa-sticky-note mr-2"></i>表單產生器
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="Ao" class="dropdown-item">
-                               
-                                 <i class="mr-2 fas fa-tasks"></i>權限管理
+                            <div id="AoDivider" class="formAo dropdown-divider" runat="server"></div>
+                            <a href="Ao" id="Ao" runat="server" class="dropdown-item formAo">
+                                 <i class="mr-2 fas fa-tasks"></i>表單權限管理
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a id="RelationItem" runat="server" class="dropdown-item" href="Relation.aspx">
+                            <div id="reDivider" class="formAo dropdown-divider" runat="server"></div>
+                            <a id="RelationItem" runat="server" class="dropdown-item formAo" href="Relation.aspx">
                                <i class="fas fa-project-diagram mr-2"></i>程序書關聯設定
                             </a>
                             <div class="dropdown-divider"></div>
@@ -149,6 +148,7 @@
             </footer>
         </div>
         <!-- ./wrapper -->
+<%--        <input type="text" runat="server" class="d-none" id="perAo"/>--%>
     </form>
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>

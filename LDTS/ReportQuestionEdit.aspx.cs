@@ -27,7 +27,6 @@ namespace LDTS
             }
             if (!Page.IsPostBack)
             {
-
                 int ReportQuestionId = Convert.ToInt32(Request.QueryString["qid"]);
                 int ReportQuestionSid = Convert.ToInt32(Request.QueryString["sqid"]);
                 int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);
@@ -39,7 +38,6 @@ namespace LDTS
                     desc.Text = reportQuestion.Description;
                     jsonData.Value = reportQuestion.OutputJson;
                     Stauts.Value = reportQuestion.Status.ToString();
-                    
                     //表單範本的權限
                     List<ReAdminForm> reQuestions = Service.RelationService.GetAllreAdminFormByAdminId(loginAdmin.admin_id).ToList();
                     if (reQuestions != null)
@@ -100,6 +98,7 @@ namespace LDTS
                     ExtendName.Value = reportAnswer.ExtendName;
                     Stauts.Value = reportAnswer.Status.ToString();
                     desc.Text = reportAnswer.Description;
+                    keyword.Value = reportAnswer.Keyword;
 
                 }
                 else if (ReportQuestionSid != 0)

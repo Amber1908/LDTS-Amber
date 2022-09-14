@@ -77,8 +77,9 @@ namespace LDTS
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            string email = EmailTextBox2.Text;
             string id = Request.QueryString["id"];
+            Admin adminImg = PersonnelManagementService.GetAdminById(id);
+            string email = EmailTextBox2.Text;
             bool isChangeMug = true;
             bool isChangeSign = true;
 
@@ -87,16 +88,15 @@ namespace LDTS
             {
                 string fileName = FileUpload.FileName;
                 String filetype = System.IO.Path.GetExtension(fileName);
+                int imgId = PublicUtil.saveImage(FileUpload);
+                adminImg.admin_image = imgId;
 
-                Images MugImg = new Images()
-                {
-                    image_id = PublicUtil.saveImage(FileUpload),
-                };
+
 
                 if (filetype.Contains(".jpg") || filetype.Contains(".png"))
                 {
                     fileNameImgEdit.Text = fileName;
-                    if (LDTSservice.UpdatImge(MugImg))
+                    if (PersonnelManagementService.UpdateAdmin(adminImg))
                     {
                         isChangeMug = true;
                     }
@@ -113,14 +113,13 @@ namespace LDTS
             {
                 string fileName = signNameUpload.FileName;
                 String filetype = System.IO.Path.GetExtension(fileName);
-                Images signImg = new Images()
-                {
-                    image_id = PublicUtil.saveImage(signNameUpload),
-                };
+                int signId = PublicUtil.saveImage(signNameUpload);
+                adminImg.admin_sign = signId;
                 if (filetype.Contains(".jpg") || filetype.Contains(".png"))
                 {
                     signNameEdit.Text = fileName;
-                    if (LDTSservice.UpdatImge(signImg))
+
+                    if (PersonnelManagementService.UpdateAdmin(adminImg))
                     {
                         isChangeSign = true;
                     }
@@ -160,6 +159,8 @@ namespace LDTS
                 admin_ao = ao,
                 admin_email = EmailTextBox2.Text,
                 status = status,
+                admin_sign= adminImg.admin_sign,
+                admin_image=adminImg.admin_image,
                 memo = memoTextbox.Text
             };
             if (PersonnelManagementService.UpdateAdmin(admin) && isChangeMug && isChangeSign)
@@ -167,9 +168,11 @@ namespace LDTS
                 Admin loginAdmin = (Admin)Session["LDTSAdmin"];
                 string work = "編輯人員:" + admin.admin_name;
                 LDTSservice.InsertRecord(loginAdmin, work);
+                
                 Literal AlertMsg = new Literal();
                 AlertMsg.Text = "<script language='javascript'>alert('編輯成功');</script>";
                 this.Page.Controls.Add(AlertMsg);
+                Response.Redirect("PersonEdit?id="+ admin.admin_id);
             }
             else
             {

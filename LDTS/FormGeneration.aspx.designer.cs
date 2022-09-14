@@ -96,12 +96,12 @@ namespace LDTS
         protected global::System.Web.UI.WebControls.FileUpload PrintTemplate;
 
         /// <summary>
-        /// Verlist 控制項。
+        /// VersGroup 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Verlist;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl VersGroup;
     }
 }

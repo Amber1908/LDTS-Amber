@@ -37,7 +37,7 @@
                             </div>
                             <div class="ansKeyword form-group">
                                 <label for="keyword" style="font-size: 12px; color: #00000080">關鍵字設定</label>
-                                <input type="text" runat="server" id="keyword" class="form-control form-control-border" />
+                                <input type="text" runat="server" id="keyword" class="form-control form-control-border" value="" />
                             </div>
                             <div class="ansStatus form-group">
                                 <label for="Stauts" style="font-size: 12px; color: #00000080">表單狀態</label>
@@ -411,6 +411,9 @@
                                     //    break;
                                     case "display":
                                         TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionText;
+                                        //if (true) {
+
+                                        //}
                                         break;
                                     case "date":
                                         if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
@@ -545,21 +548,27 @@
                                         if (Number(Obj.Groups[i].Rows[w].Cols[c].Answers[0].value) > 0) {
                                             TampleteStr += "<div class=\"col-12 pt-2 tableSign\">";
                                             TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+
                                             TampleteStr += "取消簽核";
                                             TampleteStr += "</div>";
                                             TampleteStr += "<div class=\"mt-5 d-inline\">";//SignImageBox
-                                            TampleteStr += "<img style=\"width:155% \" src=\"";//img
+                                            TampleteStr += "<img style=\"width:150% \" src=\"";//img
                                             TampleteStr += "ShowAdminImg?id=" + signImgID + "\"";
                                             TampleteStr += "id=\"sign" + signImgID + "\"";
                                             TampleteStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
                                             if (Obj.Groups[i].Rows[w].Cols[c].rotate == true) {
-                                                TampleteStr +=" "+"signRotated mt-4 mb-3 ml_1";
+                                                TampleteStr +=" "+"signRotated mt-5 mb-3 ml_1";
                                             }
                                             TampleteStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
                                             TampleteStr += "\">";//img
                                             TampleteStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                                            TampleteStr += "\" class=\"d-flex justify-content-end signDate mt-3\">";
-                                            TampleteStr += today;
+                                            if (Obj.Groups[i].Rows[w].Cols[c].rotate == true) {
+                                                TampleteStr += "\" class=\"d-flex justify-content-start signDate mt-3\">";
+                                            } else {
+                                                TampleteStr += "\" class=\"d-flex justify-content-end signDate mt-3\">";
+                                            }
+                                            time = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].lastUpdate);
+                                            TampleteStr += time.Format("yyyy-MM-dd");
                                             TampleteStr += "</span>";
                                             TampleteStr += "</div>";//SignImageBox
                                             TampleteStr += "</div>";
@@ -3082,7 +3091,9 @@
             let Row;
             var singDate = document.querySelectorAll(".signDate");
             for (var i = 0; i < singDate.length; i++) {
-                singDate[i].innerText = today;
+                if (singDate[i].innerText == today) {
+                    singDate[i].innerText = today;
+                }
             }
 
 
@@ -3161,7 +3172,6 @@
                 SignImage.id = "sign" + signImgID;
                 SignBox.classList.add("d-inline");
                 event.currentTarget.innerText = "取消簽核";
-               
                 if (isTable) {
                     for (var i = 0; i < JsonObj.Groups.length; i++) {
                         if (JsonObj.Groups[i].GroupType != "normal") {
@@ -3218,6 +3228,9 @@
                         for (var k = 0; k < JsonObj.Groups[i].Rows.length; k++) {
                             for (var c = 0; c < JsonObj.Groups[i].Rows[k].Cols.length; c++) {
                                 if (SignImage.classList.contains(JsonObj.Groups[i].Rows[k].Cols[c].QuestionID)) {
+                                    var singDateT = document.getElementsByName(JsonObj.Groups[i].Rows[k].Cols[c].QuestionID)
+                                    singDateT.innerText = today;
+
                                     JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].value = null;
                                     JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].lastUpdate = null;
                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));

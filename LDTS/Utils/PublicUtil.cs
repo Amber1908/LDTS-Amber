@@ -10,6 +10,7 @@ using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI.WebControls;
+using LDTS.Models;
 
 namespace LDTS.Utils
 {
@@ -232,6 +233,37 @@ namespace LDTS.Utils
             }
 
             return result;
+        }
+        /// <summary>
+        /// 取得單一圖片 
+        /// </summary>
+        /// <returns></returns>
+        public static Images GetImgById(int image_id)
+        {
+            Images img = new Images();
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqmm = new SqlCommand(@"Select * from Images where image_id=@image_id", sqc);
+                    sqc.Open();
+                    sqmm.Parameters.AddWithValue("@image_id", image_id);
+                    SqlDataReader sd = sqmm.ExecuteReader();
+                    if (sd.Read())
+                    {
+                        img.image_id = sd.IsDBNull(sd.GetOrdinal("image_id")) ? 0 : sd.GetInt32(sd.GetOrdinal("image_id"));
+                        img.image_bytes =sd.IsDBNull(sd.GetOrdinal("image_bytes"))?null: (byte[])sd["image_bytes"];
+                        img.memo = sd.IsDBNull(sd.GetOrdinal("memo")) ? "" : sd.GetString(sd.GetOrdinal("memo"));
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                logger.ERROR(e.Message);
+                return img = new Images();
+            }
+            return img;
         }
 
         /// <summary>

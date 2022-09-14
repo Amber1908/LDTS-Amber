@@ -180,7 +180,7 @@ namespace LDTS.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
-                    sqlCommand.CommandText = @"UPDATE Admin SET admin_name=@admin_name,admin_phone=@admin_phone,admin_email=@admin_email,admin_ao=@admin_ao,status=@status,memo=@memo,admin_image=@admin_image WHERE admin_id=@admin_id ";
+                    sqlCommand.CommandText = @"UPDATE Admin SET admin_name=@admin_name,admin_phone=@admin_phone,admin_email=@admin_email,admin_ao=@admin_ao,status=@status,memo=@memo,admin_image=@admin_image,admin_sign=@admin_sign WHERE admin_id=@admin_id ";
                     sqlCommand.Parameters.AddWithValue("@admin_id", admin.admin_id);
                     sqlCommand.Parameters.AddWithValue("@admin_name", admin.admin_name);
                     sqlCommand.Parameters.AddWithValue("@admin_phone", admin.admin_phone);
@@ -188,6 +188,8 @@ namespace LDTS.Service
                     sqlCommand.Parameters.AddWithValue("@admin_ao", admin.admin_ao);
                     sqlCommand.Parameters.AddWithValue("@status", admin.status);
                     sqlCommand.Parameters.AddWithValue("@admin_image", admin.admin_image);
+                    sqlCommand.Parameters.AddWithValue("@admin_sign", admin.admin_sign);
+
                     sqlCommand.Parameters.AddWithValue("@memo", string.IsNullOrEmpty(admin.memo) ? " " : admin.memo);
 
                     if (sqlCommand.ExecuteNonQuery() > 0)
