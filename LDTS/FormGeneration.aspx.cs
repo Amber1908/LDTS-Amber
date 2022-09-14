@@ -27,26 +27,14 @@ namespace LDTS
                     }
                     List<ReportQuestionFile> vers = ReportQuestiovService.GetAllReportFilesById(Convert.ToInt32(Request["QID"])); ;
                     string verStr = "";
-                    verStr += "<table class=\"table table-bordered table-head-fixed text-nowrap\">";
-                    verStr += "<thead><tr><th>表單版本</th><th>下載</th></tr></thead>";
-                    verStr += "<tbody>";
+                    verStr += "<select id=\"Ver\" class=\"form-control d-inline\" style=\"width:80%\">";
                     foreach (var ver in vers)
                     {
                         //版本號
-                        verStr += "<tr>";
-                        verStr += "<td>";
-                        verStr += ver.Version;
-                        verStr += "</td>";
-                        verStr += "<td>";
-                        verStr += "<a href=\"/Upload/" + ver.TemplateFile + "\">";
-                        verStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
-                        verStr += "</a>";
-                        verStr += "</td>";
-                        verStr += "</tr>";
+                        verStr += "";
+
                     }
-                    verStr += "</tbody>";
-                    verStr += "</table>";
-                    Verlist.InnerHtml = verStr;
+                    verStr += "</select>";
                 }
 
             }

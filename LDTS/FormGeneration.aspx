@@ -81,18 +81,14 @@
                                     <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
                                     <asp:FileUpload ID="PrintTemplate" runat="server" CssClass="form-control" placeholder="表單列印範本"></asp:FileUpload>
                                 </div>
-                                <div class="table-responsive p-0" id="Verlist" runat="server" style="height: 150px;">
-<%--                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>表單版本</th>
-                                                <th>下載</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>--%>
+                                <div id="VersGroup" runat="server" class="form-group">
+                                    <label for="Verlist" class="d-block">下載表單列印範本</label>
                                 </div>
+<%--                                <label for="Verlist" class="d-block">下載表單列印範本</label>
+                                <asp:DropDownList runat="server" ID="vers" CssClass="form-control d-inline" Width="80%"></asp:DropDownList>
+                                <a id="downloadVer" runat="server" class="btn-sm btn btn-info ml-3 pl-2 pr-2 pt-2">下載表單列印範本</a>--%>
+<%--                                <select class="table-responsive p-0" id="Verlist" runat="server" style="height: 150px;">
+                                </select>--%>
                             </div>
                         </div>
                     </div>
