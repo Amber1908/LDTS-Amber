@@ -128,7 +128,7 @@
                             </div>
                             <div class="personEditUploadCardBody card-body">
                                 <div class="form-horizontal d-flex justify-content-center">
-                                    <asp:Image runat="server" CssClass="img-fluid pad mb-3" ID="signImg" />
+                                    <asp:Image runat="server" CssClass="img-fluid pad mb-3" ID="signImg" Height="200px"/>
                                 </div>
                                 <div class="personEditMainUpload form-group row">
                                     <label for="signNameUpload" class="col-sm-2 col-form-label">上傳簽名</label>
@@ -154,7 +154,7 @@
                             </div>
                             <div class="personEditMugCardBody card-body">
                                 <div class="form-horizontal d-flex justify-content-center">
-                                    <asp:Image runat="server" CssClass="personEditIfoMug img-fluid pad CardbodyMug mb-3" ID="ImageMug" Width="50%" />
+                                    <asp:Image runat="server" CssClass="personEditIfoMug img-fluid pad CardbodyMug mb-3" ID="ImageMug" Height="200px" />
 <%--                                    <img id="MugImg" runat="server" class="img-fluid pad CardbodyMug d-none mb-3" src="dist/img/default-150x150.png" />--%>
                                 </div>
                                 <div class="form-group row">

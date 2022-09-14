@@ -62,18 +62,47 @@ namespace LDTS.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
-                    sqlCommand.CommandText = @"UPDATE ReportAnswer SET Title=@Title,ExtendName=@ExtendName,Description=@Description,OutputJson=@OutputJson,AppendFile=@AppendFile,OutputTemplate=@OutputTemplate,Status=@Status ,Keyword=@Keyword,LastupDate=@LastupDate,LastupMan=@LastupMan WHERE AID=@AID";
-                    sqlCommand.Parameters.AddWithValue("@AppendFile", reportAnswer.AppendFile);
-                    sqlCommand.Parameters.AddWithValue("@OutputTemplate", DBNull.Value);
-                    sqlCommand.Parameters.AddWithValue("@Keyword", DBNull.Value);
+                    sqlCommand.CommandText = @"UPDATE ReportAnswer SET Title=@Title,ExtendName=@ExtendName,Description=@Description,OutputJson=@OutputJson,AppendFile=@AppendFile,OutputTemplate=@OutputTemplate,Status=@Status,Keyword=@Keyword,LastupDate=@LastupDate,LastupMan=@LastupMan WHERE AID=@AID";
+                    if (reportAnswer.Keyword == null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@Keyword", DBNull.Value);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@Keyword", reportAnswer.Keyword);
+                    }
+                    if (reportAnswer.AppendFile == null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@AppendFile", DBNull.Value);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@AppendFile", reportAnswer.AppendFile);
+                    }
+
+                    if (reportAnswer.OutputTemplate == null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@OutputTemplate", DBNull.Value);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@OutputTemplate", reportAnswer.OutputTemplate);
+                    }
                     sqlCommand.Parameters.AddWithValue("@Status", reportAnswer.Status);
+                    if (reportAnswer.LastupMan == null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@LastupMan", DBNull.Value);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@LastupMan", reportAnswer.LastupMan);
+                    }
                     sqlCommand.Parameters.AddWithValue("@AID", reportAnswer.AID);
                     sqlCommand.Parameters.AddWithValue("@Description", reportAnswer.Description);
                     sqlCommand.Parameters.AddWithValue("@Title", reportAnswer.Title);
                     sqlCommand.Parameters.AddWithValue("@ExtendName", reportAnswer.ExtendName);
-                    sqlCommand.Parameters.AddWithValue("@OutputJson", reportAnswer.OutputJson);
                     sqlCommand.Parameters.AddWithValue("@LastupDate", reportAnswer.LastupDate);
-                    sqlCommand.Parameters.AddWithValue("@LastupMan", reportAnswer.LastupMan);
+                    sqlCommand.Parameters.AddWithValue("@OutputJson", reportAnswer.OutputJson);
 
                     if (sqlCommand.ExecuteNonQuery() > 0)
                     {
@@ -98,7 +127,7 @@ namespace LDTS.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
-                    sqlCommand.CommandText = @"INSERT INTO ReportAnswer ( QID,Title,ExtendName,Description,OutputJson,CreateMan,AppendFile,OutputTemplate,Status,Keyword) VALUES(@QID,@Title,@ExtendName,@Description,@OutputJson,@CreateMan,@AppendFile,@OutputTemplate,@Status,@Keyword);SET @AID=SCOPE_IDENTITY()";
+                    sqlCommand.CommandText = @"INSERT INTO ReportAnswer ( QID,Title,ExtendName,Description,OutputJson,CreateMan,AppendFile,OutputTemplate,Status,Keyword,LastupMan) VALUES(@QID,@Title,@ExtendName,@Description,@OutputJson,@CreateMan,@AppendFile,@OutputTemplate,@Status,@Keyword,@LastupMan);SET @AID=SCOPE_IDENTITY()";
                     sqlCommand.Parameters.AddWithValue("@QID", reportAnswer.QID);
                     sqlCommand.Parameters.AddWithValue("@Description", reportAnswer.Description);
                     sqlCommand.Parameters.AddWithValue("@Title", reportAnswer.Title);

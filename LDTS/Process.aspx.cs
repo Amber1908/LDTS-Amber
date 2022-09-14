@@ -21,11 +21,7 @@ namespace LDTS
                 int ALID= Convert.ToInt32(Request.QueryString["ALID"]);
                 string Pname = ProcessService.GetProceById(PID).Pname;
                 title.InnerText = Pname;
-                //download.HRef = "Upload/" + ProcessService.GetProceById(PID).new_filename;
-                //ProcessName.Text = Pname;
-                //desc.Text = ProcessService.GetProceById(PID).Description;
-                //proIndex.Text = ProcessService.GetProceById(PID).Pindex.ToString();
-                string ProcessContainerStr = "";
+                string ProcessContainerStr ="";
                 //跟PID有關的表單qid
                 List<int> reProcessQids = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.PID == PID).Select(x => x.QID).ToList();
                 List<ReportQuestion> reportQuestions = new List<ReportQuestion>();
@@ -58,7 +54,6 @@ namespace LDTS
                     }
                     reAdminAns = reAdminAns.Distinct().ToList();
                     //畫面:程序書 下面有哪些ReportQuestion 全部有關的表單 
-
                     foreach (var reportQuestion in reportQuestions)
                     {
 
@@ -83,7 +78,8 @@ namespace LDTS
                         ProcessContainerStr += "</div>";//prossesCardHeader 
                         ProcessContainerStr += "<div class=\"card-body\" style=\"display:block;\">";
                         //找用這個Qid產出的表單有幾個 
-                        List<ReportAnswer> answers = ReportAnswerService.GetAnswers().Where(x => x.QID == reportQuestion.QID).ToList();
+                        List<ReportAnswer> answers = ReportAnswerService.GetAnswers().Where(x => x.QID == reportQuestion.QID).OrderByDescending(x=>x.CreateDate).ToList();
+                        
                         bool hasAdd = false;
                         //USER 權限 
                         ProcessContainerStr += "<table class=\"table\">";
@@ -125,7 +121,7 @@ namespace LDTS
                         {
                             hasAdd = reAdminForms.Any(x => x.QID == reportQuestion.QID);
                         }
-                        if (reportQuestion.Status==2)
+                        if (reportQuestion.Status==2)//表單範本狀態1:正常/2:停用:該類已填寫的表單可以編輯與檢視。 
                         {
                             hasAdd = false;
                         }

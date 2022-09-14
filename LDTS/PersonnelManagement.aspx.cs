@@ -128,6 +128,7 @@ namespace LDTS
                 Literal AlertMsg = new Literal();
                 AlertMsg.Text = "<script language='javascript'>alert('新增成功');location.href='PersonnelManagement.aspx';</script>";
                 this.Page.Controls.Add(AlertMsg);
+                Response.Redirect(url);
             }
             else
             {

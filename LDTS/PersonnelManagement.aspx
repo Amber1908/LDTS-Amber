@@ -127,7 +127,7 @@
                             </div>
                             <div class="personnelManagementMainUploadCardBody card-body">
                                 <div class="form-horizontal d-flex justify-content-center">
-                                    <asp:Image runat="server" CssClass="img-fluid pad mb-3" ID="signImg" />
+                                    <asp:Image runat="server" CssClass="img-fluid pad mb-3" ID="signImg" Height="200px" />
                                 </div>
                                 <div class="personnelManagementMainUpload form-group row">
                                     <label for="signNameUpload" class="col-sm-2 col-form-label">上傳簽名</label>

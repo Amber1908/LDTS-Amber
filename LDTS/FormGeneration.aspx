@@ -46,13 +46,6 @@
                                             <asp:TextBox ID="Version" runat="server" CssClass="form-control" Text="1.0"></asp:TextBox>
                                         </div>
                                     </td>
-                                    <%--                                <td >
-                                    <div class="form-group">
-                                        <label for="PrintTemplate">表單列印範本</label>
-                                        <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
-                                        <asp:FileUpload ID="PrintTemplate" runat="server" CssClass="form-control" placeholder="表單列印範本"></asp:FileUpload>
-                                    </div>
-                                </td>--%>
                                     <td width="20%">
                                         <div class="form-group">
                                             <label for="Status">表單狀態</label>
@@ -75,20 +68,14 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div class="formVerList pt-1 col-md-3">
+                            <div class="formVerList pt-1 col-md-3" style="border: #ddd solid 0.1px;border-radius: 5px;">
                                 <div class="form-group">
                                     <label for="PrintTemplate">表單列印範本</label>
                                     <asp:HiddenField ID="TemplateFile" runat="server" Value="" />
                                     <asp:FileUpload ID="PrintTemplate" runat="server" CssClass="form-control" placeholder="表單列印範本"></asp:FileUpload>
                                 </div>
                                 <div id="VersGroup" runat="server" class="form-group">
-                                    <label for="Verlist" class="d-block">下載表單列印範本</label>
                                 </div>
-<%--                                <label for="Verlist" class="d-block">下載表單列印範本</label>
-                                <asp:DropDownList runat="server" ID="vers" CssClass="form-control d-inline" Width="80%"></asp:DropDownList>
-                                <a id="downloadVer" runat="server" class="btn-sm btn btn-info ml-3 pl-2 pr-2 pt-2">下載表單列印範本</a>--%>
-<%--                                <select class="table-responsive p-0" id="Verlist" runat="server" style="height: 150px;">
-                                </select>--%>
                             </div>
                         </div>
                     </div>
@@ -635,6 +622,13 @@
             }
 
             return true;
+        }
+        //選擇下載版本
+        function changeVer(){
+            console.log("changeVer");
+            let ver= $("#Ver option:selected").val();
+            let downloadLink=$("#downloadVer");
+            downloadLink.attr("href",ver);
         }
 
         // 選擇群組類型
