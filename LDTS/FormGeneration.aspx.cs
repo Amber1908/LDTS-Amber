@@ -37,7 +37,7 @@ namespace LDTS
                     }
                     verStr += "</select>";
                     verStr += "<a class=\"ml-3 btn btn-info\" id=\"downloadVer\" href=\"";
-                    verStr += "/Upload/" + vers[0].TemplateFile;
+                    verStr += vers.Count>0?"/Upload/" + vers[0].TemplateFile:"#";
                     verStr += "\">下載</a>";
                     VersGroup.InnerHtml = verStr;
                 }

@@ -230,7 +230,7 @@
                                     str += 'value="status_1,F_id:' + DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].form.QID + '"';
                                 }
                                 else {
-                                    str += 0;
+                                    str +='value=" 0"';
                                 }
                                 if (DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].status == 1 || DataObj[i].ChildrenSwbs[s].ChildrenSWBforms[c].status ==2) {
                                     str += 'checked';

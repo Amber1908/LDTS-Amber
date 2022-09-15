@@ -324,6 +324,7 @@
                                     break;
                                 default:
                             }
+                            
                             Qlabel.append(nQuestion);
                         }
                         break;
@@ -2854,7 +2855,12 @@
                     for (var i = 0; i < dataObj.Groups.length; i++) {
                         if (dataObj.Groups[i].GroupType == "normal") {
                             for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
-                                if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name) {
+                                if (dataObj.Groups[i].Questions[j].hasOtherAnswers && dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name) {
+                                    dataObj.Groups[i].Questions[j].otherAnswer.length = 0;
+                                    dataObj.Groups[i].Questions[j].otherAnswer.push({ "index": 1, "value": event.currentTarget.value, "lastUpdate": today });
+                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                }
+                                if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "text" || dataObj.Groups[i].Questions[j].QuestionType == "number" || dataObj.Groups[i].Questions[j].QuestionType == "date" || dataObj.Groups[i].Questions[j].QuestionType == "select") {
                                     dataObj.Groups[i].Questions[j].Answers.length = 0;
                                     dataObj.Groups[i].Questions[j].Answers.push({ "index": 1, "value": event.currentTarget.value, "lastUpdate": today });
                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -2916,105 +2922,107 @@
                     break;
                 case "checkbox":
                     for (var i = 0; i < dataObj.Groups.length; i++) {
-                        for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
-                            if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "checkbox") {
-                                if (event.currentTarget.checked) {
-                                    for (var ic = 0; ic < dataObj.Groups[i].Questions[j].AnswerOptions.length; ic++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[ic].AnsText == event.currentTarget.value) {
-                                            dataObj.Groups[i].Questions[j].Answers[ic].value = true;
-                                            dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
-                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                        if (dataObj.Groups[i].GroupType == "normal") {
+                            for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
+                                if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "checkbox") {
+                                    if (event.currentTarget.checked) {
+                                        for (var ic = 0; ic < dataObj.Groups[i].Questions[j].AnswerOptions.length; ic++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[ic].AnsText == event.currentTarget.value) {
+                                                dataObj.Groups[i].Questions[j].Answers[ic].value = true;
+                                                dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            }
                                         }
-                                    }
-                                } else {
-                                    for (let cc = 0; cc < dataObj.Groups[i].Questions[j].AnswerOptions.length; cc++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[cc].AnsText == event.currentTarget.value) {
-                                            dataObj.Groups[i].Questions[j].Answers[cc].value = false;
-                                            dataObj.Groups[i].Questions[j].Answers[cc].lastUpdate = today;
-                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                            console.log("沒勾:" + dataObj.Groups[i].Questions[j].Answers);
+                                    } else {
+                                        for (let cc = 0; cc < dataObj.Groups[i].Questions[j].AnswerOptions.length; cc++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[cc].AnsText == event.currentTarget.value) {
+                                                dataObj.Groups[i].Questions[j].Answers[cc].value = false;
+                                                dataObj.Groups[i].Questions[j].Answers[cc].lastUpdate = today;
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                console.log("沒勾:" + dataObj.Groups[i].Questions[j].Answers);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else if (dataObj.Groups[i].Questions[j].QuestionType == "CheckboxMixFilling") {
-                                console.log("CheckboxMixFilling Checkbox")
-                                if (event.currentTarget.checked) {
-                                    for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.value) {
-                                            let Opt = y;
-                                            for (var m = 0; m < dataObj.Groups[i].Questions[j].Answers.length; m++) {
-                                                if (dataObj.Groups[i].Questions[j].Answers[m].index == dataObj.Groups[i].Questions[j].AnswerOptions[Opt].index) {
+                                else if (dataObj.Groups[i].Questions[j].QuestionType == "CheckboxMixFilling") {
+                                    console.log("CheckboxMixFilling Checkbox")
+                                    if (event.currentTarget.checked) {
+                                        for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.value) {
+                                                let Opt = y;
+                                                for (var m = 0; m < dataObj.Groups[i].Questions[j].Answers.length; m++) {
+                                                    if (dataObj.Groups[i].Questions[j].Answers[m].index == dataObj.Groups[i].Questions[j].AnswerOptions[Opt].index) {
 
-                                                    dataObj.Groups[i].Questions[j].Answers[m].value = true;
-                                                    dataObj.Groups[i].Questions[j].Answers[m].lastUpdate = today;
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                        dataObj.Groups[i].Questions[j].Answers[m].value = true;
+                                                        dataObj.Groups[i].Questions[j].Answers[m].lastUpdate = today;
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.value) {
+                                                for (var m = 0; m < dataObj.Groups[i].Questions[j].Answers.length; m++) {
+                                                    if (dataObj.Groups[i].Questions[j].Answers[m].index == dataObj.Groups[i].Questions[j].AnswerOptions[y].index) {
+                                                        dataObj.Groups[i].Questions[j].Answers[m].value = false;
+                                                        dataObj.Groups[i].Questions[j].Answers[m].lastUpdate = today;
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                } else {
-                                    for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.value) {
-                                            for (var m = 0; m < dataObj.Groups[i].Questions[j].Answers.length; m++) {
-                                                if (dataObj.Groups[i].Questions[j].Answers[m].index == dataObj.Groups[i].Questions[j].AnswerOptions[y].index) {
-                                                    dataObj.Groups[i].Questions[j].Answers[m].value = false;
-                                                    dataObj.Groups[i].Questions[j].Answers[m].lastUpdate = today;
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                } else if (dataObj.Groups[i].Questions[j].QuestionType == "RadioMixCheckbox") {
+                                    if (event.currentTarget.checked) {
+                                        for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.name) {
+                                                for (var x = 0; x < dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions.length; x++) {
+                                                    if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions[x].AnsText == event.currentTarget.value) {
+                                                        dataObj.Groups[i].Questions[j].Answers[y].Answers[x].value = true;
+                                                        console.log("dataObj.Groups[i].Questions[j].Answers[y].Answers[x].index:" + dataObj.Groups[i].Questions[j].Answers[y].Answers[x].index);
+                                                        dataObj.Groups[i].Questions[j].Answers[y].Answers[x].lastUpdate = today;
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.name) {
+                                                for (var x = 0; x < dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions.length; x++) {
+                                                    if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions[x].AnsText == event.currentTarget.value) {
+                                                        dataObj.Groups[i].Questions[j].Answers[y].Answers[x].value = false;
+                                                        dataObj.Groups[i].Questions[j].Answers[y].Answers[x].lastUpdate = today;
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            } else if (dataObj.Groups[i].Questions[j].QuestionType == "RadioMixCheckbox") {
-                                if (event.currentTarget.checked) {
-                                    for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.name) {
-                                            for (var x = 0; x < dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions.length; x++) {
-                                                if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions[x].AnsText == event.currentTarget.value) {
-                                                    dataObj.Groups[i].Questions[j].Answers[y].Answers[x].value = true;
-                                                    console.log("dataObj.Groups[i].Questions[j].Answers[y].Answers[x].index:" + dataObj.Groups[i].Questions[j].Answers[y].Answers[x].index);
-                                                    dataObj.Groups[i].Questions[j].Answers[y].Answers[x].lastUpdate = today;
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                                }
+                                else if (dataObj.Groups[i].Questions[j].QuestionType == "CheckboxMixImage") {
+                                    if (event.currentTarget.checked) {
+                                        for (var ic = 0; ic < dataObj.Groups[i].Questions[j].AnswerOptions.length; ic++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[ic].AnsText == event.currentTarget.value) {
+                                                dataObj.Groups[i].Questions[j].Answers[ic].value = true;
+                                                dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            }
+                                        }
+                                    } else {
+                                        for (let cc = 0; cc < dataObj.Groups[i].Questions[j].AnswerOptions.length; cc++) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[cc].AnsText == event.currentTarget.value) {
+                                                dataObj.Groups[i].Questions[j].Answers[cc].value = false;
+                                                dataObj.Groups[i].Questions[j].Answers[cc].lastUpdate = today;
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                console.log("沒勾:" + dataObj.Groups[i].Questions[j].Answers);
                                             }
                                         }
                                     }
-                                }
-                                else {
-                                    for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnsText == event.currentTarget.name) {
-                                            for (var x = 0; x < dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions.length; x++) {
-                                                if (dataObj.Groups[i].Questions[j].AnswerOptions[y].AnswerOptions[x].AnsText == event.currentTarget.value) {
-                                                    dataObj.Groups[i].Questions[j].Answers[y].Answers[x].value = false;
-                                                    dataObj.Groups[i].Questions[j].Answers[y].Answers[x].lastUpdate = today;
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else if (dataObj.Groups[i].Questions[j].QuestionType == "CheckboxMixImage") {
-                                if (event.currentTarget.checked) {
-                                    for (var ic = 0; ic < dataObj.Groups[i].Questions[j].AnswerOptions.length; ic++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[ic].AnsText == event.currentTarget.value) {
-                                            dataObj.Groups[i].Questions[j].Answers[ic].value = true;
-                                            dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
-                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                        }
-                                    }
-                                } else {
-                                    for (let cc = 0; cc < dataObj.Groups[i].Questions[j].AnswerOptions.length; cc++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[cc].AnsText == event.currentTarget.value) {
-                                            dataObj.Groups[i].Questions[j].Answers[cc].value = false;
-                                            dataObj.Groups[i].Questions[j].Answers[cc].lastUpdate = today;
-                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                            console.log("沒勾:" + dataObj.Groups[i].Questions[j].Answers);
-                                        }
-                                    }
-                                }
 
+                                }
                             }
                         }
                     }
@@ -3497,8 +3505,12 @@
                         RadioInput.setAttribute("checked", "true");
                     }
                 }
+
                 inputRadioBox.append(RadioInput);
                 inputRadioBox.append(RadioLabel);
+            }
+            if (DataObj.Groups[GroupSn].Questions[QusetionSn].hasOtherAnswers == true) {
+                normalTypeOther(DataObj, GroupSn, QusetionSn, Parent);
             }
             let newline = document.createElement('div');
             newline.classList.add("col-12")
@@ -3525,13 +3537,14 @@
                 CheckboxInput.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionText);
                 CheckboxInput.setAttribute("onchange", "changeJsonData(event)");
                 CheckboxInput.classList.add("mycheckbox", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID)
-                for (var asnc = 0; asnc < DataObj.Groups[GroupSn].Questions[QusetionSn].Answers.length; asnc++) {
-                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[asnc].value == true) {
-                        CheckboxInput.setAttribute("checked", "true");
-                    }
+                if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[ac].value == true) {
+                    CheckboxInput.setAttribute("checked", "true");
                 }
                 inputCheckbox.append(CheckboxInput);
                 inputCheckbox.append(CheckLabel);
+            }
+            if (DataObj.Groups[GroupSn].Questions[QusetionSn].hasOtherAnswers == true) {
+                normalTypeOther(DataObj, GroupSn, QusetionSn, Parent);
             }
             let newLine = document.createElement('div');
             newLine.classList.add("col-12");
@@ -3742,8 +3755,8 @@
                 ckboxInput.setAttribute("onclick", "DisabledTrue(event)");
                 ckboxInput.classList.add("CheckboxMixFilling", "mycheckbox", "mt-2", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
                 checkboxFillngBox.append(ckboxInput);
-                if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[acf].value == true) {
-                    ckboxInput.checked = true;
+                if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[acf].value) {
+                    ckboxInput.setAttribute("checked","true");
                 }
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[acf].AnsText.includes("##^")) {//有填空 填空部分
                     let AnsText = DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[acf].AnsText;//答案選項
@@ -3788,6 +3801,9 @@
                 fillingAns++;
                 optionAns = 0;
             }
+            if (DataObj.Groups[GroupSn].Questions[QusetionSn].hasOtherAnswers == true) {
+                normalTypeOther(DataObj, GroupSn, QusetionSn, Parent);
+            }
             let newLINEf = document.createElement('div');
             newLINEf.classList.add("col-12");
             Parent.append(newLINEf);
@@ -3817,7 +3833,7 @@
                 rcRadio.setAttribute("onchange", "changeJsonData(event)");//todo 檢查 父子值問題
                 rcRadio.setAttribute("onclick", "CleanOption(event)");
                 //跟答案比對 有的被選起來
-                if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[arc].value == true) {
+                if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[arc].value) {
                     console.log("北病" + DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[arc].value);
                     rcRadio.setAttribute("checked", "true");
                 }
@@ -3849,6 +3865,9 @@
                     ckOptionSpan.classList.add("pt-1", "ml-1")
                     RCinputBox.append(ckOptionSpan);
                 }
+                if (DataObj.Groups[GroupSn].Questions[QusetionSn].hasOtherAnswers == true) {
+                    normalTypeOther(DataObj, GroupSn, QusetionSn, Parent);
+                }
             }
         }
         function CreateNormalTypeRadioMixFilling(DataObj, GroupSn, QusetionSn, Parent) {
@@ -3874,8 +3893,8 @@
 
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers.length > 0) {
 
-                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[arf].value == true) {
-                        rfRadio.checked = true;
+                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[arf].value) {
+                        rfRadio.setAttribute("checked", "true");
                     }
                 }
                 rfRadfillBox.append(rfRadio);
@@ -3918,6 +3937,9 @@
                     rfLabel.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[arf].AnsText;
                     rfRadfillBox.append(rfLabel)
                 }
+                if (DataObj.Groups[GroupSn].Questions[QusetionSn].hasOtherAnswers == true) {
+                    normalTypeOther(DataObj, GroupSn, QusetionSn, Parent);
+                }
             }
 
         }
@@ -3956,105 +3978,29 @@
                     img.classList.add("col-10", "ml-5");
                     Parent.append(img)
                 }
+                if (DataObj.Groups[GroupSn].Questions[QusetionSn].hasOtherAnswers == true) {
+                    normalTypeOther(DataObj, GroupSn, QusetionSn, Parent);
+                }
             }
+        }
+        //normal 其他選項題型
+        function normalTypeOther(DataObj, GroupSn,QusetionSn,Parent) {
+            let otherSpan = document.createElement("span");
+            otherSpan.classList.add("pt-2");
+            otherSpan.innerText = "其他:"
+            Parent.append(otherSpan);
+            let other = document.createElement("input");
+            other.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionText);
+            other.setAttribute("type", "text");
+            other.setAttribute("onchange", "changeJsonData(event)");
+            if (DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer.length > 0) {
+                other.setAttribute("value", DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer[0].value);
+            }
+            other.classList.add("col-1", "form-control", "ml-1", "otherAns");
+            Parent.append(other);
         }
 
         //Table ColsMapQuestionTypeTemplate中會呼叫這個方法產出問題樣式
-        //Table 有分放在標頭(Card-header-固定欄位)跟放在下面的部分(Card-body會重複的部分)
-        function CreateTableTypeCardHeaderPartRadio(DataObj, GroupsSn, RowsSn) {
-            let headerRadioContainer = document.createElement("div");
-            headerRadioContainer.classList.add("headerRadioContainer", "d-inline", "ml-1");
-            for (var hRAnsOp = 0; hRAnsOp < DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions.length; hRAnsOp++) {
-                let headerRadio = document.createElement("input");
-                headerRadio.setAttribute("type", "radio");
-                headerRadio.setAttribute("value", DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[hRAnsOp].AnsText);
-                headerRadio.setAttribute("name", DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].QuestionID);
-                for (let v = 0; v < DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].Answers.length; v++) {
-                    if (DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[hRAnsOp].AnsText == DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].Answers[v].value) {
-                        headerRadio.checked = true;
-                    }
-                }
-                headerRadio.setAttribute("onchange", "changeTableJsonData(event)");
-                headerRadio.classList.add("myRadio", "ml-2");
-                headerRadio.style.left = 0;
-                headerRadioContainer.append(headerRadio);
-
-                let headerLabelRadio = document.createElement("label");
-                headerLabelRadio.innerText = DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[hRAnsOp].AnsText;
-                headerRadioContainer.append(headerLabelRadio);
-            }
-            return headerRadioContainer;
-
-        }
-        function CreateTableTypeCardHeaderPartCheckbox(DataObj, GroupsSn, RowsSn) {
-            let headercheckboxContainer = document.createElement("div");
-            headercheckboxContainer.classList.add("headercheckboxContainer", "d-inline", "ml-1");
-            for (var hrc = 0; hrc < DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions.length; hrc++) {
-                let hckbox = document.createElement("input");
-                hckbox.setAttribute("type", "checkbox");
-                hckbox.setAttribute("value", DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[hrc].AnsText);
-                hckbox.setAttribute("name", DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].QuestionID);
-                for (let w = 0; w < DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].Answers.length; w++) {
-                    if (DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].Answers[w].value == DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[hrc].AnsText) {
-                        hckbox.checked = true;
-                    }
-                }
-                hckbox.setAttribute("onchange", "changeTableJsonData(event)");
-                hckbox.classList.add("d-inline", "myCheckboxRc", "ml-3", "mr-2");
-                hckbox.style.top = 0;
-                headercheckboxContainer.append(hckbox);
-                let hcklabel = document.createElement("label");
-                hcklabel.innerText = DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[hrc].AnsText;
-                hcklabel.classList.add("d-inline");
-                headercheckboxContainer.append(hcklabel);
-
-            }
-            return headercheckboxContainer;
-        }
-        function CreateTableTypeCardHeaderPartDisplay(DataObj, GroupsSn, RowsSn) {
-            let txt = document.createElement("span");
-            txt.classList.add("pl-2");
-            txt.innerText = DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[0].AnsText;
-            return txt;
-        }
-        function CreateTableTypeCardHeaderPartFilling(DataObj, GroupsSn, RowsSn) {
-            let fillingbox = document.createElement("div");
-            fillingbox.classList.add("fillingbox", "d-flex", "justify-content-space");
-            let fillingtxts = DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[0].AnsText;
-            let fillingStr = fillingtxts.split("##");
-            let AnsSn = 0;
-            let index = AnsSn + 1;
-            for (var fs = 0; fs < fillingStr.length; fs++) {
-                if (fillingStr[fs].includes("^")) {
-                    let fillinfPlace = document.createElement("input");//有要填的地方放Input
-                    fillinfPlace.setAttribute("type", "text");
-                    fillinfPlace.setAttribute("onchange", "changeTableJsonData(event)");
-                    fillinfPlace.setAttribute("name", DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].AnswerOptions[0].AnsText + "_" + index);
-                    fillinfPlace.setAttribute("value", DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].Answers[0].value);
-                    if (DataObj.Groups[GroupsSn].Rows[RowsSn].Cols[0].Answers[0].value == null) {
-                        fillinfPlace.setAttribute("value", "");
-                    }
-                    fillinfPlace.classList.add("form-control", "form-control-user");
-                    AnsSn++;
-                    index++;
-                    fillingbox.append(fillinfPlace);
-                    let words = fillingStr[fs].substring(2);
-                    if (words != null) {
-                        let wds = document.createElement('div');
-                        wds.classList.add("ml-1", "mr-1", "pt-2");
-                        wds.innerText = words;
-                        fillingbox.append(wds);
-                    }
-                } else {
-                    let Words = document.createElement('div');
-                    Words.classList.add("ml-1", "mr-1", "pt-2");
-                    Words.innerText = fillingStr[fs];
-                    fillingbox.append(Words);
-                }
-            }
-            return fillingbox;
-
-        }
         //Table 放在會重複的部分(Card-body)
         function CreateTableTypeCardBodyPartText(DataObj, GroupsSn, RowsSn, ColsSn) {
             let container = document.createElement("div");

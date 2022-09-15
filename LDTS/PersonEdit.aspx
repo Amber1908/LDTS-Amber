@@ -139,7 +139,7 @@
                                                 <asp:Label ID="signNameEdit" runat="server" CssClass="custom-file-label">選擇簽名檔</asp:Label>
                                             </div>
                                             <div class="input-group-append">
-                                                <span class="input-group-text" onclick="showImg(event)">確認</span>
+                                                <span class="input-group-text" onclick="showImg(event)">上傳</span>
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +166,7 @@
                                                 <asp:Label ID="fileNameImgEdit" runat="server" CssClass="custom-file-label">選擇照片</asp:Label>
                                             </div>
                                             <div class="input-group-append">
-                                                <span class="input-group-text" onclick="showMug(event)">確認</span>
+                                                <span class="input-group-text" onclick="showMug(event)">上傳</span>
                                             </div>
                                         </div>
                                     </div>
@@ -215,6 +215,14 @@
                 MainContent_signName.innerText = "已選擇檔案:" + signNameUpload.value;
             }
         })
+        var FileUpload = document.getElementById("mainPlaceHolder_FileUpload");
+        FileUpload.addEventListener('change', function () {
+            if (FileUpload.value.length > 0) {
+                var fileNameImgEdit = document.getElementById("mainPlaceHolder_fileNameImgEdit");
+                fileNameImgEdit.innerText = "已選擇檔案:" + FileUpload.value;
+            }
+        })
+
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">

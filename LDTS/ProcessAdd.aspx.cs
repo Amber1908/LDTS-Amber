@@ -126,7 +126,8 @@ namespace LDTS
                 LDTSservice.InsertRecord(admin, "新增程序書:" + proName.Text);
                 AlertMsg.Text = "<script language='javascript'>alert('新增成功!');</script>";
                 this.Page.Controls.Add(AlertMsg);
-
+                Response.Write("<script type='text/javascript'>alert('新增成功!'); location.href ='Relation';</script>");
+                //Response.Redirect("Relation");
             }
 
         }
