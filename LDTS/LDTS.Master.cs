@@ -37,6 +37,13 @@ namespace LDTS
                 Ao.Visible = false;
                 RelationItem.Visible = false;
             }
+            if (!loginAdmin.admin_ao.Contains("admin"))
+            {
+                perDivider.Visible = false;
+                UnitDivider.Visible = false;
+                unitInfo.Visible = false;
+                perManagement.Visible = false;
+            }
             if (!IsPostBack)
             {
                 string sidebarMenuString = "";

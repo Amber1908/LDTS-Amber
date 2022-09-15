@@ -127,13 +127,15 @@ namespace LDTS.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
-                    sqlCommand.CommandText = @"INSERT INTO ReportAnswer ( QID,Title,ExtendName,Description,OutputJson,CreateMan,AppendFile,OutputTemplate,Status,Keyword,LastupMan) VALUES(@QID,@Title,@ExtendName,@Description,@OutputJson,@CreateMan,@AppendFile,@OutputTemplate,@Status,@Keyword,@LastupMan);SET @AID=SCOPE_IDENTITY()";
+                    sqlCommand.CommandText = @"INSERT INTO ReportAnswer ( QID,Title,ExtendName,Description,OutputJson,CreateMan,AppendFile,OutputTemplate,Status,Keyword,LastupMan,Version) VALUES(@QID,@Title,@ExtendName,@Description,@OutputJson,@CreateMan,@AppendFile,@OutputTemplate,@Status,@Keyword,@LastupMan,@Version);SET @AID=SCOPE_IDENTITY()";
                     sqlCommand.Parameters.AddWithValue("@QID", reportAnswer.QID);
                     sqlCommand.Parameters.AddWithValue("@Description", reportAnswer.Description);
                     sqlCommand.Parameters.AddWithValue("@Title", reportAnswer.Title);
                     sqlCommand.Parameters.AddWithValue("@ExtendName", reportAnswer.ExtendName);
                     sqlCommand.Parameters.AddWithValue("@OutputJson", reportAnswer.OutputJson);
                     sqlCommand.Parameters.AddWithValue("@CreateMan", reportAnswer.CreateMan);
+                    sqlCommand.Parameters.AddWithValue("@Version", reportAnswer.Version);
+
                     if (reportAnswer.Keyword == null)
                     {
                         sqlCommand.Parameters.AddWithValue("@Keyword", DBNull.Value);

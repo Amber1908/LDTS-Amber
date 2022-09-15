@@ -204,6 +204,14 @@
                 img.src = Url;
             }
         }
+        var FileUpload = document.getElementById("mainPlaceHolder_FileUpload");
+        FileUpload.addEventListener('change', function () {
+            if (FileUpload.value.length > 0) {
+                var fileNameImgEdit = document.getElementById("mainPlaceHolder_fileNameImgEdit");
+                fileNameImgEdit.innerText = "已選擇檔案:" + FileUpload.value;
+            }
+        })
+
         var signNameUpload = document.getElementById("mainPlaceHolder_signNameUpload");
         signNameUpload.addEventListener('change', function () {
             if (signNameUpload.value.length > 0) {

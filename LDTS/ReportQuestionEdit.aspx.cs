@@ -118,6 +118,8 @@ namespace LDTS
             ReportAnswer reportAnswer = new ReportAnswer();
             Admin loginAdmin = (Admin)Session["LDTSAdmin"];
             int ReportQuestionId = Convert.ToInt32(Request.QueryString["qid"]);//Insert
+            ReportQuestion question = ReportQuestiovService.GetReportQuestions(Request.QueryString["qid"]);
+
             int ReportQuestionSqid = Convert.ToInt32(Request.QueryString["sqid"]);
             int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);//Update
             if (ReportQuestionId != 0)
@@ -132,6 +134,7 @@ namespace LDTS
                 reportAnswer.Status = Convert.ToInt32(Stauts.Value);
                 reportAnswer.Keyword = keyword.Value;
                 reportAnswer.LastupMan = loginAdmin.admin_name;
+                reportAnswer.Version = question.Version;//新增是最新的版本號
                 int aid = ReportAnswerService.InsertReportAnswer(reportAnswer);
                 if (aid != 0)
                 {

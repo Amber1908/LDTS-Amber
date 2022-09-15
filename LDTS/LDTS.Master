@@ -47,12 +47,12 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             
-                            <div class="dropdown-divider"></div>
-                            <a href="PersonnelManagement.aspx" class="dropdown-item">
+                            <div id="perDivider" runat="server" class="dropdown-divider"></div>
+                            <a id="perManagement" runat="server" href="PersonnelManagement.aspx" class="dropdown-item">
                                 <i class="fa fa-solid fa-user mr-1"></i>人員管理
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="Unit.aspx" class="dropdown-item">
+                            <div id="UnitDivider" runat="server" class="dropdown-divider"></div>
+                            <a id="unitInfo"  runat="server" href="Unit.aspx" class="dropdown-item">
                                 <i class="fas fa-users mr-2"></i>單位資訊
                             </a>
                             <div id="FormDivider" class="formAo dropdown-divider" runat="server"></div>
