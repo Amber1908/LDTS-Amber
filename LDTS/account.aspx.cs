@@ -31,6 +31,18 @@ namespace LDTS
                     formManagement.Checked = true;
                     formManagement.Enabled = false;
                 }
+                else if (admin.admin_ao.Contains("admin"))
+                {
+                    personnalManagement.Enabled = false;
+                    formManagement.Enabled = false;
+                    personnalManagement.Checked = true;
+                }
+                else if (admin.admin_ao.Contains("form"))
+                {
+                    formManagement.Checked = true;
+                    formManagement.Enabled = false;
+                    personnalManagement.Enabled = false;
+                }
                 //大頭照
                 Images mug = LDTSservice.GetImageById(admin.admin_image);
                 Mug.ImageUrl = "ShowAdminImg.aspx?id=" + mug.image_id;
