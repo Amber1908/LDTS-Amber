@@ -149,7 +149,6 @@ namespace LDTS
                     //程序書
                     sidebarMenuString += "</li>";
                     sidebarMenuString += "</ul>";
-
                 }
                 SidebarMenu.InnerHtml = sidebarMenuString;
             }
