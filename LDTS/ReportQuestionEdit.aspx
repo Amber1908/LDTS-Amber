@@ -33,7 +33,7 @@
                             </div>
                             <div class="ansExtendName form-group">
                                 <label for="ExtendName" style="font-size: 12px; color: #00000080">自訂義名稱</label>
-                                <input type="text" runat="server" id="ExtendName" class="form-control form-control-border" value="未命名" />
+                                <input type="text" runat="server" id="ExtendName" class="form-control form-control-border" value=" " />
                             </div>
                             <div class="ansKeyword form-group">
                                 <label for="keyword" style="font-size: 12px; color: #00000080">關鍵字設定</label>
