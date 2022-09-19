@@ -14,7 +14,6 @@ namespace LDTS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["MsgResult"] = "NoMsg";
             int id = Convert.ToInt32(Request.QueryString["pid"]);
             Process process = new Process();
             process = ProcessService.GetProceById(id);
@@ -124,10 +123,7 @@ namespace LDTS
                     return;
                 }
                 LDTSservice.InsertRecord(admin, "新增程序書:" + proName.Text);
-                AlertMsg.Text = "<script language='javascript'>alert('新增成功!');</script>";
-                this.Page.Controls.Add(AlertMsg);
                 Response.Write("<script type='text/javascript'>alert('新增成功!'); location.href ='Relation';</script>");
-                //Response.Redirect("Relation");
             }
 
         }

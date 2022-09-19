@@ -135,6 +135,11 @@ namespace LDTS
                 reportAnswer.Keyword = keyword.Value;
                 reportAnswer.LastupMan = loginAdmin.admin_name;
                 reportAnswer.Version = question.Version;//新增是最新的版本號
+                List<ReportQuestionFile> files = ReportQuestiovService.GetReportQuestionFile(ReportQuestionId.ToString(), question.Version);
+                if (files!=null)
+                {
+                    reportAnswer.OutputTemplate = files[0].TemplateFile;
+                }
                 int aid = ReportAnswerService.InsertReportAnswer(reportAnswer);
                 if (aid != 0)
                 {
@@ -226,6 +231,29 @@ namespace LDTS
                 Literal AlertMsg = new Literal();
                 AlertMsg.Text = "<script language='javascript'>alert('目前沒有表單列印範本!!!');</script>";
                 this.Page.Controls.Add(AlertMsg);
+            }
+        }
+
+        protected void Deletebtn_Click(object sender, EventArgs e)
+        {
+            Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+
+            string ReportAnswerId = Request.QueryString["aid"];
+            ReportAnswer answer = ReportAnswerService.GetReportAnswer(ReportAnswerId);
+            if (answer != null)
+            {
+                if (ReportAnswerService.DeleteReportAnswer(ReportAnswerId))
+                {
+                    int qid = answer.QID;
+                    ReProcessQuestion reProcessQuestion = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == qid).First();
+
+
+                    LDTSservice.InsertRecord(loginAdmin,"刪除表單"+ answer.ExtendName);
+                    string url = "Process?pid=" + reProcessQuestion.PID;
+                    Response.Write("<script type='text/javascript'>alert('刪除表單成功!'); location.href ='"+ url +"'</script>");
+
+
+                }
             }
         }
     }

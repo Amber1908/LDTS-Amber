@@ -85,8 +85,12 @@ namespace LDTS
                 Processstring += "<span class=\"d-flex justify-content-end\">";
                 Processstring += "<a style=\"text-decoration:none; position: absolute \" href=\"";//
                 Processstring += "ProcessEdit?pid="+ process.PID+"\">";
-                Processstring += "<i style=\"position: relative; top: -5px;\" class=\"fas fa-edit\"></i>";
+                Processstring += "<i style=\"position: relative; top: -5px;right:20px\" class=\"fas fa-edit\"></i>";
                 Processstring += "</a>";
+                Processstring += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";
+                Processstring += "DeleteRelation.aspx?pid="+process.PID;//刪除
+                Processstring += "\"style=\"text-decoration:none\">";
+                Processstring += string.Format("<i style=\"position: relative; top: -5px;\" class=\"fas fa-trash {0}\"></i></a>", process.PID == pid ? "Active" : " ");
                 Processstring += "</span>";
                 Processstring += "</div>";//card-header
                 Processstring += "<div class=\"card-body\">";//card-body

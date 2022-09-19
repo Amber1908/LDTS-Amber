@@ -20,7 +20,7 @@ namespace LDTS
         static readonly Logger logger = new Logger("OutputWord");
 
         public void ProcessRequest(HttpContext context)
-        {
+       {
             string AID = context.Request["AID"];
             string new_filename = PublicUtil.GenFilename(".docx");
             string new_filepath = HttpContext.Current.Server.MapPath("~/Template/") + new_filename;
