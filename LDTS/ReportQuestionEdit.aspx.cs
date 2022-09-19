@@ -158,6 +158,7 @@ namespace LDTS
             else if (ReportAnswerId != 0)
             {
                 //原本的版本號
+                ReportAnswer answer = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString());
                 reportAnswer.Version = FormService.GetReportAnswerById(ReportAnswerId).Version.ToString();
                 reportAnswer.AID = ReportAnswerId;
                 reportAnswer.Title = Qtitle.Text;
@@ -168,6 +169,7 @@ namespace LDTS
                 reportAnswer.AppendFile = AppendFile.Value;
                 reportAnswer.Keyword = keyword.Value;
                 reportAnswer.LastupMan = loginAdmin.admin_name;
+                reportAnswer.OutputTemplate = answer.OutputTemplate;
                 DateTime thisDay = DateTime.Now;
                 reportAnswer.LastupDate = thisDay;
                 if (ReportAnswerService.UpdateReportAnswer(reportAnswer))
