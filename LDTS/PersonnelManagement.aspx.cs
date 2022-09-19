@@ -51,7 +51,7 @@ namespace LDTS
             {
                 ao = "form";
             }
-            //狀態
+            //狀態 1是正常 0是停用 停用只能瀏覽表單
             if (statusSetNormal.Checked)
             {
                 status = 1;

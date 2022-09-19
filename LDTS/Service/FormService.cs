@@ -85,7 +85,7 @@ namespace LDTS.Service
                         reportAnswer.CreateMan = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("CreateMan")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("CreateMan"));
                         reportAnswer.Version = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Version")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("Version"));
                         reportAnswer.Status = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Status")) ? 0 : sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("Status"));
-
+                        reportAnswer.Keyword = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("Keyword")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("Keyword"));
                     }
                     sqc.Close();
                 }

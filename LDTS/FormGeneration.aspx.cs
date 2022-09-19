@@ -27,18 +27,22 @@ namespace LDTS
                     }
                     List<ReportQuestionFile> vers = ReportQuestiovService.GetAllReportFilesById(Convert.ToInt32(Request["QID"])); ;
                     string verStr = "";
-                    verStr += "<label for=\"Ver\" class=\"d-block\">下載表單列印範本</label>";
-                    verStr += "<select id=\"Ver\" class=\"form-control d-inline\" onchange=\"changeVer()\" style=\"width:75%\">";
-                    //<a href=\"/Upload/" + ver.TemplateFile + "\">"
-                    foreach (var ver in vers)
+                    if (vers.Count > 0)
                     {
-                        //版本號
-                        verStr += "<option value=\""+ "/Upload/" + ver.TemplateFile+"\">"+ver.Version+ "</option>";
+                        verStr += "<label for=\"Ver\" class=\"d-block\">下載表單列印範本</label>";
+                        verStr += "<select id=\"Ver\" class=\"form-control d-inline\" onchange=\"changeVer()\" style=\"width:75%\">";
+                        //<a href=\"/Upload/" + ver.TemplateFile + "\">"
+                        foreach (var ver in vers)
+                        {
+                            //版本號
+                            verStr += "<option value=\"" + "/Upload/" + ver.TemplateFile + "\">" + ver.Version + "</option>";
+                        }
+                        verStr += "</select>";
+                        verStr += "<a class=\"ml-3 btn btn-info\" id=\"downloadVer\" href=\"";
+                        verStr += vers.Count > 0 ? "/Upload/" + vers[0].TemplateFile : "#";
+                        verStr += "\">下載</a>";
                     }
-                    verStr += "</select>";
-                    verStr += "<a class=\"ml-3 btn btn-info\" id=\"downloadVer\" href=\"";
-                    verStr += vers.Count>0?"/Upload/" + vers[0].TemplateFile:"#";
-                    verStr += "\">下載</a>";
+
                     VersGroup.InnerHtml = verStr;
                 }
 

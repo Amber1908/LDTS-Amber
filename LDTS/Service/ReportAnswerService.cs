@@ -298,6 +298,30 @@ namespace LDTS.Service
             }
             return reportAnswers;
         }
-
+        /// <summary>
+        /// 刪除單筆表單
+        /// </summary>
+        public static bool DeleteReportAnswer(string AID)
+        {
+            bool result = false;
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("", sqc);
+                    sqc.Open();
+                    sqlCommand.CommandText = @"DELETE from ReportAnswer WHERE AID=@AID ";
+                    sqlCommand.Parameters.Add("@AID", System.Data.SqlDbType.NVarChar);
+                    sqlCommand.Parameters["@AID"].Value = AID;
+                    if (sqlCommand.ExecuteNonQuery() > 0)
+                        result = true;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.ERROR(e.Message);
+            }
+            return result;
+        }
     }
 }

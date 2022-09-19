@@ -39,9 +39,13 @@ namespace LDTS
             Admin admin = new Admin();
             string account = accountTextbox.Text;
             string password = passwordTextBox1.Text;
+            if (account==string.Empty)
+            {
+                return;
+            }
             bool isUpdatePsw = false;
             admin = PersonnelManagementService.GetAdminById(account);
-            if (admin == null)
+            if (admin== null)
             {
                 msgLiteral.Text = "帳戶不存在!";
                 accountTextbox.Focus();
@@ -65,6 +69,7 @@ namespace LDTS
                 if (checkedPassword != admin.admin_password)
                 {
                     passwordTextBox1.Focus();
+                    msgLiteral.Text = "密碼錯誤!";
                     return;
                 }
             }

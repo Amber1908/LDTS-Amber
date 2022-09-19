@@ -44,7 +44,7 @@
                             <div class="personnelManagementIfoStatus form-group">
                                 <label for="status" style="font-size: 12px; color: #00000080">人員狀態</label>
                                 <asp:RadioButton ID="statusSetNotWork" CssClass="ml-3 mr-3" runat="server" GroupName="status" Text="停用" TabIndex="0" />
-                                <asp:RadioButton ID="statusSetNormal" CssClass="mr-3" runat="server" GroupName="status" Text="正常" TabIndex="1" />
+                                <asp:RadioButton ID="statusSetNormal" CssClass="mr-3" runat="server" GroupName="status" Text="正常" TabIndex="1" Checked/>
                             </div>
                             <div class="personnelManagementIfoMemo form-group">
                                 <label for="memoTextbox" style="font-size: 12px; color: #00000080">備註</label>
@@ -138,7 +138,7 @@
                                                 <asp:Label ID="signNameEdit" runat="server" CssClass="custom-file-label">選擇簽名檔</asp:Label>
                                             </div>
                                             <div class="input-group-append">
-                                                <span class="input-group-text" onclick="showImg(event)">確認</span>
+                                                <span class="input-group-text" onclick="showImg(event)">上傳</span>
                                             </div>
                                         </div>
                                     </div>
@@ -164,7 +164,7 @@
                                                 <asp:Label ID="fileNameImgEdit" runat="server" CssClass="custom-file-label">選擇照片</asp:Label>
                                             </div>
                                             <div class="input-group-append">
-                                                <span class="input-group-text" onclick="showMug(event)">確認</span>
+                                                <span class="input-group-text" onclick="showMug(event)">上傳</span>
                                             </div>
                                         </div>
                                     </div>

@@ -117,11 +117,9 @@ namespace LDTS
                     return;
 
                 }
-                LDTSservice.InsertRecord(admin, "新增程序書:" + sName.Text);
-                AlertMsg.Text = "<script language='javascript'>alert('新增成功!');</script>";
-                this.Page.Controls.Add(AlertMsg);
+                LDTSservice.InsertRecord(admin, "新增標準作業書:" + sName.Text);
+                Response.Write("<script type='text/javascript'>alert('新增成功!'); location.href ='Relation';</script>");
             }
-
         }
     }
 }

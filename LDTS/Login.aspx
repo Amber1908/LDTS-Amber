@@ -26,15 +26,17 @@
             <div class="card">
                 <div class="card-body login-card-body">
                     <p class="login-box-msg">Sign in to start your session</p>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="accountTextbox" Display="Dynamic" ErrorMessage="請填帳號!" ForeColor="Red"></asp:RequiredFieldValidator>
                     <div class="input-group mb-3">
                         <asp:TextBox ID="accountTextbox" CssClass="form-control form-control-user" placeholder="帳號" runat="server" ToolTip="請輸入帳號"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="accountTextbox" Display="Dynamic" ErrorMessage="請填帳號!" ForeColor="Red"></asp:RequiredFieldValidator>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
                             </div>
                         </div>
                     </div>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="請輸入密碼!" ControlToValidate="passwordTextBox1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="密碼格式錯誤!" ControlToValidate="passwordTextBox1" Display="Dynamic" ForeColor="Red" ValidationExpression="^[a-zA-Z\d]{4}$"></asp:RegularExpressionValidator>
                     <div class="input-group mb-3">
                         <asp:TextBox ID="passwordTextBox1" TextMode="Password" CssClass="form-control" placeholder="密碼" runat="server" ToolTip="請輸入密碼"></asp:TextBox>
                         <div class="input-group-append">
@@ -58,7 +60,6 @@
                             <asp:Button ID="loginButton1" CssClass="btn btn-primary btn-block" runat="server" Text="登入" OnClick="loginButton1_Click" />
                         </div>
                         <font color="Red"><asp:Literal ID="msgLiteral" runat="server"></asp:Literal></font>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="請輸入密碼!" ControlToValidate="passwordTextBox1" Display="Dynamic" ForeColor="Red"></asp:RequiredFieldValidator>
                         <!-- /.col -->
                     </div>
                 </div>

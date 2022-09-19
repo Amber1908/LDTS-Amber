@@ -34,15 +34,15 @@
                         <div class="row">
                             <table class="col-md-9" cellpadding="5">
                                 <tr>
-                                    <td width="60%">
+                                    <td width="50%">
                                         <div class="form-group">
                                             <label for="FormTitle">表單名稱</label>
                                             <asp:TextBox ID="FormTitle" runat="server" CssClass="form-control" placeholder="表單名稱"></asp:TextBox>
                                         </div>
                                     </td>
-                                    <td width="15%">
+                                    <td width="30%">
                                         <div class="form-group">
-                                            <label for="Version">表單版本</label>
+                                            <label for="Version">表單版本<span style="color:red">(上傳新範本時，請記得更換)</span></label>
                                             <asp:TextBox ID="Version" runat="server" CssClass="form-control" Text="1.0"></asp:TextBox>
                                         </div>
                                     </td>

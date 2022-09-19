@@ -37,7 +37,7 @@
                             </div>
                             <div class="ansKeyword form-group">
                                 <label for="keyword" style="font-size: 12px; color: #00000080">關鍵字設定</label>
-                                <input type="text" runat="server" id="keyword" class="form-control form-control-border" value="" />
+                                <input type="text" runat="server" id="keyword" class="form-control form-control-border" />
                             </div>
                             <div class="ansStatus form-group">
                                 <label for="Stauts" style="font-size: 12px; color: #00000080">表單狀態</label>
@@ -56,6 +56,7 @@
                             <div class="ansSave form-group float-right">
                                 <asp:Button runat="server" ID="Printbtn" CssClass="btn btn-danger" Text="列印" OnClick="Printbtn_Click" />
                                 <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary" Text="儲存" OnClick="SaveButton_Click" />
+                                <asp:Button runat="server" ID="Deletebtn" CssClass="btn btn-default" Text="刪除" OnClick="Deletebtn_Click" />
                             </div>
                         </div>
                     </div>
@@ -949,7 +950,7 @@
                                     switch (Obj.Groups[i].Rows[w].Cols[c].QuestionType) {
                                         case "file":
                                         case "image":
-                                            tampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value+"</span>";
+                                            tampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "</span>";
                                             tampleteStr += "<a  class=\"ml-1 btn btn-default btn-sm download\" href=\"Upload/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value +"\">";
                                             tampleteStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
                                             tampleteStr += "</a>";
@@ -988,7 +989,7 @@
                                             }
                                             break;
                                         case "sign":
-                                            if (Obj.Groups[i].Rows[w].Cols[c].Answers[0].value != 0) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].Answers[0].value != null && Obj.Groups[i].Rows[w].Cols[c].Answers[0].value !=0) {
                                                 let time = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].lastUpdate);
                                                 let strTime = time.Format("yyyy-MM-dd");
                                                 tampleteStr += "<img style=\"width:20%\" id=\"sign\" src=\"" + "ShowAdminImg.aspx?id=" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
@@ -1102,6 +1103,47 @@
             let Obj = GetJsonData();
             let i = event.currentTarget.dataset.gid;
             let w = event.currentTarget.dataset.row;
+            var ao = document.getElementById("mainPlaceHolder_Ao");
+            //switch (ao.value) {
+            //    case "2":
+            //        break;
+            //    case "1":
+            //        var allsign = document.getElementsByClassName("Signbtn");
+            //        for (var s = 0; s < allsign.length; s++) {
+            //            console.log(allsign.length);
+            //            allsign[s].classList.add("d-none");
+            //        }
+            //        break;
+            //    case "0":
+            //        var allinputs = document.getElementsByTagName("input");
+            //        var allsign = document.getElementsByClassName("Signbtn");
+            //        var downloads = document.getElementsByClassName("download");
+            //        var selects = document.getElementsByTagName("select");
+            //        var txtbox = document.getElementsByTagName("textarea");
+            //        console.log(allsign.length);
+            //        for (var s = 0; s < txtbox.length; s++) {
+            //            txtbox[s].disabled = true;
+            //        }
+            //        for (var s = 0; s < selects.length; s++) {
+            //            selects[s].disabled = true;
+            //        }
+            //        for (var s= 0; s < downloads.length; s++) {
+            //            downloads[s].classList.add("d-none");
+            //        }
+            //        for (var s = 0; s < allsign.length; s++) {
+            //            allsign[s].classList.add("d-none");
+            //        }
+            //        for (var s = 0; s< allinputs.length; s++) {
+            //            console.log(allinputs[s].type);
+            //            //inputBrothers[d].disabled = true;
+            //            allinputs[s].disabled = true;
+            //        }
+            //        savebtn.classList.add("d-none");
+            //        Printbtn.classList.add("d-none");
+            //        break;
+            //    default:
+            //}
+
             console.log("isInsert:" + isInsert)
             //新增的modle
             if (isInsert == "true") {
@@ -1120,23 +1162,25 @@
                             let today = time.getFullYear() + "-" + Number(time.getMonth() + 1);
                             today += "-" + time.getDate();
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
-                            insertBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
-                            insertBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\"  onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
-                            insertBodyStr += "簽核";
-                            insertBodyStr += "</div>";
-                            insertBodyStr += "<div class=\"ml-5  SignImageBox d-none\">";//SignImageBox
-                            insertBodyStr += "<img style=\"height:80px\" src=\"";//img
-                            insertBodyStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
-                            insertBodyStr += "id=\"sign" + signImgID + "\"";
-                            insertBodyStr += "class=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID;
-                            insertBodyStr += "\"name=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID;
-                            insertBodyStr += "\">";//img
-                            insertBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID;
-                            insertBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
-                            insertBodyStr += today;
-                            insertBodyStr += "</span>";
-                            insertBodyStr += "</div>";//SignImageBox
-                            insertBodyStr += "</div>";
+                            if (ao.value == 2) {
+                                insertBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
+                                insertBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\"  onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                insertBodyStr += "簽核";
+                                insertBodyStr += "</div>";
+                                insertBodyStr += "<div class=\"ml-5  SignImageBox d-none\">";//SignImageBox
+                                insertBodyStr += "<img style=\"height:80px\" src=\"";//img
+                                insertBodyStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
+                                insertBodyStr += "id=\"sign" + signImgID + "\"";
+                                insertBodyStr += "class=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                insertBodyStr += "\"name=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                insertBodyStr += "\">";//img
+                                insertBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                insertBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
+                                insertBodyStr += today;
+                                insertBodyStr += "</span>";
+                                insertBodyStr += "</div>";//SignImageBox
+                                insertBodyStr += "</div>";
+                            }
                             break;
                         case "date":
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1438,52 +1482,91 @@
                             let today = time.getFullYear() + "/" + Number(time.getMonth() + 1);
                             today += "/" + time.getDate();
                             if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
-                                updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
-                                updateBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
-                                updateBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"" + Obj.Groups[i].GroupID+"#"+w+"\" onchange=\"changeTableJsonData(event)\"  onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                if (Obj.Groups[i].Rows[w].Cols[r].Answers[0].value != null && Obj.Groups[i].Rows[w].Cols[r].Answers[0].value != 0) {
+                                    updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
+                                    if (ao.value == 2) {
+                                        updateBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
+                                        updateBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"" + Obj.Groups[i].GroupID + "#" + w + "\" onchange=\"changeTableJsonData(event)\"  onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                        updateBodyStr += "取消簽核";
+                                        updateBodyStr += "</div>";
+                                        updateBodyStr += "<div class=\"ml-5  SignImageBox \">";//SignImageBox
+                                        updateBodyStr += "<img style=\"height: 80px\" src=\"";//img
+                                        updateBodyStr += "ShowAdminImg.aspx?id=" + Obj.Groups[i].Rows[w].Cols[r].Answers[0].value + "\"";
+                                        updateBodyStr += "id=\"sign" + signImgID + "\"";
+                                        updateBodyStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\">";//img
+                                        updateBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
+                                        updateBodyStr += today;
+                                        updateBodyStr += "</span>";
+                                        updateBodyStr += "</div>";//SignImageBox
+                                        updateBodyStr += "</div>";
+                                    } else {
+                                        updateBodyStr += "<div class=\"ml-5  SignImageBox \">";//SignImageBox
+                                        updateBodyStr += "<img style=\"height: 80px\" src=\"";//img
+                                        updateBodyStr += "ShowAdminImg.aspx?id=" + Obj.Groups[i].Rows[w].Cols[r].Answers[0].value + "\"";
+                                        updateBodyStr += "id=\"sign" + signImgID + "\"";
+                                        updateBodyStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\">";//img
+                                        updateBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
+                                        updateBodyStr += today;
+                                        updateBodyStr += "</span>";
+                                        updateBodyStr += "</div>";//SignImageBox
+                                        updateBodyStr += "</div>";
 
-                                updateBodyStr += "取消簽核";
-                                updateBodyStr += "</div>";
-                                updateBodyStr += "<div class=\"ml-5  SignImageBox \">";//SignImageBox
-                                updateBodyStr += "<img src=\"";//img
-                                updateBodyStr += "ShowAdminImg.aspx?id=" + Obj.Groups[i].Rows[w].Cols[r].Answers[0].value + "\"";
-                                updateBodyStr += "id=\"sign" + signImgID + "\"";
-                                updateBodyStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
-                                updateBodyStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
-                                updateBodyStr += "\">";//img
-                                updateBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
-                                updateBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
-                                updateBodyStr += today;
-                                updateBodyStr += "</span>";
-                                updateBodyStr += "</div>";//SignImageBox
-                                updateBodyStr += "</div>";
-
+                                    }
+                                } else {
+                                    updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
+                                    if (ao.value == 2) {
+                                        updateBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
+                                        updateBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"" + Obj.Groups[i].GroupID + "#" + w + "\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                        updateBodyStr += "簽核";
+                                        updateBodyStr += "</div>";
+                                        updateBodyStr += "<div class=\"ml-5  SignImageBox d-none\">";//SignImageBox
+                                        updateBodyStr += "<img style=\"height: 80px\" src=\"";//img
+                                        updateBodyStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
+                                        updateBodyStr += "id=\"sign" + signImgID + "\"";
+                                        updateBodyStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\">";//img
+                                        updateBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                        updateBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
+                                        updateBodyStr += today;
+                                        updateBodyStr += "</span>";
+                                        updateBodyStr += "</div>";//SignImageBox
+                                        updateBodyStr += "</div>";
+                                    } 
+                                }
                             } else {
                                 updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
-                                updateBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
-                                updateBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\"  onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
-                                updateBodyStr += "簽核";
-                                updateBodyStr += "</div>";
-                                updateBodyStr += "<div class=\"ml-5  SignImageBox d-none\">";//SignImageBox
-                                updateBodyStr += "<img src=\"";//img
-                                updateBodyStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
-                                updateBodyStr += "id=\"sign" + signImgID + "\"";
-                                updateBodyStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
-                                updateBodyStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
-                                updateBodyStr += "\">";//img
-                                updateBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
-                                updateBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
-                                updateBodyStr += today;
-                                updateBodyStr += "</span>";
-                                updateBodyStr += "</div>";//SignImageBox
-                                updateBodyStr += "</div>";
-
+                                if (ao.value == 2) {
+                                    updateBodyStr += "<div class=\"col-12 pt-2 SignBoxRow\">";
+                                    updateBodyStr += "<div data-Staut=\"Edit\" data-GidandRow=\"" + Obj.Groups[i].GroupID + "#" + w + "\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
+                                    updateBodyStr += "簽核";
+                                    updateBodyStr += "</div>";
+                                    updateBodyStr += "<div class=\"ml-5  SignImageBox d-none\">";//SignImageBox
+                                    updateBodyStr += "<img style=\"height: 80px\" src=\"";//img
+                                    updateBodyStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
+                                    updateBodyStr += "id=\"sign" + signImgID + "\"";
+                                    updateBodyStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                    updateBodyStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                    updateBodyStr += "\">";//img
+                                    updateBodyStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID;
+                                    updateBodyStr += "\" class=\"d-flex justify-content-center signDate\">";
+                                    updateBodyStr += today;
+                                    updateBodyStr += "</span>";
+                                    updateBodyStr += "</div>";//SignImageBox
+                                    updateBodyStr += "</div>";
+                                } 
                             }
                             break;
                         case "date":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             updateBodyStr += "<input type=\"date\"onchange=\"changeTableJsonData(event)\" class=\"Upload form-control mb-3\"name=\"";
-                            updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                            updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\"";
                             if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
                                 let time = new Date(Obj.Groups[i].Rows[w].Cols[r].Answers[0].value);
                                 time= time.Format("yyyy-MM-dd");
@@ -1860,6 +1943,7 @@
         function Update(event) {
             const dataObj = GetJsonData();
             //img
+            let today = new Date().getTime();
 
             let GroupId = event.currentTarget.id;
             let imgs = event.currentTarget.parentNode.parentNode.getElementsByTagName("img");
@@ -1878,12 +1962,10 @@
                                 dataObj.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": sid, "lastUpdate": today });
                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
 
-                            } else {
+                            } else if (dataObj.Groups[i].Rows[sn].Cols[c].QuestionID == imgs[m].name && SignImageBox[m].classList.contains("d-none")){
                                 dataObj.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
                                 dataObj.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": null });
                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-
-
                             }
                         }
                     }
@@ -2016,7 +2098,10 @@
                                 sid = sid.substring(4);
                                 console.log("img" + sid);
                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": sid, "lastUpdate": today });
-                            }
+                            } else if (dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID == imgs[m].name && SignImageBox[m].classList.contains("d-none")) {
+                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
+                                dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": null, "lastUpdate": today });
+                            } 
                         }
                     }
                 }
@@ -2451,7 +2536,8 @@
                         console.log("dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID" + dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID)
                         let row = lastRow + 1;
                         let col = c + 1;
-                        dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID = dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID + row + col;
+                        let time = new Date().getMilliseconds();
+                        dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID = dataObj2.Groups[i].Rows[lastRow].Cols[c].QuestionID + row + col + time;
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                     }
                 }
@@ -2469,13 +2555,20 @@
             var dataObj = GetJsonData();
             let gid = event.currentTarget.dataset.gid;
             let row = Number(event.currentTarget.dataset.row);
+            if (row == 1 && dataObj.Groups[gid].Rows.length==2) {
+                for (var i = 0; i < dataObj.Groups[gid].Rows[row].Cols.length; i++) {
+                    dataObj.Groups[gid].Rows[row].Cols[i].Answers.length = 0;
+                }
+                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
 
-            dataObj.Groups[gid].Rows.splice(row, 1);
-            for (var i = 0; i < dataObj.Groups[gid].Rows.length; i++) {
-                dataObj.Groups[gid].Rows[i], index = i + 1;
+            } else {
+                dataObj.Groups[gid].Rows.splice(row, 1);
+                for (var i = 0; i < dataObj.Groups[gid].Rows.length; i++) {
+                    dataObj.Groups[gid].Rows[i], index = i + 1;
+                }
+                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+
             }
-            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-
             let allRow = document.querySelectorAll(".rowPart");
             for (var i = 0; i < allRow.length; i++) {
                 allRow[i].innerHTML = "";
@@ -2904,7 +2997,6 @@
                                     console.log("RadioMixFilling Filling")
                                     for (var ansO = 0; ansO < dataObj.Groups[i].Questions[j].AnswerOptions.length; ansO++) {
                                         if (dataObj.Groups[i].Questions[j].AnswerOptions[ansO].AnsText == ansValue[0]) {
-
                                             for (var f = 0; f < dataObj.Groups[i].Questions[j].Answers[ansO].Answers.length; f++) {
                                                 if (dataObj.Groups[i].Questions[j].Answers[ansO].Answers[f].index == ansValue[1]) {
                                                     console.log("RadioMixFilling Filling2")
@@ -3054,6 +3146,10 @@
                                         } else {
                                             dataObj.Groups[i].Questions[j].Answers[rc].value = false;
                                             dataObj.Groups[i].Questions[j].Answers[rc].lastUpdate = today;
+                                            for (var c = 0; c < dataObj.Groups[i].Questions[j].Answers[rc].Answers.length; c++) {
+                                                dataObj.Groups[i].Questions[j].Answers[rc].Answers[c].value = false;
+                                                dataObj.Groups[i].Questions[j].Answers[rc].Answers[c].lastUpdate = today;
+                                            }
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                         }
                                     }
@@ -3103,8 +3199,6 @@
                     singDate[i].innerText = today;
                 }
             }
-
-
             if (SignBoxFather.classList.contains("SignBoxinsertRow") || SignBoxFather.classList.contains("SignBoxRow")) {
                 GidandRowsIndex = SignBoxFather.querySelector(".Signbtn").dataset.gidandrow;
                 dataStaut = SignBoxFather.querySelector(".Signbtn").dataset.staut;
@@ -3112,8 +3206,6 @@
                 Gid = Str[0];
                 Row = Str[1]-1;
             }
-
-
             SignImage.src = "ShowAdminImg?id=" + signImgID;
 
             if (SignBoxFather.classList.contains("SignBoxRow")) {//row 修改
