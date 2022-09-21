@@ -449,7 +449,7 @@
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
                                             TampleteStr += "<div class=\"form-check\">"
-                                            TampleteStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" class=\" mr-1\"name=\"";
+                                            TampleteStr += "<input type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\" class=\" mr-1\"name=\"";
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
                                             TampleteStr += "value=\"";
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
@@ -469,6 +469,34 @@
                                             TampleteStr += "\"class=\"\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</label>";
                                             TampleteStr += "</div>";
                                         }
+                                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                            }
+                                            TampleteStr += "<div class=\"form-check\">"
+                                            TampleteStr += "<input class=\"otherAns\" type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
+                                            TampleteStr += "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "checked";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+                                            TampleteStr += "<label >其他</label>";
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+
+                                            TampleteStr += "</div>";
+                                        }
+
                                         break;
                                     case "checkbox":
                                         //case "CheckboxMixImage":
@@ -501,6 +529,35 @@
                                             TampleteStr += "\"class=\"\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</label>"
                                             TampleteStr += "</div>";
                                         }
+
+                                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value":null, "lastUpdate": "" });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                            }
+                                            TampleteStr += "<div class=\"form-check\">"
+                                            TampleteStr += "<input class=\"otherAns\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
+                                            TampleteStr += "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "checked";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+                                            TampleteStr += "<label >其他</label>";
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+
+                                            TampleteStr += "</div>";
+                                        }
+
                                         break;
                                     case "CheckboxMixImage":
                                         if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
@@ -531,6 +588,33 @@
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
                                             TampleteStr += "\"class=\"mb-5\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</label>";
                                             TampleteStr += "<img style =\"height:50px\"src=\"ShowAdminImg?id=" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].image + "\"" + "/>";
+
+                                            TampleteStr += "</div>";
+                                        }
+                                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                            }
+                                            TampleteStr += "<div class=\"form-check\">"
+                                            TampleteStr += "<input class=\"otherAns\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
+                                            TampleteStr += "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "checked";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+                                            TampleteStr += "<label >其他</label>";
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                }
+                                            }
+                                            TampleteStr += ">";
 
                                             TampleteStr += "</div>";
                                         }
@@ -697,21 +781,36 @@
                                                 }
                                             }
                                             TampleteStr += "</div>";
-                                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": "", "lastUpdate": "" });
-                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                                                }
-                                                TampleteStr += "<span>其他</span>"
-                                                TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"other form-control mb-3\"name=\"";
-                                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                                                }
-                                                TampleteStr += ">";
-                                            }
 
                                         }
+                                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                            }
+                                            TampleteStr += "<div class=\"form-check\">"
+                                            TampleteStr += "<input class=\"otherAns\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
+                                            TampleteStr += "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "checked";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+                                            TampleteStr += "<label >其他</label>";
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+
+                                            TampleteStr += "</div>";
+                                        }
+
                                         break;
                                     case "RadioMixFilling":
                                         if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
@@ -765,18 +864,45 @@
                                             }
                                             TampleteStr += "</div>";
                                         }
+                                        //if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                        //    if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
+                                        //        Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                        //        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
+                                        //    }
+                                        //    TampleteStr += "<span>其他</span>"
+                                        //    TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"other form-control mb-3\"name=\"";
+                                        //    TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                        //    if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                        //        TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                        //    }
+                                        //    TampleteStr += ">";
+                                        //}
                                         if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
-                                            TampleteStr += "<span>其他</span>"
-                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"other form-control mb-3\"name=\"";
-                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            TampleteStr += "<div class=\"form-check\">"
+                                            TampleteStr += "<input class=\"otherAns\" type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
+                                            TampleteStr += "\"";
                                             if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                                                TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "checked";
+                                                }
                                             }
                                             TampleteStr += ">";
+                                            TampleteStr += "<label >其他</label>";
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+
+                                            TampleteStr += "</div>";
                                         }
 
                                         break;
@@ -836,18 +962,34 @@
                                             }
                                             TampleteStr += "</div>";
                                         }
+                                        console.log("hasOtherAnswers"+Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers);
                                         if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
+                                            
                                             if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
-                                            TampleteStr += "<span>其他</span>"
-                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"other form-control mb-3\"name=\"";
-                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            TampleteStr += "<div class=\"form-check\">"
+                                            TampleteStr += "<input class=\"otherAns\" type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
+                                            TampleteStr += "\"";
                                             if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                                                TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "checked";
+                                                }
                                             }
                                             TampleteStr += ">";
+                                            TampleteStr += "<label >其他</label>";
+                                            TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control mb-3\"name=\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
+                                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
+                                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
+                                                }
+                                            }
+                                            TampleteStr += ">";
+
+                                            TampleteStr += "</div>";
                                         }
 
                                         break;
@@ -980,6 +1122,9 @@
                                                     tampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnsText + "</br>";
                                                 }
                                             }
+                                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
+                                                tampleteStr += "其他:"+ Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "</br>";
+                                            }
                                             break;
                                         case "CheckboxMixImage":
                                             for (var r = 0; r < Obj.Groups[i].Rows[1].Cols[c].Answers.length; r++) {
@@ -988,6 +1133,10 @@
                                                     tampleteStr += "<img style=\"height:50px\"src=\"ShowAdminImg?id=" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].image + "\"" + "/>" + "</br>";
                                                 }
                                             }
+                                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
+                                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "</br>";
+                                            }
+
                                             break;
                                         case "sign":
                                             if (Obj.Groups[i].Rows[w].Cols[c].Answers[0].value != null && Obj.Groups[i].Rows[w].Cols[c].Answers[0].value !=0) {
@@ -1055,7 +1204,7 @@
                                                 }
                                             }
                                             if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-                                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value;
+                                                tampleteStr += "</br>" +"其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value;
                                             }
 
                                             break;
@@ -1105,45 +1254,6 @@
             let i = event.currentTarget.dataset.gid;
             let w = event.currentTarget.dataset.row;
             var ao = document.getElementById("mainPlaceHolder_Ao");
-            //switch (ao.value) {
-            //    case "2":
-            //        break;
-            //    case "1":
-            //        var allsign = document.getElementsByClassName("Signbtn");
-            //        for (var s = 0; s < allsign.length; s++) {
-            //            console.log(allsign.length);
-            //            allsign[s].classList.add("d-none");
-            //        }
-            //        break;
-            //    case "0":
-            //        var allinputs = document.getElementsByTagName("input");
-            //        var allsign = document.getElementsByClassName("Signbtn");
-            //        var downloads = document.getElementsByClassName("download");
-            //        var selects = document.getElementsByTagName("select");
-            //        var txtbox = document.getElementsByTagName("textarea");
-            //        console.log(allsign.length);
-            //        for (var s = 0; s < txtbox.length; s++) {
-            //            txtbox[s].disabled = true;
-            //        }
-            //        for (var s = 0; s < selects.length; s++) {
-            //            selects[s].disabled = true;
-            //        }
-            //        for (var s= 0; s < downloads.length; s++) {
-            //            downloads[s].classList.add("d-none");
-            //        }
-            //        for (var s = 0; s < allsign.length; s++) {
-            //            allsign[s].classList.add("d-none");
-            //        }
-            //        for (var s = 0; s< allinputs.length; s++) {
-            //            console.log(allinputs[s].type);
-            //            //inputBrothers[d].disabled = true;
-            //            allinputs[s].disabled = true;
-            //        }
-            //        savebtn.classList.add("d-none");
-            //        Printbtn.classList.add("d-none");
-            //        break;
-            //    default:
-            //}
 
             console.log("isInsert:" + isInsert)
             //新增的modle
@@ -1227,13 +1337,27 @@
                                 insertBodyStr += "value=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                 insertBodyStr += "\"id=\"";
-                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText;
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                 insertBodyStr += "\">";
                                 insertBodyStr += "<label for=\"";
-                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText;
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                 insertBodyStr += "\"class=\"\">" + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText + "</label>"
+                                insertBodyStr += "</div>";
+                            }
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
+                                let time = new Date().getMilliseconds();
+                                insertBodyStr += "<div class=\"form-check\">"
+                                insertBodyStr += "<input class=\"otherAns  mr-3\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time;
+                                insertBodyStr += "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "<label>其他</label>";
+                                insertBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                insertBodyStr += ">";
                                 insertBodyStr += "</div>";
                             }
                             break;
@@ -1246,15 +1370,30 @@
                                 insertBodyStr += "value=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                 insertBodyStr += "\"id=\"";
-                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText;
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                 insertBodyStr += "\">";
                                 insertBodyStr += "<label for=\"";
-                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText;
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                 insertBodyStr += "\"class=\"\">" + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText + "</label>"
                                 insertBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
+                                let time = new Date().getMilliseconds();
+                                insertBodyStr += "<div class=\"form-check\">"
+                                insertBodyStr += "<input class=\"otherAns  mr-3\" type=\"radio\" onclick=\"CleanOptionforTable(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID ;
+                                insertBodyStr += "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "<label >其他</label>";
+                                insertBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "</div>";
+                            }
+
                             break;
                         case "filling":
                             let fillingStr = Obj.Groups[i].Rows[1].Cols[r].QuestionText;
@@ -1281,7 +1420,7 @@
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             for (var o = 0; o < Obj.Groups[i].Rows[1].Cols[r].AnswerOptions.length; o++) {
                                 if (Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText.includes("##^")) {
-                                    insertBodyStr += "<div class=\"form-check\">"
+                                    insertBodyStr += "<div class=\"form-check mt-3\">"
                                     insertBodyStr += "<input type=\"checkbox\" onclick=\"DisabledTrue(event)\" class=\" mr-3\"name=\"";
                                     insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                     insertBodyStr += "value=\"";
@@ -1305,7 +1444,7 @@
                                         }
                                     }
                                 } else {
-                                    insertBodyStr += "<div class=\"form-check\">"
+                                    insertBodyStr += "<div class=\"form-check mt-3\">"
                                     insertBodyStr += "<input type=\"checkbox\" class=\" mr-3\"name=\"";
                                     insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                     insertBodyStr += "value=\"";
@@ -1321,6 +1460,21 @@
                                 }
                                 insertBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
+                                let time = new Date().getMilliseconds();
+                                insertBodyStr += "<div class=\"form-check mt-3\">"
+                                insertBodyStr += "<input class=\"otherAns  mr-3\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time;
+                                insertBodyStr += "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "<label>其他</label>";
+                                insertBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "</div>";
+                            }
+
                             break;
                         case "CheckboxMixFilling":
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1344,7 +1498,7 @@
                                 //    insertBodyStr += "\"class=\"\">";
                                 for (var s = 0; s < StrArr.length; s++) {
                                     if (StrArr[s].includes("^")) {
-                                        insertBodyStr += "<input type=\"text\" disabled style=\"width:20%\" class=\"form-control d-inline mb-2\"name=\"";
+                                        insertBodyStr += "<input type=\"text\" disabled style=\"width:20%\" class=\"ml-2 mr-2 form-control d-inline mb-2\"name=\"";
                                         insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                         insertBodyStr += "data-checkboxIndex=\"" + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index + "\"";
                                         insertBodyStr += "data-TextIndex=\"" + fSn + "\"";
@@ -1360,21 +1514,27 @@
                                 //insertBodyStr += "</label>";
                                 insertBodyStr += "</div>";
                             }
-                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers == true) {
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
                                 let time = new Date().getMilliseconds();
-                                insertBodyStr += "<span>其他:</span>";
-                                insertBodyStr += "<input type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                insertBodyStr += "<div class=\"form-check\">"
+                                insertBodyStr += "<input class=\"otherAns  mr-3\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time;
+                                insertBodyStr += "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "<label>其他</label>";
+                                insertBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
                                 insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                 insertBodyStr += ">";
-
+                                insertBodyStr += "</div>";
                             }
+
                             break;
                         case "RadioMixFilling":
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             for (var o = 0; o < Obj.Groups[i].Rows[1].Cols[r].AnswerOptions.length; o++) {
                                 insertBodyStr += "<div class=\"form-check\">"
-                                insertBodyStr += "<input type=\"radio\" onclick=\"CleanOthers(event)\" class=\" mr-3\"name=\"";
+                                insertBodyStr += "<input type=\"radio\" onclick=\"CleanOthers(event)\" class=\"mr-3\"name=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                 insertBodyStr += "value=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
@@ -1409,14 +1569,19 @@
                                 //insertBodyStr += "</label>";
                                 insertBodyStr += "</div>";
                             }
-                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers == true) {
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
                                 let time = new Date().getMilliseconds();
-                                insertBodyStr += "<span>其他:</span>";
-                                insertBodyStr += "<input type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                insertBodyStr += "<div class=\"form-check\">"
+                                insertBodyStr += "<input class=\"otherAns  mr-3\" type=\"radio\" onclick=\"CleanOptionforTable(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                insertBodyStr += "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "<label >其他</label>";
+                                insertBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
                                 insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                 insertBodyStr += ">";
-
+                                insertBodyStr += "</div>";
                             }
 
                             break;
@@ -1424,7 +1589,7 @@
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             for (var o = 0; o < Obj.Groups[i].Rows[1].Cols[r].AnswerOptions.length; o++) {
                                 insertBodyStr += "<div class=\"form-check\">"
-                                insertBodyStr += "<input type=\"radio\" onclick=\"CleanOptionforTable(event)\" class=\" mr-3\"name=\"";
+                                insertBodyStr += "<input type=\"radio\" onclick=\"CleanOption(event)\" class=\" mr-3\"name=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                 insertBodyStr += "value=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
@@ -1439,28 +1604,32 @@
                                     insertBodyStr += "value=\"";
                                     insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].index;
                                     insertBodyStr += "\"id=\"";
-                                    insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].AnsText;
+                                    insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                     insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].index;
                                     insertBodyStr += "\"";
                                     insertBodyStr += "data-RadioIndex=\"" + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index + "\"";
                                     insertBodyStr += "data-CheckboxIndex=\"" + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].index + "\">";
                                     insertBodyStr += "<label for=\"";
-                                    insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].AnsText;
+                                    insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
                                     insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].index;
                                     insertBodyStr += "\"class=\"mr-2\">" + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].AnsText + "</label>"
                                 }
                                 insertBodyStr += "</div>";
                             }
-                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers == true) {
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
                                 let time = new Date().getMilliseconds();
-                                insertBodyStr += "<span>其他:</span>";
-                                insertBodyStr += "<input type=\"text\" class=\"other form-control mb-3\"name=\"";
+                                insertBodyStr += "<div class=\"form-check\">"
+                                insertBodyStr += "<input class=\"otherAns  mr-3\" type=\"radio\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                insertBodyStr += "\"";
+                                insertBodyStr += ">";
+                                insertBodyStr += "<label >其他</label>";
+                                insertBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
                                 insertBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                 insertBodyStr += ">";
-                                
+                                insertBodyStr += "</div>";
                             }
-
                             break;
                         default:
                     }
@@ -1649,6 +1818,23 @@
                                 updateBodyStr += "\"class=\"\">" + Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnsText + "</label>"
                                 updateBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers) {
+                                updateBodyStr += "<div class=\"form-check\">"
+                                updateBodyStr += "<input class=\"otherAns  mr-3\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                updateBodyStr += "\"";
+                                if (Obj.Groups[i].Rows[w].Cols[r].otherAnswer[0].value != null && Obj.Groups[i].Rows[w].Cols[r].otherAnswer[0].value != "") {
+                                    updateBodyStr += "checked";
+                                }
+                                updateBodyStr += ">";
+                                updateBodyStr += "<label>其他</label>";
+                                updateBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\"disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value + "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "</div>";
+                            }
+
                             break;
                         case "radio":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1675,6 +1861,21 @@
                                 updateBodyStr += "\"class=\"\">" + Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnsText + "</label>"
                                 updateBodyStr += "</div>";
                             }
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
+                                let time = new Date().getMilliseconds();
+                                updateBodyStr += "<div class=\"form-check\">"
+                                updateBodyStr += "<input class=\"otherAns  mr-3\" type=\"radio\" onclick=\"CleanOptionforTable(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                updateBodyStr += "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "<label >其他</label>";
+                                updateBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                updateBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "</div>";
+                            }
+
                             break;
                         case "filling":
                             let fillingStr = Obj.Groups[i].Rows[w].Cols[r].QuestionText;
@@ -1708,7 +1909,7 @@
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[r].AnswerOptions.length; o++) {
                                 if (Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText.includes("##^")) {
-                                    updateBodyStr += "<div class=\"form-check\">"
+                                    updateBodyStr += "<div class=\"form-check mt-3\">"
                                     updateBodyStr += "<input type=\"checkbox\" onchange=\"changeTableJsonData(event)\" onclick=\"DisabledTrue(event)\" class=\" mr-3\"name=\"";
                                     updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\"";
                                     updateBodyStr += "value=\"";
@@ -1732,7 +1933,7 @@
                                         }
                                     }
                                 } else {
-                                    updateBodyStr += "<div class=\"form-check\">"
+                                    updateBodyStr += "<div class=\"form-check mt-3\">"
                                     updateBodyStr += "<input onchange=\"changeTableJsonData(event)\" type=\"checkbox\" class=\" mr-3\"name=\"";
                                     updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\"";
                                     updateBodyStr += "value=\"";
@@ -1753,7 +1954,23 @@
 
                                 }
                                 updateBodyStr += "</div>";
+
                             }
+
+                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers) {
+                                updateBodyStr += "<div class=\"form-check mt-3\">"
+                                updateBodyStr += "<input class=\"otherAns mr-3\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                updateBodyStr += "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "<label>其他</label>";
+                                updateBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\"disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value + "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "</div>";
+                            }
+
                             break;
                         case "CheckboxMixFilling":
                             updateBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
@@ -1782,7 +1999,7 @@
                                 //    insertBodyStr += "\"class=\"\">";
                                 for (var s = 0; s < StrArr.length; s++) {
                                     if (StrArr[s].includes("^")) {
-                                        updateBodyStr += "<input  onchange=\"changeTableJsonData(event)\" type=\"text\" disabled style=\"width:20%\" class=\"form-control d-inline mb-2\"name=\"";
+                                        updateBodyStr += "<input  onchange=\"changeTableJsonData(event)\" type=\"text\" disabled style=\"width:20%\" class=\"ml-2 mr-1 form-control d-inline mb-2\"name=\"";
                                         updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\"";
                                         updateBodyStr += "data-checkboxIndex=\"" + Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].index + "\"";
                                         if (Obj.Groups[i].Rows[w].Cols[r].Answers[o].value == true) {
@@ -1805,13 +2022,20 @@
                                 //insertBodyStr += "</label>";
                                 updateBodyStr += "</div>";
                             }
-                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers== true) {
-                                updateBodyStr += "<span>其他:</span>";
-                                updateBodyStr += "<input onchange=\"changeTableJsonData(event)\" type=\"text\" class=\"other form-control mb-3\"name=\"";
-                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
-                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value+"\"";
+                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers) {
+                                updateBodyStr += "<div class=\"form-check\">"
+                                updateBodyStr += "<input class=\"otherAns  mr-3\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                updateBodyStr += "\"";
                                 updateBodyStr += ">";
+                                updateBodyStr += "<label>其他</label>";
+                                updateBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\"disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID+ "\"";
+                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value+ "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "</div>";
                             }
+
 
                             break;
                         case "RadioMixFilling":
@@ -1834,10 +2058,6 @@
                                 updateBodyStr += ">";
                                 let fillingStr = Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnsText;
                                 let StrArr = fillingStr.split("##");
-                                //    insertBodyStr += "<label for=\"";
-                                //    insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnsText;
-                                //    insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
-                                //    insertBodyStr += "\"class=\"\">";
                                 let fSn = 1;
                                 let n = 0;
                                 let N = 0;
@@ -1867,12 +2087,19 @@
                                 //insertBodyStr += "</label>";
                                 updateBodyStr += "</div>";
                             }
-                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers == true) {
-                                updateBodyStr += "<span>其他:</span>";
-                                updateBodyStr += "<input onchange=\"changeTableJsonData(event)\" type=\"text\" class=\"other form-control mb-3\"name=\"";
-                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
-                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value + "\"";
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
+                                let time = new Date().getMilliseconds();
+                                updateBodyStr += "<div class=\"form-check\">"
+                                updateBodyStr += "<input class=\"otherAns  mr-3\" type=\"radio\" onclick=\"CleanOptionforTable(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                updateBodyStr += "\"";
                                 updateBodyStr += ">";
+                                updateBodyStr += "<label >其他</label>";
+                                updateBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                updateBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "</div>";
                             }
                             break;
                         case "RadioMixCheckbox":
@@ -1880,7 +2107,7 @@
                             for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[r].AnswerOptions.length; o++) {
                                 let oldStr = updateBodyStr;
                                 updateBodyStr += "<div class=\"form-check\">";
-                                updateBodyStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" onclick=\"CleanOptionforTable(event)\" class=\" mr-3\"name=\"";
+                                updateBodyStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" onclick=\"CleanOption(event)\" class=\" mr-3\"name=\"";
                                 updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\"";
                                 updateBodyStr += "value=\"";
                                 updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].index;
@@ -1891,7 +2118,7 @@
                                 if (Obj.Groups[i].Rows[w].Cols[r].Answers[o].value == true) {
                                     updateBodyStr = oldStr;
                                     updateBodyStr += "<div class=\"form-check\">";
-                                    updateBodyStr += "<input checked type=\"radio\"  onchange=\"changeTableJsonData(event)\" onclick=\"CleanOptionforTable(event)\" class=\" mr-3\"name=\"";
+                                    updateBodyStr += "<input checked type=\"radio\"  onchange=\"changeTableJsonData(event)\" onclick=\"CleanOption(event)\" class=\" mr-3\"name=\"";
                                     updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\"";
                                     updateBodyStr += "value=\"";
                                     updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].index;
@@ -1908,7 +2135,7 @@
                                     updateBodyStr += "value=\"";
                                     updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnswerOptions[k].index;
                                     updateBodyStr += "\"id=\"";
-                                    updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnswerOptions[k].AnsText;
+                                    updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].index;
                                     updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnswerOptions[k].index;
                                     updateBodyStr += "\"";
                                     updateBodyStr += "data-RadioIndex=\"" + Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].index + "\"";
@@ -1919,18 +2146,25 @@
                                     }
                                     updateBodyStr += ">";
                                     updateBodyStr += "<label for=\"";
-                                    updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnswerOptions[k].AnsText;
+                                    updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].index;
                                     updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].AnswerOptions[k].index;
                                     updateBodyStr += "\"class=\"mr-2\">" + Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].AnswerOptions[k].AnsText + "</label>"
                                 }
                                 updateBodyStr += "</div>";
                             }
-                            if (Obj.Groups[i].Rows[w].Cols[r].hasOtherAnswers == true) {
-                                updateBodyStr += "<span>其他:</span>";
-                                updateBodyStr += "<input onchange=\"changeTableJsonData(event)\" type=\"text\" class=\"other form-control mb-3\"name=\"";
-                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
-                                updateBodyStr += "value=\"" + Obj.Groups[i].Rows[1].Cols[r].otherAnswer[0].value + "\"";
+                            if (Obj.Groups[i].Rows[1].Cols[r].hasOtherAnswers) {
+                                let time = new Date().getMilliseconds();
+                                updateBodyStr += "<div class=\"form-check\">"
+                                updateBodyStr += "<input class=\"otherAns  mr-3\" type=\"radio\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID;
+                                updateBodyStr += "\"";
                                 updateBodyStr += ">";
+                                updateBodyStr += "<label >其他</label>";
+                                updateBodyStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other d-inline col-3 ml-2 form-control mb-3\"name=\"";
+                                updateBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + time + "\"";
+                                updateBodyStr += "data-QID=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
+                                updateBodyStr += ">";
+                                updateBodyStr += "</div>";
                             }
                             break;
                         default:
@@ -2109,7 +2343,6 @@
                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
             }
             for (var d = 0; d < inputs.length; d++) {
-                console.log(inputs.length)
                 for (var i = 0; i < dataObj2.Groups.length; i++) {
                     if (dataObj2.Groups[i].GroupID == GroupId) {
                         let sn = dataObj2.Groups[i].Rows.length - 1;
@@ -2176,7 +2409,21 @@
                                         break;
                                     case "checkbox":
                                     case "CheckboxMixImage":
-                                        let sameCheckboxes = document.getElementsByName(inputs[d].name);
+                                        let SameNames = document.getElementsByName(inputs[d].name);
+                                        let sameCheckboxes = [];
+                                        SameNames.forEach(function (item) {
+                                            if (item.type == "checkbox" && !item.classList.contains("otherAns")) {
+                                                sameCheckboxes.push(item);
+                                            }
+                                        });
+                                        let otherCkb;
+                                        let otherCkbs = document.querySelectorAll(".other");
+                                        otherCkbs.forEach(function (item) {
+                                            if (item.dataset.qid == inputs[d].name) {
+                                                otherCkb = item;
+                                            }
+                                        })
+
                                         if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length) {
                                             for (var o = 0; o < dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length; o++) {
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[o].index, "value": false, "lastUpdate": today });
@@ -2195,19 +2442,39 @@
                                             }
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                         }
+                                        if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers) {
+                                            dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.length = 0;
+                                            dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": otherCkb.value, "lastUpdate": today });
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+                                        }
+
                                         //給新QuestionID
                                         //dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID = dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID + today;
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                         break;
                                     case "radio":
-                                        let smaeRadios = document.getElementsByName(inputs[d].name);
+                                        let other;
+                                        let others = document.querySelectorAll(".other");
+                                        others.forEach(function (item) {
+                                            if (item.dataset.qid == inputs[d].name) {
+                                                other = item;
+                                            }
+                                        })
+                                        let sameNames = document.getElementsByName(inputs[d].name);
+                                        let smaeRadios = [];
+                                        sameNames.forEach(function (item) {
+                                            if (item.type == "radio" && !item.classList.contains("otherAns")) {
+                                                smaeRadios.push(item);
+                                            }
+                                        });
                                         if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length) {
                                             for (var o = 0; o < dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length; o++) {
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[o].index, "value": false, "lastUpdate": today });
+                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                             }
                                         }
                                         for (var s = 0; s < smaeRadios.length; s++) {
-                                            if (smaeRadios[s].checked) {
+                                            if (smaeRadios[s].checked && !smaeRadios[s].classList.contains("otherAns")) {
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers[s].value = true;
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers[s].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
@@ -2220,6 +2487,12 @@
                                         }
                                         //給新QuestionID
                                         //dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID = dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID + today;
+                                        if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers) {
+                                            dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.length = 0;
+                                            dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": other.value, "lastUpdate": today });
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
+                                        }
+
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
 
 
@@ -2272,7 +2545,7 @@
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
                                             }
                                             SmaeRadios.forEach(function (item) {
-                                                if (item.type == "radio") {
+                                                if (item.type == "radio" && !item.classList.contains("otherAns")) {
                                                     Radios.push(item);
                                                 }
                                             });
@@ -2318,10 +2591,10 @@
 
                                                 }
                                             }
-                                            if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers == true) {
+                                            if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers) {
+                                                dataObj2.Groups[i].Rows[sn].Cols[c].length = 0;
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": other.value, "lastUpdate": today });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
-
                                             }
                                             //給新QuestionID
                                             //dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID = dataObj2.Groups[i].Rows[sn].Cols[c].QuestionID + today;
@@ -2333,6 +2606,7 @@
                                         if (inputs[d].type == "radio") {
                                             console.log("RadioMixCheckBox")
                                             let Smaeradios = document.getElementsByName(inputs[d].name);
+
                                             let Radios = [];
                                             let Ckbs = [];
                                             let others = document.querySelectorAll(".other");
@@ -2346,7 +2620,7 @@
                                                 }
                                             })
                                             Smaeradios.forEach(function (item) {
-                                                if (item.type == "radio") {
+                                                if (item.type == "radio" && !item.classList.contains("otherAns")) {
                                                     Radios.push(item);
                                                 }
                                             });
@@ -2394,6 +2668,7 @@
 
                                                 }
                                                 if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers == true) {
+                                                    dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.length = 0;
                                                     dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": other.value, "lastUpdate": today });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                                 }
@@ -2474,6 +2749,7 @@
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                             }
                                             if (dataObj2.Groups[i].Rows[sn].Cols[c].hasOtherAnswers == true) {
+                                                dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.length = 0;
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].otherAnswer.push({ "index": 1, "value": other.value, "lastUpdate": today });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
                                             }
@@ -2631,7 +2907,6 @@
                         }
                     }
                     break;
-
                 case "text":
                 case "number":
                 case "date":
@@ -2696,7 +2971,6 @@
                                                 }
                                             } else {
                                                 for (var a = 0; a < dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers.length; a++) {
-                                                    console.log("RadioMixFilling");
                                                     dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].value = "";
                                                     dataObj.Groups[t].Rows[i].Cols[c].Answers[o].Answers[a].lastUpdate = today;
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -2736,9 +3010,10 @@
                                         }
                                     }
                                     else if (thischange.classList.contains("other")) {
-                                        console.log("other");
+                                        
                                         for (let c = 0; c < dataObj.Groups[t].Rows[i].Cols.length; c++) {
                                             if (dataObj.Groups[t].Rows[i].Cols[c].hasOtherAnswers && dataObj.Groups[t].Rows[i].Cols[c].QuestionID == thischange.name) {
+                                                console.log("other" + thischange.value);
                                                 dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].value = thischange.value;
                                                 dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -2768,6 +3043,10 @@
                                                 if (thischange.value == dataObj.Groups[i].Rows[r].Cols[c].Answers[a].index) {
                                                     dataObj.Groups[i].Rows[r].Cols[c].Answers[a].value = true;
                                                     dataObj.Groups[i].Rows[r].Cols[c].Answers[a].lastUpdate = today;
+                                                    if (dataObj.Groups[i].Rows[r].Cols[c].hasOtherAnswers) {
+                                                        dataObj.Groups[i].Rows[r].Cols[c].otherAnswer[0].value = null;
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                    }
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                                 }
                                             }
@@ -2782,14 +3061,12 @@
 
                                                         }
                                                     } else if (dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers.length > 0 && dataObj.Groups[i].Rows[r].Cols[c].QuestionType == "RadioMixFilling") {
-
                                                         for (var aa = 0; aa < dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers.length; aa++) {
                                                             dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers[aa].value == "";
                                                             dataObj.Groups[i].Rows[r].Cols[c].Answers[a].Answers[aa].lastUpdate = today;
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
 
                                                         }
-
                                                     }
                                                 }
                                             }
@@ -2809,7 +3086,6 @@
                                     if (dataObj.Groups[i].Rows[r].Cols[c].QuestionID == thischange.name) {
                                         if (dataObj.Groups[i].Rows[r].Cols[c].QuestionType == "RadioMixCheckbox" && dataObj.Groups[i].Rows[r].Cols[c].QuestionID == thischange.name) {
                                             if (thischange.classList.contains("other")) {
-                                                console.log("other");
                                                 dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].value = thischange.value;
                                                 dataObj.Groups[t].Rows[i].Cols[c].otherAnswer[0].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -2848,7 +3124,6 @@
                             for (let r = 0; r < dataObj.Groups[i].Rows.length; r++) {
                                 for (let c = 0; c < dataObj.Groups[i].Rows[r].Cols.length; c++) {
                                     if (dataObj.Groups[i].Rows[r].Cols[c].QuestionID == thischange.name.substring(1) || dataObj.Groups[i].Rows[r].Cols[c].QuestionID == thischange.name) {
-
                                         if (dataObj.Groups[i].Rows[r].Cols[c].QuestionType == "checkbox" || dataObj.Groups[i].Rows[r].Cols[c].QuestionType == "CheckboxMixImage" || dataObj.Groups[i].Rows[r].Cols[c].QuestionType == "CheckboxMixFilling") {
                                             if (thischange.checked) {
                                                 for (var a = 0; a < dataObj.Groups[i].Rows[r].Cols[c].Answers.length; a++) {
@@ -2859,8 +3134,11 @@
                                                     }
                                                 }
                                             } else {
+                                                if (thischange.classList.contains("otherAns")) {
+                                                    dataObj.Groups[i].Rows[r].Cols[c].otherAnswer[0].value = null;
+                                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                }
                                                 for (var a = 0; a < dataObj.Groups[i].Rows[r].Cols[c].Answers.length; a++) {
-                                                    console.log("yy")
                                                     if (dataObj.Groups[i].Rows[r].Cols[c].Answers[a].index == thischange.value) {
                                                         dataObj.Groups[i].Rows[r].Cols[c].Answers[a].value = false;
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -2998,9 +3276,11 @@
                                 else if (dataObj.Groups[i].Questions[j].QuestionType == "RadioMixFilling") {
                                     let thisValue = event.currentTarget.name;
                                     let ansValue = thisValue.split("_");
+                                    let rd = event.currentTarget.dataset.rd;
+
                                     console.log("RadioMixFilling Filling")
                                     for (var ansO = 0; ansO < dataObj.Groups[i].Questions[j].AnswerOptions.length; ansO++) {
-                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[ansO].AnsText == ansValue[0]) {
+                                        if (dataObj.Groups[i].Questions[j].AnswerOptions[ansO].index == rd) {
                                             for (var f = 0; f < dataObj.Groups[i].Questions[j].Answers[ansO].Answers.length; f++) {
                                                 if (dataObj.Groups[i].Questions[j].Answers[ansO].Answers[f].index == ansValue[1]) {
                                                     console.log("RadioMixFilling Filling2")
@@ -3027,12 +3307,12 @@
                                                 dataObj.Groups[i].Questions[j].Answers[ic].value = true;
                                                 dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                            } else {
-                                                dataObj.Groups[i].Questions[j].Answers[ic].value = false;
-                                                dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
-                                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                            } /*else {*/
+                                            //    dataObj.Groups[i].Questions[j].Answers[ic].value = false;
+                                            //    dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
+                                            //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
 
-                                            }
+                                            //}
                                         }
                                     } else {
                                         for (let cc = 0; cc < dataObj.Groups[i].Questions[j].AnswerOptions.length; cc++) {
@@ -3040,13 +3320,11 @@
                                                 dataObj.Groups[i].Questions[j].Answers[cc].value = false;
                                                 dataObj.Groups[i].Questions[j].Answers[cc].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                                console.log("沒勾:" + dataObj.Groups[i].Questions[j].Answers);
                                             }
                                         }
                                     }
                                 }
                                 else if (dataObj.Groups[i].Questions[j].QuestionType == "CheckboxMixFilling") {
-                                   
                                     if (event.currentTarget.checked) {
                                         for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
                                             if (dataObj.Groups[i].Questions[j].AnswerOptions[y].index == event.currentTarget.value) {
@@ -3056,16 +3334,15 @@
                                                         dataObj.Groups[i].Questions[j].Answers[m].value = true;
                                                         dataObj.Groups[i].Questions[j].Answers[m].lastUpdate = today;
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                                    } else {
-                                                        dataObj.Groups[i].Questions[j].Answers[m].value = false;
-                                                        dataObj.Groups[i].Questions[j].Answers[m].lastUpdate = today;
-                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                                    }
+                                                    } /*else {*/
+                                                    //    dataObj.Groups[i].Questions[j].Answers[m].value = false;
+                                                    //    dataObj.Groups[i].Questions[j].Answers[m].lastUpdate = today;
+                                                    //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                    //}
                                                 }
                                             } 
                                         }
                                     } else {
-                                       
                                         for (var y = 0; y < dataObj.Groups[i].Questions[j].AnswerOptions.length; y++) {
                                             if (dataObj.Groups[i].Questions[j].AnswerOptions[y].index == event.currentTarget.value) {
                                                 for (var m = 0; m < dataObj.Groups[i].Questions[j].Answers.length; m++) {
@@ -3122,11 +3399,17 @@
                                                 dataObj.Groups[i].Questions[j].Answers[cc].value = false;
                                                 dataObj.Groups[i].Questions[j].Answers[cc].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                                console.log("沒勾:" + dataObj.Groups[i].Questions[j].Answers);
                                             }
                                         }
                                     }
 
+                                }
+                                else if (event.currentTarget.classList.contains("otherAns")) {
+                                    if (!event.currentTarget.checked) {
+                                        dataObj.Groups[i].Questions[j].otherAnswer[0].value = null;
+                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                        console.log("沒勾:" + dataObj.Groups[i].Questions[j].otherAnswer[0].value);
+                                    }
                                 }
                             }
                         }
@@ -3141,6 +3424,7 @@
                                         if (dataObj.Groups[i].Questions[j].AnswerOptions[r].AnsText == event.currentTarget.value) {
                                             dataObj.Groups[i].Questions[j].Answers[r].value = true;
                                             dataObj.Groups[i].Questions[j].Answers[r].lastUpdate = today;
+                                            dataObj.Groups[i].Questions[j].otherAnswer[0].value =null;
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                         } else {
                                             dataObj.Groups[i].Questions[j].Answers[r].value = false;
@@ -3154,6 +3438,7 @@
                                     for (var rc = 0; rc < dataObj.Groups[i].Questions[j].AnswerOptions.length; rc++) {
                                         if (dataObj.Groups[i].Questions[j].AnswerOptions[rc].AnsText == event.currentTarget.value) {
                                             dataObj.Groups[i].Questions[j].Answers[rc].value = true;
+                                            dataObj.Groups[i].Questions[j].otherAnswer[0].value = null;
                                             dataObj.Groups[i].Questions[j].Answers[rc].lastUpdate = today;
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                         } else {
@@ -3172,6 +3457,7 @@
                                     for (var c = 0; c < dataObj.Groups[i].Questions[j].AnswerOptions.length; c++) {
                                         if (dataObj.Groups[i].Questions[j].AnswerOptions[c].AnsText == event.currentTarget.value) {
                                             dataObj.Groups[i].Questions[j].Answers[c].value = true;
+                                            dataObj.Groups[i].Questions[j].otherAnswer[0].value = null;
                                             dataObj.Groups[i].Questions[j].Answers[c].lastUpdate = today;
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                         } else {
@@ -3398,9 +3684,12 @@
             let selfradio = gfather.childNodes;//radio box
             for (var i = 0; i < selfradio.length; i++) {
                 let selfckbs = selfradio[i].childNodes;
+
                 for (var cki = 0; cki < selfckbs.length; cki++) {
-                    selfckbs[cki].checked = false;
-                    selfckbs[cki].disabled = true;
+                    if (selfckbs[cki].type == "checkbox" && selfckbs[cki].name == event.currentTarget.name) {
+                        selfckbs[cki].checked = false;
+                        selfckbs[cki].disabled = true;
+                    }
                 }
             }
             event.currentTarget.checked = true;
@@ -3444,18 +3733,35 @@
             let Allinputs = gfather.childNodes;
             for (var i = 0; i < Allinputs.length; i++) {
                 let fillings = Allinputs[i].childNodes;
+                let Fillings = [];
+                fillings.forEach(function (item) {
+                    if (item.type == "text" && item.classList.contains("other")) {
+                        Fillings.push(item);
+                    }
+                })
+
                 for (var f = 0; f < fillings.length; f++) {
                     if (fillings[f].type == "text") {
                         fillings[f].value = "";
+                        if (!fillings[f].classList.contains("other")) {
+                            if (fillings[f].name == event.currentTarget.name) {
+                                fillings[f].disabled = true;
+                            } 
+                        } else {
+                            if (fillings[f].dataset.qid == event.currentTarget.name) {
+                                fillings[f].disabled = true;
+                            }
+                        }
                     }
-                    fillings[f].disabled = true;
                     fillings[0].disabled = false;
                 }
             }
+
             let myFilling = event.currentTarget.parentNode.childNodes;
             for (var m = 0; m < myFilling.length; m++) {
                 myFilling[m].disabled = false;
             }
+
             event.currentTarget.disabled = false;
         }
         //產生Table問題有固定的欄位 跟變動欄位
@@ -3665,7 +3971,9 @@
             if (DataObj.Groups[GroupSn].Questions[QusetionSn].hasOtherAnswers == true) {
                 let otherCkb= document.createElement("input");
                 otherCkb.setAttribute("type", "checkbox");
-                otherCkb.setAttribute("onclick","DisabledTrue(event)");
+                otherCkb.setAttribute("onclick", "DisabledTrue(event)");
+                otherCkb.setAttribute("onchange", "changeJsonData(event)");
+                otherCkb.classList.add("otherAns");
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer.length > 0) {
                     if (DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer[0].value != null) {
                         otherCkb.setAttribute("checked", "true");
@@ -3947,6 +4255,8 @@
                 let ckboxInput = document.createElement("input");
                 ckboxInput.setAttribute("type", "checkbox");
                 ckboxInput.setAttribute("onclick", "DisabledTrue(event)");
+                ckboxInput.setAttribute("onchange", "changeJsonData(event)");
+                ckboxInput.classList.add("otherAns");
                 checkboxFillngBox.append(ckboxInput);
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer.length > 0) {
                     if (DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer[0].value != null) {
@@ -4076,6 +4386,8 @@
                             placeRf.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[arf].AnsText + "_" + fillingAnsSn);
                             placeRf.setAttribute("onchange", "changeJsonData(event)");
                             placeRf.classList.add("form-control", "form-control-user", "mb-3", "d-inline", "mr-2", "ml-1", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                            placeRf.setAttribute("data-rd", DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[arf].index);
+
                             placeRf.disabled = true;
                             //placeRf.classList.add(rfAnstext[rfo].substring("2"))
                             if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[arf].Answers.length < rfAnstext.length) {
@@ -4174,7 +4486,11 @@
             other.disabled = true;
             other.setAttribute("onchange", "changeJsonData(event)");
             if (DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer.length > 0) {
-                other.setAttribute("value", DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer[0].value);
+                if (DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer[0].value != null) {
+                    other.setAttribute("value", DataObj.Groups[GroupSn].Questions[QusetionSn].otherAnswer[0].value);
+                } else {
+                    other.setAttribute("value", "");
+                }
             }
             other.classList.add("col-3", "form-control", "ml-1", "otherAns","d-inline");
             Parent.append(other);
