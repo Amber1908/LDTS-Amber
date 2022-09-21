@@ -61,16 +61,6 @@
                         <span id="formAdd" runat="server" class="info-box-number ">新增表單範本</span>
                     </div>
                 </div>
-<%--                <div class="info-box report">
-                    <span class="info-box-icon bg-success ">
-                        <span id="save" runat="server" class="btn" style="left: 0px; bottom: 0px">
-                            <i class="fas fa-check"></i>
-                        </span>
-                    </span>
-                    <div class="info-box-content ">
-                        <span class="info-box-number ">儲存設定</span>
-                    </div>
-                </div>--%>
             </div>
             <div class="card card-row card-primary" style="padding-left: 0px; padding-right: 0px">
                 <div class="card-header ">

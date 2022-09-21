@@ -87,7 +87,7 @@ namespace LDTS
                 Processstring += "ProcessEdit?pid="+ process.PID+"\">";
                 Processstring += "<i style=\"position: relative; top: -5px;right:20px\" class=\"fas fa-edit\"></i>";
                 Processstring += "</a>";
-                Processstring += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";
+                Processstring += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" onClick=\"return confirm('確定刪除程序書?')\"; href =\"";
                 Processstring += "DeleteRelation.aspx?pid="+process.PID;//刪除
                 Processstring += "\"style=\"text-decoration:none\">";
                 Processstring += string.Format("<i style=\"position: relative; top: -5px;\" class=\"fas fa-trash {0}\"></i></a>", process.PID == pid ? "Active" : " ");
@@ -118,7 +118,7 @@ namespace LDTS
                 Sstr += "StandarWorkbookEdit?sid=" + standarWorkBook.SID + "\">";
                 Sstr += "<i style=\"position: relative; top: -5px; right: 20px\" class=\"fas fa-edit\"></i>";
                 Sstr += "</a>";
-                Sstr += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";
+                Sstr += "<a style=\"text-decoration:none; position: absolute \" class=\"ml-1\" onClick=\"return confirm('確定刪除標準作業書?')\" href=\"";
                 Sstr += "DeleteRelation.aspx?sid=";//standarWorkBook delete 
                 Sstr += standarWorkBook.SID;
                 Sstr += "\"style=\"text-decoration:none\">";
@@ -156,9 +156,9 @@ namespace LDTS
                 Fstr += "FormGeneration?QID=" + reportQuestion.QID + "\">";
                 Fstr += "<i style=\"position: relative; top: -5px; right: 20px\" class=\"fas fa-edit\"></i>";
                 Fstr += "</a>";
-                Fstr += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";
-                Fstr += "DeleteRelation.aspx?qid="+ reportQuestion.QID;// delete aids>0? "</a>" : 
-                Fstr += "\"style=\" text-decoration:none\">";
+                Fstr += "<a onClick=\"return confirm('確定刪除表單範本?')\" style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";
+                Fstr += "DeleteRelation.aspx?qid="+ reportQuestion.QID;// delete 
+                Fstr += aids > 0 ? "</a>" : "\"style=\" text-decoration:none\">";
                 Fstr +="<i style=\"position: relative; top: -5px\" class=\"fas fa-trash \"></i></a>";
                 Fstr += "</span>";
                 Fstr += "</div>";//card-header
