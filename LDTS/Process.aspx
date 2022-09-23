@@ -38,13 +38,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">
     <script>
-        var processesUploadName = document.getElementById("mainPlaceHolder_processesUploadName");
-        var processesUpload = document.getElementById("mainPlaceHolder_processesUpload");
-        processesUpload.addEventListener("change", function () {
-            if (processesUpload.value.length > 0) {
-                processesUploadName.innerText = processesUpload.value;
-            }
-        });
-
+        let rawUrl = window.location.href;
+        console.log("rawUrl:" + rawUrl);
+        document.cookie = "proUrl=" + window.location.href;
     </script>
 </asp:Content>
