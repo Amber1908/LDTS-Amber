@@ -136,7 +136,7 @@ namespace LDTS
                 reportAnswer.LastupMan = loginAdmin.admin_name;
                 reportAnswer.Version = question.Version;//新增是最新的版本號
                 List<ReportQuestionFile> files = ReportQuestiovService.GetReportQuestionFile(ReportQuestionId.ToString(), question.Version);
-                if (files!=null)
+                if (files.Count!=0)
                 {
                     reportAnswer.OutputTemplate = files[0].TemplateFile;
                 }
@@ -176,7 +176,7 @@ namespace LDTS
                 {
                     LDTSservice.InsertRecord(loginAdmin, "編輯表單:" + reportAnswer.ExtendName);
                     Literal AlertMsg = new Literal();
-                    AlertMsg.Text = "<script language='javascript'>alert('編輯表單成功!!!');location.href='ReportQuestionEdit.aspx?aid=" + ReportAnswerId + "';</script>";
+                    AlertMsg.Text = "<script language='javascript'>alert('編輯表單成功!!!');';</script>";
                     this.Page.Controls.Add(AlertMsg);
                 }
             }
@@ -197,7 +197,9 @@ namespace LDTS
                 {
                     LDTSservice.InsertRecord(loginAdmin, "新增表單:" + reportAnswer.ExtendName);
                     Literal AlertMsg = new Literal();
-                    AlertMsg.Text = "<script language='javascript'>alert('新增表單成功!!!');location.href='ReportQuestionEdit.aspx?aid=" + aid + "';</script>";
+                    AlertMsg.Text = "<script language='javascript'>alert('新增表單成功!!!')';</script>";
+                    //AlertMsg.Text = "<script language='javascript'>alert('新增表單成功!!!');location.href='ReportQuestionEdit.aspx?aid=" + aid + "';</script>";
+
                     this.Page.Controls.Add(AlertMsg);
                 }
                 else
