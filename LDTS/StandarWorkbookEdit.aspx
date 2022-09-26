@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="Default">Home</a></li>
+                        <li class="breadcrumb-item"><a href="Relation">程序書關聯設定</a></li>
                         <li class="breadcrumb-item">標準作業書</li>
                     </ol>
                 </div>

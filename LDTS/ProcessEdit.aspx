@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="Default">Home</a></li>
+                        <li class="breadcrumb-item"><a href="Relation">程序書關聯設定</a></li>
                         <li class="breadcrumb-item">編輯程序書</li>
                     </ol>
                 </div>
@@ -36,8 +36,8 @@
                             </div>
 
                             <div class="processesName form-group">
-                                <label for="processesName"  MaxLength="50" style="font-size: 12px; color: #00000080">程序書名稱</label>
-                                <asp:TextBox ID="proName" runat="server" CssClass="form-control form-control-border">未命名</asp:TextBox>
+                                <label for="processesName" style="font-size: 12px; color: #00000080">程序書名稱</label>
+                                <asp:TextBox ID="proName"  MaxLength="50" runat="server" CssClass="form-control form-control-border">未命名</asp:TextBox>
                             </div>
                             <div class="processesDesc form-group">
                                 <label for="desc" style="font-size: 12px; color: #00000080">程序書描述</label>
