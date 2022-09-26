@@ -2024,6 +2024,8 @@
     <Content Include="plugins\uplot\uPlot.iife.js" />
     <Content Include="plugins\uplot\uPlot.iife.min.js" />
     <Content Include="plugins\uplot\uPlot.min.css" />
+    <Content Include="preView.aspx" />
+    <Content Include="Preview.html" />
     <Content Include="Process.aspx" />
     <Content Include="ProcessAdd.aspx" />
     <Content Include="ProcessEdit.aspx" />
@@ -2185,6 +2187,13 @@
     </Compile>
     <Compile Include="PersonnelManagement.aspx.designer.cs">
       <DependentUpon>PersonnelManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="preView.aspx.cs">
+      <DependentUpon>preView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="preView.aspx.designer.cs">
+      <DependentUpon>preView.aspx</DependentUpon>
     </Compile>
     <Compile Include="Process.aspx.cs">
       <DependentUpon>Process.aspx</DependentUpon>

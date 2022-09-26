@@ -165,9 +165,18 @@ namespace LDTS
                                                         outputDocument.FillContent(valuesToFill);
                                                         break;
                                                     case "date":
-                                                        DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(Answers[0]["value"].Value<long>());
-                                                        valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}", dateTimeOffset.ToLocalTime().ToString("yyyy/MM/dd")));
-                                                        outputDocument.FillContent(valuesToFill);
+                                                        if (Answers[0]["value"].Value<long>()==0)
+                                                        {
+                                                            valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}"," "));
+                                                            outputDocument.FillContent(valuesToFill);
+
+                                                        }
+                                                        else
+                                                        {
+                                                            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(Answers[0]["value"].Value<long>());
+                                                            valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}", dateTimeOffset.ToLocalTime().ToString("yyyy/MM/dd")));
+                                                            outputDocument.FillContent(valuesToFill);
+                                                        }
                                                         break;
                                                     case "sign":
                                                         if (0 < Answers[0]["value"].Value<int>())

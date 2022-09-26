@@ -83,7 +83,7 @@ namespace LDTS
                         bool hasAdd = false;
                         //USER 權限 
                         ProcessContainerStr += "<table class=\"table\">";
-                        ProcessContainerStr += "<thead>";
+                        ProcessContainerStr += "<thead class=\"sticky\">";
                         ProcessContainerStr += "<tr>";
                         ProcessContainerStr += "<th>自定義名稱</th><th>異動時間</th><th>異動人員</th><th>簽核狀態</th><th>版本號</th><th></th>";
                         ProcessContainerStr += "</tr>";
@@ -194,7 +194,7 @@ namespace LDTS
                         ProcessContainerStr += "</div>";//prossesCardHeader 
                         ProcessContainerStr += "<div class=\"card-body\" style=\"display:block;\">";
                         ProcessContainerStr += "<table class=\"table\">";
-                        ProcessContainerStr += "<thead>";
+                        ProcessContainerStr += "<thead class=\"sticky\">";
                         ProcessContainerStr += "<tr>";
                         ProcessContainerStr += "<th>自定義名稱</th><th>異動時間</th><th>異動人員</th><th>簽核狀態</th><th>版本號</th><th></th>";
                         ProcessContainerStr += "</tr>";

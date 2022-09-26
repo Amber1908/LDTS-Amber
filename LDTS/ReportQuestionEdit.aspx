@@ -245,8 +245,9 @@
                         normalDiv.append(GroupNameH);
 
                         let QcardBody = document.createElement("div");//卡片的Body 全部產出的問題會在這邊顯示
+                        QcardBody.classList.add("card-body", "row");
+
                         for (var q = 0; q < Obj.Groups[i].Questions.length; q++) {
-                            QcardBody.classList.add("card-body", "row");
                             normalDiv.append(QcardBody);
                             let Qlabel = document.createElement("div");
                             let img = document.createElement("img");
@@ -3938,7 +3939,10 @@
             let selfradio = gfather.childNodes;//radio box
             let normals = normalfather.childNodes;//全部的孩子
             let otherAns = gfather.getElementsByClassName("otherAns");
-            otherAns[0].disabled = true;
+            if(otherAns.length>0){
+                otherAns[0].disabled = true;
+            }
+            
             let other = gfather.getElementsByClassName("other");
             for (var i = 0; i < other.length; i++) {
                 if (other[i].dataset.qid == event.currentTarget.name) {
@@ -4439,7 +4443,7 @@
                         fillinfPlace.setAttribute("value", DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[AnsSn].value);
                     }
                     fillinfPlace.setAttribute("onchange", "changeJsonData(event)");//todo 檢查 有順序問題
-                    fillinfPlace.classList.add("form-control", "form-control-user", "col-1", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                    fillinfPlace.classList.add("form-control", "form-control-user", "col-1","form-control-sm","form-control-border", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
                     FillingBox.append(fillinfPlace);
                     let words = strOfFilling[sf].substring(2);
                     if (words != null) {
@@ -4644,7 +4648,7 @@
         function CreateNormalTypeRadioMixFilling(DataObj, GroupSn, QusetionSn, Parent) {
             let today = new Date().getTime();
             let rfRadfillBoxFather = document.createElement("div");
-            rfRadfillBoxFather.classList.add("row");
+            rfRadfillBoxFather.classList.add("row","col-12");
             Parent.append(rfRadfillBoxFather)
             for (var arf = 0; arf < DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions.length; arf++) {//radio
                 let rfRadfillBox = document.createElement("div");
