@@ -1785,7 +1785,7 @@
                             insertBodyStr += "<h6>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h6>";
                             for (var o = 0; o < Obj.Groups[i].Rows[1].Cols[r].AnswerOptions.length; o++) {
                                 insertBodyStr += "<div class=\"form-check\">"
-                                insertBodyStr += "<input type=\"radio\" onclick=\"CleanOptionforTable(event)\" class=\" mr-3\"name=\"";
+                                insertBodyStr += "<input type=\"radio\" onclick=\"CleanOptionforRow(event)\" class=\" mr-3\"name=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"";
                                 insertBodyStr += "value=\"";
                                 insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].AnswerOptions[o].index;
@@ -2346,7 +2346,7 @@
                             for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[r].AnswerOptions.length; o++) {
                                 let oldStr = updateBodyStr;
                                 updateBodyStr += "<div class=\"form-check\">";
-                                updateBodyStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" onclick=\"CleanOption(event)\" class=\" mr-3\"name=\"";
+                                updateBodyStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" onclick=\"CleanOptionforRow(event)\" class=\" mr-3\"name=\"";
                                 updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\"";
                                 updateBodyStr += "value=\"";
                                 updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].AnswerOptions[o].index;
@@ -2709,7 +2709,7 @@
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers[s].value = true;
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers[s].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
-                                            } else {
+                                            } else if (!smaeRadios[s].checked && !smaeRadios[s].classList.contains("otherAns")){
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers[s].value = false;
                                                 dataObj2.Groups[i].Rows[sn].Cols[c].Answers[s].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
@@ -3932,6 +3932,64 @@
             input.disabled = false;
 
         }
+        //checkbox勾選 table
+        function CleanOptionforRow(event) {//不刪radio的checked
+            let gfather = event.currentTarget.parentNode.parentNode;
+            let normalfather = event.currentTarget.parentNode;
+            let selfradio = gfather.childNodes;//radio box
+            let normals = normalfather.childNodes;//全部的孩子
+            let otherAns = gfather.getElementsByClassName("otherAns");
+            if (otherAns.length > 0) {
+                otherAns[0].disabled = true;
+            }
+
+            let other = gfather.getElementsByClassName("other");
+            for (var i = 0; i < other.length; i++) {
+                if (other[i].dataset.qid == event.currentTarget.name) {
+                    other[i].disabled = true;
+                }
+            }
+            for (var i = 0; i < selfradio.length; i++) {
+                let selfckbs = selfradio[i].childNodes;
+
+                for (var cki = 0; cki < selfckbs.length; cki++) {
+                    if (selfckbs[cki].type == "checkbox" && selfckbs[cki].name == event.currentTarget.name) {
+                        selfckbs[cki].checked = false;
+                        selfckbs[cki].disabled = true;
+                    } else if (selfckbs[cki].type == "checkbox" && selfckbs[cki].name != event.currentTarget.value) {
+                        console.log("CleanOption");
+                        //selfckbs[cki].checked = false;
+                        selfckbs[cki].disabled = true;
+                    }
+                    else if (selfckbs[cki].type == "checkbox" && selfckbs[cki].name == event.currentTarget.value) {
+
+                        selfckbs[cki].checked = false;
+                        selfckbs[cki].disabled = true;
+                    }
+                }
+            }
+            event.currentTarget.checked = true;
+
+            let selfchbox = event.currentTarget.parentNode.childNodes;
+            for (var c = 0; c < selfchbox.length; c++) {
+
+                if (selfchbox[c].name == event.currentTarget.name) {
+                    selfchbox[c].disabled = false;
+                }
+            }
+
+            for (var b = 0; b < selfradio.length; b++) {
+                selfradio[b].childNodes[0].disabled = false;
+            }
+            for (var i = 0; i < normals.length; i++) {
+                if (normals[i].type == "checkbox" && normals[i].name == event.currentTarget.value) {
+                    normals[i].disabled = false;
+                }
+            }
+
+            event.currentTarget.disabled = false;
+        }
+
         //清空 checkbox勾選 一般
         function CleanOption(event) {//不刪radio的checked
             let gfather = event.currentTarget.parentNode.parentNode;
@@ -3962,7 +4020,7 @@
                         selfckbs[cki].disabled = true;
                     }
                     else if (selfckbs[cki].type == "checkbox" && selfckbs[cki].name == event.currentTarget.value) {
-                        console.log("CleanOption");
+                        
                         selfckbs[cki].checked = false;
                         selfckbs[cki].disabled = true;
                     }
