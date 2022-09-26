@@ -96,8 +96,6 @@
     <Content Include="Default.aspx" />
     <Content Include="DeleteRelation.aspx" />
     <Content Include="dist\css\adminlte.css" />
-    <Content Include="dist\css\adminlteLDTS.css" />
-    <Content Include="dist\css\adminlte.min.css" />
     <Content Include="dist\css\alt\adminlte.components.css" />
     <Content Include="dist\css\alt\adminlte.components.min.css" />
     <Content Include="dist\css\alt\adminlte.core.css" />
@@ -111,6 +109,7 @@
     <Content Include="dist\css\alt\adminlte.plugins.css" />
     <Content Include="dist\css\alt\adminlte.plugins.min.css" />
     <Content Include="dist\css\LDTS_StyleSheet.css" />
+    <Content Include="dist\css\paratmeter.css" />
     <Content Include="dist\img\AdminLTELogo.png" />
     <Content Include="dist\img\avatar.png" />
     <Content Include="dist\img\avatar2.png" />
@@ -2312,8 +2311,6 @@
     <Compile Include="Utils\PublicUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dist\css\adminlte.css.map" />
-    <Content Include="dist\css\adminlte.min.css.map" />
     <Content Include="dist\css\alt\adminlte.components.css.map" />
     <Content Include="dist\css\alt\adminlte.components.min.css.map" />
     <Content Include="dist\css\alt\adminlte.core.css.map" />
@@ -2330,7 +2327,6 @@
     <Content Include="dist\js\adminlte.js.map" />
     <Content Include="dist\js\adminlte.min.js.map" />
     <Content Include="LDTS.Master" />
-    <Content Include="dist\css\.editorconfig" />
     <Content Include="InsertAdminFormService.ashx" />
     <Content Include="InsertReportAnswer.ashx" />
     <Content Include="InsertReProSworkbook.ashx" />
