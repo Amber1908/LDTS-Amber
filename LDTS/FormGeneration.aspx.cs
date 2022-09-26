@@ -102,6 +102,14 @@ namespace LDTS
                     if (isUpdate)
                     {
                         result = ReportQuestiovService.UpdateReportQuestionFile(report);
+                        //改所有ReportQuestion下面的 ReportAnswers的Reportfile
+                        List<ReportAnswer> updateAnswers = ReportAnswerService.GetAllAnswersByQID(report.QID);
+
+                        foreach (var updateAnswer in updateAnswers)
+                        {
+                            updateAnswer.OutputTemplate = TemplateFileName;
+                            ReportAnswerService.UpdateReportAnswer(updateAnswer);
+                        }
                     }
                     else
                     {

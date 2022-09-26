@@ -135,7 +135,7 @@
             </aside>
 
             <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
+            <div id="contentWrapper" class="content-wrapper">
                 <asp:ContentPlaceHolder ID="mainPlaceHolder" runat="server">
                 </asp:ContentPlaceHolder>
             </div>

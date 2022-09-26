@@ -12,6 +12,49 @@ namespace LDTS.Service
     public class ReportAnswerService
     {
         static readonly Logger logger = new Logger("ReportAnswerService");
+        public static List<ReportAnswer> GetAllAnswersByQID(int qid)
+        {
+            List<ReportAnswer> reportAnswers = new List<ReportAnswer>();
+            try
+            {
+                using (SqlConnection sqc = new SqlConnection(WebConfigurationManager.ConnectionStrings["LDTSConnectionString"].ToString()))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("", sqc);
+                    sqc.Open();
+                    sqlCommand.CommandText = @"Select * from ReportAnswer where QID=@QID";
+                    sqlCommand.Parameters.AddWithValue("@QID", qid);
+
+                    SqlDataReader sd = sqlCommand.ExecuteReader();
+                    while (sd.Read())
+                    {
+                        reportAnswers.Add(new ReportAnswer()
+                        {
+                            AID = sd.IsDBNull(sd.GetOrdinal("AID")) ? 0 : sd.GetInt32(sd.GetOrdinal("AID")),
+                            QID = sd.IsDBNull(sd.GetOrdinal("QID")) ? 0 : sd.GetInt32(sd.GetOrdinal("QID")),
+                            Title = sd.IsDBNull(sd.GetOrdinal("Title")) ? "" : sd.GetString(sd.GetOrdinal("Title")),
+                            ExtendName = sd.IsDBNull(sd.GetOrdinal("ExtendName")) ? string.Empty : sd.GetString(sd.GetOrdinal("ExtendName")),
+                            Description = sd.IsDBNull(sd.GetOrdinal("Description")) ? "" : sd.GetString(sd.GetOrdinal("Description")),
+                            OutputJson = sd.IsDBNull(sd.GetOrdinal("OutputJson")) ? "" : sd.GetString(sd.GetOrdinal("OutputJson")),
+                            CreateDate = sd.IsDBNull(sd.GetOrdinal("CreateDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("CreateDate")),
+                            CreateMan = sd.IsDBNull(sd.GetOrdinal("CreateMan")) ? "" : sd.GetString(sd.GetOrdinal("CreateMan")),
+                            AppendFile = sd.IsDBNull(sd.GetOrdinal("AppendFile")) ? "" : sd.GetString(sd.GetOrdinal("AppendFile")),
+                            OutputTemplate = sd.IsDBNull(sd.GetOrdinal("OutputTemplate")) ? "" : sd.GetString(sd.GetOrdinal("OutputTemplate")),
+                            Version = sd.IsDBNull(sd.GetOrdinal("Version")) ? "" : sd.GetString(sd.GetOrdinal("Version")),
+                            Keyword = sd.IsDBNull(sd.GetOrdinal("Keyword")) ? "" : sd.GetString(sd.GetOrdinal("Keyword")),
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status")),
+                            LastupDate = sd.IsDBNull(sd.GetOrdinal("LastupDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("LastupDate")),
+                            LastupMan = sd.IsDBNull(sd.GetOrdinal("LastupMan")) ? string.Empty : sd.GetString(sd.GetOrdinal("LastupMan"))
+
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.ERROR(e.Message);
+            }
+            return reportAnswers;
+        }
 
         public static List<ReportAnswer> GetAnswers()
         {
@@ -23,6 +66,7 @@ namespace LDTS.Service
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
                     sqlCommand.CommandText = @"Select * from ReportAnswer";
+
                     SqlDataReader sd = sqlCommand.ExecuteReader();
                     while (sd.Read())
                     {
