@@ -36,11 +36,11 @@
                             </div>
                             <div class="sName form-group">
                                 <label for="sName" style="font-size: 12px; color: #00000080">標準作業書名稱</label>
-                                <asp:TextBox ID="sName" runat="server" CssClass="form-control form-control-border">未命名</asp:TextBox>
+                                <asp:TextBox ID="sName" MaxLength="50" runat="server" CssClass="form-control form-control-border">未命名</asp:TextBox>
                             </div>
                             <div class="sDesc form-group">
                                 <label for="desc" style="font-size: 12px; color: #00000080">標準作業書描述</label>
-                                <asp:TextBox TextMode="MultiLine" ID="desc" runat="server" Rows="5" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox TextMode="MultiLine" MaxLength="200" ID="desc" runat="server" Rows="5" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="swbUpload">
                                 <div class="swbEditUploadCard card">

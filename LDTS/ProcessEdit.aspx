@@ -36,12 +36,12 @@
                             </div>
 
                             <div class="processesName form-group">
-                                <label for="processesName" style="font-size: 12px; color: #00000080">程序書名稱</label>
+                                <label for="processesName"  MaxLength="50" style="font-size: 12px; color: #00000080">程序書名稱</label>
                                 <asp:TextBox ID="proName" runat="server" CssClass="form-control form-control-border">未命名</asp:TextBox>
                             </div>
                             <div class="processesDesc form-group">
                                 <label for="desc" style="font-size: 12px; color: #00000080">程序書描述</label>
-                                <asp:TextBox TextMode="MultiLine" ID="desc" runat="server" Rows="5" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox TextMode="MultiLine"  MaxLength="200" ID="desc" runat="server" Rows="5" CssClass="form-control"></asp:TextBox>
                             </div>
                             <div class="processesUpload">
                                 <div class="personEditUploadCard card">
