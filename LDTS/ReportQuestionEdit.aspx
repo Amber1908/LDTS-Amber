@@ -33,7 +33,7 @@
                             </div>
                             <div class="ansExtendName form-group">
                                 <label for="ExtendName" style="font-size: 12px; color: #00000080">自訂義名稱</label>
-                                <input type="text" runat="server" MaxLength="50" id="ExtendName" class="form-control form-control-border" value=" " />
+                                <input type="text" runat="server" MaxLength="50" id="ExtendName" class="form-control form-control-border" />
                             </div>
                             <div class="ansKeyword form-group">
                                 <label for="keyword" style="font-size: 12px; color: #00000080">關鍵字設定</label>
@@ -119,7 +119,6 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">
     <script>
-
         window.onload = function () {
             //Signbtn 
             var dataObj = GetJsonData();
@@ -285,21 +284,16 @@
                             }
 
                             switch (Obj.Groups[i].Questions[q].QuestionType) {//產出對應的問題
+
                                 case "text":
                                     CreateNormalTypeText(Obj, i, q, QcardBody);//Obj Json來源 i第幾個Group q第幾個問題 QcardBody要放在哪個載體中
                                     break;
                                 case "number":
                                     CreateNormalTypeNumber(Obj, i, q, QcardBody);
                                     break;
-                                case "radio":
-                                    CreateNormalTypeRadio(Obj, i, q, QcardBody);
-                                    break;
+                                case "checkbox":
                                 case "CheckboxMixFilling":
                                     CreateNormalTypeCheckboxMixFilling(Obj, i, q, QcardBody);
-                                    break;
-
-                                case "checkbox":
-                                    CreateNormalTypeCheckbox(Obj, i, q, QcardBody);
                                     break;
                                 case "select":
                                     CreateNormalTypeSelect(Obj, i, q, QcardBody);
@@ -314,12 +308,14 @@
                                 case "sign":
                                     CreateNormalTypeSign(Obj, i, q, QcardBody);
                                     break;
+                                case"display":
                                 case "filling":
                                     CreateNormalTypeFilling(Obj, i, q, QcardBody);
                                     break;
                                 case "RadioMixCheckbox":
                                     CreateNormalTypeRadioMixCheckbox(Obj, i, q, QcardBody);
                                     break;
+                                case "radio":
                                 case "RadioMixFilling":
                                     CreateNormalTypeRadioMixFilling(Obj, i, q, QcardBody);
                                     break;
@@ -3407,7 +3403,6 @@
         function changeJsonData(event) {
             var dataObj = GetJsonData();
             let thischange = event.currentTarget;
-            console.log("thischange_" + thischange.type)
             let date = new Date();
             let today = date.getTime();
             switch (thischange.type) {
@@ -3454,6 +3449,7 @@
                 case "select-one":
                     let ThisName = event.currentTarget.name;
                     let thisNameQ = ThisName.split("_");
+
                     for (var i = 0; i < dataObj.Groups.length; i++) {
                         if (dataObj.Groups[i].GroupType == "normal") {
                             for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
@@ -3475,21 +3471,36 @@
                                             dataObj.Groups[i].Questions[j].Answers.length = 0;
                                             let time = new Date(event.currentTarget.value).getTime();
                                             dataObj.Groups[i].Questions[j].Answers.push({ "index": 1, "value": time, "lastUpdate": today });
-                                            console.log("date" + time);
+                                           
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-
                                             break;
                                         default:
                                     }
+                                } else if (dataObj.Groups[i].Questions[j].QuestionType == "checkbox") {
+                                    let ckbSn = Number(event.currentTarget.dataset.ckb)-1;
+                                    let sn = Number(thisNameQ[1]) - 1;
+                                    let hasCkbSn = isNaN(ckbSn);
+                                    if (!hasCkbSn) {
+                                        if (dataObj.Groups[i].Questions[j].Answers[ckbSn].value) {
+                                            dataObj.Groups[i].Questions[j].Answers[ckbSn].Answers[sn].value = event.currentTarget.value;
+                                            dataObj.Groups[i].Questions[j].Answers[ckbSn].Answers[sn].lastUpdate = today;
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                        }
+                                    }
                                 }
-                                //else if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "date" ) {
-                                //    dataObj.Groups[i].Questions[j].Answers.length = 0;
-                                //    let time = new Date(event.currentTarget.value).getTime();
-                                //    dataObj.Groups[i].Questions[j].Answers.push({ "index": 1, "value": time, "lastUpdate": today });
-                                //    console.log("date" + time);
-                                //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                //}
-                                else if (dataObj.Groups[i].Questions[j].QuestionType == "filling") {////Filling
+                                else if (dataObj.Groups[i].Questions[j].QuestionType == "radio") {
+                                    let rdSn = Number(event.currentTarget.dataset.rd) - 1;
+                                    let sn = Number(thisNameQ[1]) - 1;
+                                    let hasRdSn = isNaN(rdSn);
+                                    if (!hasRdSn) {
+                                        if (dataObj.Groups[i].Questions[j].Answers[rdSn].value) {
+                                            dataObj.Groups[i].Questions[j].Answers[rdSn].Answers[sn].value = event.currentTarget.value;
+                                            dataObj.Groups[i].Questions[j].Answers[rdSn].Answers[sn].lastUpdate = today;
+                                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                        }
+                                    }
+                                }
+                                else if (dataObj.Groups[i].Questions[j].QuestionType == "filling" ) {////Filling
                                     if (dataObj.Groups[i].Questions[j].QuestionText == thisNameQ[0]) {
                                         let sn = thisNameQ[1] - 1;
                                         if (dataObj.Groups[i].Questions[j].Answers.length == 0) {
@@ -3505,7 +3516,10 @@
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                         }
                                     }
-                                } else if (dataObj.Groups[i].Questions[j].QuestionType == "CheckboxMixFilling") {
+                                } else if (dataObj.Groups[i].Questions[j].QuestionType == "display") {
+
+                                }
+                                else if (dataObj.Groups[i].Questions[j].QuestionType == "CheckboxMixFilling") {
                                     let thisValue = event.currentTarget.name;
                                     let ansValue = thisValue.split("_");
                                     let ckb = event.currentTarget.dataset.ckb;
@@ -3553,24 +3567,27 @@
                                 if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "checkbox") {
                                     if (event.currentTarget.checked) {
                                         for (var ic = 0; ic < dataObj.Groups[i].Questions[j].AnswerOptions.length; ic++) {
-                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[ic].AnsText == event.currentTarget.value) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[ic].index == event.currentTarget.value) {
                                                 dataObj.Groups[i].Questions[j].Answers[ic].value = true;
                                                 dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-                                            } /*else {*/
-                                            //    dataObj.Groups[i].Questions[j].Answers[ic].value = false;
-                                            //    dataObj.Groups[i].Questions[j].Answers[ic].lastUpdate = today;
-                                            //    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
-
-                                            //}
+                                            }
                                         }
                                     } else {
                                         for (let cc = 0; cc < dataObj.Groups[i].Questions[j].AnswerOptions.length; cc++) {
-                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[cc].AnsText == event.currentTarget.value) {
+                                            if (dataObj.Groups[i].Questions[j].AnswerOptions[cc].index == event.currentTarget.value) {
                                                 dataObj.Groups[i].Questions[j].Answers[cc].value = false;
                                                 dataObj.Groups[i].Questions[j].Answers[cc].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                if (dataObj.Groups[i].Questions[j].AnswerOptions[cc].AnsText.includes("##^")) {
+                                                    for (var a = 0; a < dataObj.Groups[i].Questions[j].Answers[cc].Answers.length; a++) {
+                                                        dataObj.Groups[i].Questions[j].Answers[cc].Answers[a].value = "";
+                                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                    }
+                                                }
+
                                             }
+
                                         }
                                     }
                                 }
@@ -3675,12 +3692,19 @@
                                             if (dataObj.Groups[i].Questions[j].AnswerOptions[r].AnsText == event.currentTarget.value) {
                                                 dataObj.Groups[i].Questions[j].Answers[r].value = true;
                                                 dataObj.Groups[i].Questions[j].Answers[r].lastUpdate = today;
-                                                dataObj.Groups[i].Questions[j].otherAnswer[0].value = null;
+                                                if (dataObj.Groups[i].Questions[j].hasOtherAnswers) {
+                                                    dataObj.Groups[i].Questions[j].otherAnswer[0].value = null;
+                                                }
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                             } else {
                                                 dataObj.Groups[i].Questions[j].Answers[r].value = false;
                                                 dataObj.Groups[i].Questions[j].Answers[r].lastUpdate = today;
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                                if (dataObj.Groups[i].Questions[j].AnswerOptions[r].AnsText.includes("##^")) {
+                                                    for (var a = 0; a < dataObj.Groups[i].Questions[j].Answers[r].Answers.length; a++) {
+                                                        dataObj.Groups[i].Questions[j].Answers[r].Answers
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -4597,7 +4621,7 @@
                     }
                 } else {
                     let TXTS = document.createElement("div");//一開始的文字
-                    TXTS.innerText = AnsAStr[ocf];
+                    TXTS.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[acf].AnsText;
                     checkboxFillngBox.append(TXTS);
                 }
                 fillingAns++;

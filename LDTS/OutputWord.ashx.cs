@@ -311,11 +311,20 @@ namespace LDTS
                         case "radio":
                             Temp = "";
                             JArray r_answeroptions = cols[i]["AnswerOptions"].Value<JArray>();
-                            JArray r_answers = cols[i]["Answers"].Value<JArray>();
+                            JArray r_answers = cols[i]["Answers"].Value<JArray>();//第一層
                             for (int j = 0; j < r_answers.Count; j++)
                             {
+                                var fills = (JArray)r_answers[j]["Answers"];
+
                                 Temp += r_answers[j]["value"].Value<bool>() ? "●" : "○";
                                 Temp += $" {r_answeroptions[j]["AnsText"].Value<string>()} ";
+                                if (fills.Count>0)
+                                {
+                                    for (int f = 0; f < fills.Count; f++)//tingyu
+                                    {
+                                        Temp += $" {r_answeroptions[j]["Answers"]["Answers"][f].Value<string>()} "; //tingyu
+                                    }
+                                }
                             }
                             fi.Add(new FieldContent($"col{i + 1}", Temp));
                             break;

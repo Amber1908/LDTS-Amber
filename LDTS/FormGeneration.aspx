@@ -122,13 +122,10 @@
                         <option value="checkbox">checkbox</option>
                         <option value="select">select</option>
                         <option value="sign">sign</option>
-                        <option value="filling">filling</option>
                         <option value="date">date</option>
                         <option value="file">file</option>
                         <option value="RadioMixCheckbox">RadioMixCheckbox</option>
-                        <option value="RadioMixFilling">RadioMixFilling</option>
                         <option value="CheckboxMixImage">CheckboxMixImage</option>
-                        <option value="CheckboxMixFilling">CheckboxMixFilling</option>
                     </select>
                 </div>
                 <div class="modal-footer">
@@ -149,6 +146,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <span class="text-info">填充位置請以
+                    <label class="text-danger">##^n</label>
+                    來表示，例如: 檢體大小
+                    <label class="text-danger">##^1</label>
+                    x
+                    <label class="text-danger">##^2</label>
+                    。</span>
+
                     <input id="displayInput" type="text" class="form-control w-100" placeholder="請輸入題目" />
                     <div id="displayUploadDiv" class="form-inline mt-2">
                         <label for="displayFile">附加圖片</label>
@@ -210,67 +215,6 @@
             </div>
         </div>
     </div>
-    <!-- radio Modal -->
-    <div class="modal fade" id="radioModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="radioModalTitle">radio</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-inline">
-                        <input id="radioInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
-                        <div class="form-check ml-3">
-                            <input type="checkbox" class="form-check-input" id="radioCheck">
-                            <label class="form-check-label" for="radioCheck">包含其他選項</label>
-                        </div>
-                    </div>
-                    <hr />
-                    <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return AddOption('radioBody')">添加選項</button>
-                    <div id="radioBody" class="mt-2">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('radio')">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- checkbox Modal -->
-    <div class="modal fade" id="checkboxModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="checkboxModalTitle">checkbox</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-inline">
-                        <input id="checkboxInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
-                        <div class="form-check ml-3">
-                            <input type="checkbox" class="form-check-input" id="checkboxCheck">
-                            <label class="form-check-label" for="checkboxCheck">包含其他選項</label>
-                        </div>
-                    </div>
-                    <hr />
-                    <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return AddOption('checkboxBody')">添加選項</button>
-                    <div id="checkboxBody" class="mt-2">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('checkbox')">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- select Modal -->
     <div class="modal fade" id="selectModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
@@ -400,7 +344,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                                            <span class="text-info">填充位置請以
+                        <label class="text-danger">##^n</label>
+                        來表示，例如: 檢體大小
+                        <label class="text-danger">##^1</label>
+                        x
+                        <label class="text-danger">##^2</label>
+                        。</span>
+
                     <div class="form-inline">
+
                         <input id="RadioMixCheckboxInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
                         <div class="form-check ml-3">
                             <input type="checkbox" class="form-check-input" id="RadioMixCheckboxCheck">
@@ -419,26 +372,26 @@
             </div>
         </div>
     </div>
-    <!-- RadioMixFilling Modal -->
-    <div class="modal fade" id="RadioMixFillingModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- radioModal Modal -->
+    <div class="modal fade" id="radioModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="RadioMixFillingModalTitle">RadioMixFilling</h5>
+                    <h5 class="modal-title" id="radioModalTitle">radio</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-inline">
-                        <input id="RadioMixFillingInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
+                        <input id="radioInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
                         <div class="form-check ml-3">
-                            <input type="checkbox" class="form-check-input" id="RadioMixFillingCheck">
+                            <input type="checkbox" class="form-check-input" id="radioCheck">
                             <label class="form-check-label" for="radioCheck">包含其他選項</label>
                         </div>
                     </div>
                     <hr />
-                    <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return AddOption('RadioMixFillingBody')">添加選項</button>
+                    <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return AddOption('radioBody')">添加選項</button>
                     <span class="text-info">填充位置請以
                         <label class="text-danger">##^n</label>
                         來表示，例如: 檢體大小
@@ -446,12 +399,12 @@
                         x
                         <label class="text-danger">##^2</label>
                         。</span>
-                    <div id="RadioMixFillingBody" class="mt-2">
+                    <div id="radioBody" class="mt-2">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('RadioMixFilling')">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('radio')">Save changes</button>
                 </div>
             </div>
         </div>
@@ -467,6 +420,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                        <span class="text-info">填充位置請以
+                        <label class="text-danger">##^n</label>
+                        來表示，例如: 檢體大小
+                        <label class="text-danger">##^1</label>
+                        x
+                        <label class="text-danger">##^2</label>
+                        。</span>
+
                     <div class="form-inline">
                         <input id="CheckboxMixImageInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
                         <div class="form-check ml-3">
@@ -489,26 +450,26 @@
             </div>
         </div>
     </div>
-    <!-- CheckboxMixFilling Modal -->
-    <div class="modal fade" id="CheckboxMixFillingModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- checkboxModal Modal -->
+    <div class="modal fade" id="checkboxModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="CheckboxMixFillingModalTitle">CheckboxMixFilling</h5>
+                    <h5 class="modal-title" id="checkboxModalTitle">CheckboxMixFilling</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-inline">
-                        <input id="CheckboxMixFillingInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
+                        <input id="checkboxInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
                         <div class="form-check ml-3">
-                            <input type="checkbox" class="form-check-input" id="CheckboxMixFillingCheck">
-                            <label class="form-check-label" for="radioCheck">包含其他選項</label>
+                            <input type="checkbox" class="form-check-input" id="checkboxCheck">
+                            <label class="form-check-label" for="checkboxCheck">包含其他選項</label>
                         </div>
                     </div>
                     <hr />
-                    <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return AddOption('CheckboxMixFillingBody')">添加選項</button>
+                    <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return AddOption('checkboxBody')">添加選項</button>
                     <span class="text-info">填充位置請以
                         <label class="text-danger">##^n</label>
                         來表示，例如: 檢體大小
@@ -516,12 +477,12 @@
                         x
                         <label class="text-danger">##^2</label>
                         。</span>
-                    <div id="CheckboxMixFillingBody" class="mt-2">
+                    <div id="checkboxBody" class="mt-2">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('CheckboxMixFilling')">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('checkbox')">Save changes</button>
                 </div>
             </div>
         </div>
@@ -530,1236 +491,6 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">
     <script>
         const outputJsonBox = $("#<%= OutputJson.ClientID %>");
-        showQuestion();
-        function preview() {
-            //let sonWindow = window.open('Preview');
-            let sonWindow = window.open('');
-            let fatherWindow = sonWindow.opener;
-            let previewJsonStr = document.getElementById("mainPlaceHolder_OutputJson").value;
-            let previewObj = JSON.parse(previewJsonStr);
-            let preview = GroupsTemplate(previewObj);
-            let head = sonWindow.document.head;
-            let link = sonWindow.document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = "plugins/fontawesome-free/css/all.min.css";
-            let Theme = sonWindow.document.createElement("link");
-            Theme.rel = "stylesheet";
-            Theme.href = "dist/css/adminlte.css";
-            let bootstrap = sonWindow.document.createElement("link");
-            bootstrap.rel = "stylesheet";
-            bootstrap.href = "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css";
-            bootstrap.integrity = "sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N";
-            bootstrap.crossOrigin = "anonymous";
-            let LDTSstyle = sonWindow.document.createElement("link");
-            LDTSstyle.rel = "stylesheet";
-            LDTSstyle.href = "dist/css/LDTS_StyleSheet.css";
-            head.appendChild(link);
-            head.appendChild(Theme);
-            head.appendChild(bootstrap);
-            head.appendChild(LDTSstyle);
-            sonWindow.document.body.innerHTML = GroupsTemplate(previewObj);
-            console.log(contentWrapper);
-            
-
-        };
-        function GroupsTemplate(Obj) {
-            const container = document.body;//產出畫面的位置
-            let previewStr = "<div class=\" content\"><div class=\" container-fluid\"><div class=\" row\"><div class=\"ansEdit col-md-3\"></div>";
-            previewStr += "<div class=\"ansEdit col-md-9\">";
-            previewStr += "<div class=\"card\">";
-            previewStr += "<div class=\"card-body\">";
-            previewStr += "<div class=\"ansEditForm\">";
-            for (var i = 0; i < Obj.Groups.length; i++) {
-                let hasSn = Obj.Groups[i].hasSN;
-                let Gsn = i;
-                switch (Obj.Groups[i].GroupType) {//先判斷GroupType
-                    case "normal":
-                        previewStr += "<div class=\"row normal\">";
-                        previewStr += "<h3 class=\"col-12 GroupName\">" + Obj.Groups[i].GroupName;
-                        previewStr += "</h3>";
-                        previewStr += "</div>";
-                        previewStr += "<div class=\"card-body row\">";//卡片的Body 全部產出的問題會在這邊顯示
-                        for (var q = 0; q < Obj.Groups[i].Questions.length; q++) {
-                            
-                            if (Obj.Groups[i].Questions[q].QuestionType == "filling") {
-                                previewStr += "<div class=\"col-12 pt-2 d-flex justify-content-start\">"
-                            }
-                            if (Obj.Groups[i].Questions[q].QuestionType == "display") {
-                                previewStr += "<div class=\"col-12 pt-2 d-flex justify-content-start\">"
-                                if (Obj.Groups[i].Questions[q].AnswerOptions.length > 0) {
-                                    previewStr += "<img style=\"80%\" src=\"ShowAdminImg?id" + Obj.Groups[i].Questions[q].AnswerOptions[0].image+"\""+">";
-                                }
-                            } else {
-                                previewStr += "<div class=\"col-3 pt-2 d-flex justify-content-start\">"
-                            }
-                            if (Obj.Groups[i].Questions[q].QuestionType == "RadioMixCheckbox" || Obj.Groups[i].Questions[q].QuestionType == "CheckboxMixFilling" || Obj.Groups[i].Questions[q].QuestionType == "RadioMixFilling") {
-                                previewStr += "<p clas=\"nQuestion p-1 myTextColor mt-5\">"
-                            } else {
-                                previewStr += "<p clas=\"nQuestion p-1 myTextColor\">"
-                            }
-                            if (Obj.Groups[i].Questions[q].QuestionType == "filling" && hasSn > 0) {//有項次
-                                previewStr += hasSn-1;
-                            } else if (hasSn > 0) {
-                                previewStr += hasSn;
-                            }
-                            hasSn++;
-                            if (Obj.Groups[i].Questions[q].QuestionType == "filling") {
-                                previewStr += "";
-                            } else {
-                                previewStr += Obj.Groups[i].Questions[q].QuestionText;//QuestionText
-                            }
-                            previewStr += "</p>";
-                            previewStr += "</div>";//問題的部分
-                            //switch (Obj.Groups[i].Questions[q].QuestionType) {//產出對應的問題
-                            //    case "text":
-                            //        CreateNormalTypeText(Obj, i, q, QcardBody);//Obj Json來源 i第幾個Group q第幾個問題 QcardBody要放在哪個載體中
-                            //        break;
-                            //    case "number":
-                            //        CreateNormalTypeNumber(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "radio":
-                            //        CreateNormalTypeRadio(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "CheckboxMixFilling":
-                            //        CreateNormalTypeCheckboxMixFilling(Obj, i, q, QcardBody);
-                            //        break;
-
-                            //    case "checkbox":
-                            //        CreateNormalTypeCheckbox(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "select":
-                            //        CreateNormalTypeSelect(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "image"://上傳圖片
-                            //    case "file":
-                            //        CreateNormalTypeImage(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "date":
-                            //        CreateNormalTypeDate(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "sign":
-                            //        CreateNormalTypeSign(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "filling":
-                            //        CreateNormalTypeFilling(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "RadioMixCheckbox":
-                            //        CreateNormalTypeRadioMixCheckbox(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "RadioMixFilling":
-                            //        CreateNormalTypeRadioMixFilling(Obj, i, q, QcardBody);
-                            //        break;
-                            //    case "CheckboxMixImage":
-                            //        CreateNormalTypeCheckboxMixImage(Obj, i, q, QcardBody);
-                            //        break;
-                            //    default:
-                            //}
-
-                            /*Qlabel.append(nQuestion);*/
-                        }
-                        break;
-                //    case "table":
-                //        let ansEditFormT = document.querySelector(".ansEditForm");
-                //        let TampleteStr = "";
-                //        TampleteStr += "<div class=\"rowPart\">";
-                //        TampleteStr += "<div class=\"rowPart\">";
-                //        TampleteStr += "<h3 class=\"rowPart\">" + Obj.Groups[i].GroupName;
-                //        TampleteStr += "</h3>";
-                //        TampleteStr += "<div class=\"rowContainer row card mb-4 rowPart\">";
-                //        TampleteStr += "<div class=\"rowPart\">";
-                //        TampleteStr += "<div class=\"table-responsive rowPart\" style=\"overflow-x:hidden\">";
-                //        TampleteStr += "<div class=\"row\">";
-                //        TampleteStr += "<div class=\"col-sm-12 col-12 rowPart\">";
-                //        TampleteStr += "<table class=\"table table-bordered dataTable rowPart\" style=\"width: 100%;\">";
-                //        TampleteStr += "<thead>";//thead
-                //        TampleteStr += "<tr role=\"row\">";
-                //        if (Obj.Groups[i].hasSN > 0) {
-                //            TampleteStr += "<th style=\"width:5%\" class=\"sorting sorting_asc rowPart\">" + "項次";
-                //            TampleteStr += "</th>";
-                //        }
-                //        for (var r = 0; r < Obj.Groups[i].Rows[0].Cols.length; r++) {//首列的標題
-
-                //            switch (Obj.Groups[i].Rows[0].Cols[r].QuestionType) {
-                //                case "display":
-                //                    TampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                    TampleteStr += "</th>";
-                //                    break;
-                //                case "text":
-                //                    TampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                    TampleteStr += "<input type=\"text\" value=\"" + Obj.Groups[i].Rows[0].Cols[r].Answers[0].value + "\">";
-                //                    TampleteStr += "</th>";
-                //                    break;
-                //                case "sign":
-                //                    if (Obj.Groups[i].Rows[0].Cols[r].QuestionText != "") {
-                //                        TampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                        if (Obj.Groups[i].Rows[0].Cols[r].Answers.length == 0) {
-                //                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": 0, "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        let signImgID = document.getElementById("mainPlaceHolder_adminSign").value;
-                //                        let time = new Date();
-                //                        let today = time.Format("yyyy-MM-dd");
-
-                //                        if (Number(Obj.Groups[i].Rows[0].Cols[r].Answers[0].value) > 0) {
-                //                            TampleteStr += "<div class=\"col-12 pt-2 tableSign\">";
-                //                            if (signImgID == Obj.Groups[i].Rows[0].Cols[c].Answers[0].value) {
-                //                                TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
-                //                                TampleteStr += "取消簽核";
-                //                                TampleteStr += "</div>";
-                //                            }
-                //                            TampleteStr += "<div class=\"mt-5 d-inline\">";//SignImageBox
-                //                            TampleteStr += "<img style=\"width:100px;\" src=\"";//img
-                //                            TampleteStr += "ShowAdminImg?id=" + Obj.Groups[i].Rows[0].Cols[r].Answers[0].value + "\"";
-                //                            TampleteStr += "id=\"sign" + Obj.Groups[i].Rows[0].Cols[r].Answers[0].value + "\"";
-                //                            TampleteStr += "class=\"" + Obj.Groups[i].Rows[0].Cols[r].QuestionID;
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].rotate == true) {
-                //                                TampleteStr += " " + "signRotated mt-5 mb-3 ml_1";
-                //                            }
-                //                            TampleteStr += "\"name=\"" + Obj.Groups[i].Rows[0].Cols[r].QuestionID;
-                //                            TampleteStr += "\">";//img
-                //                            TampleteStr += "<span style=\"font-weight:lighter;\" name=\"" + Obj.Groups[i].Rows[0].Cols[r].QuestionID;//
-                //                            if (Obj.Groups[i].Rows[0].Cols[r].rotate == true) {
-                //                                TampleteStr += "\" class=\" signDate mt-3\">";//d-flex justify-content-start
-                //                            } else {
-                //                                TampleteStr += "\" class=\"signDate mt-3\">";//d-flex  justify-content-end
-                //                            }
-                //                            time = new Date(Obj.Groups[i].Rows[0].Cols[r].Answers[0].lastUpdate);
-                //                            TampleteStr += time.Format("yyyy-MM-dd");
-                //                            TampleteStr += "</span>";
-                //                            TampleteStr += "</div>";//SignImageBox
-                //                            TampleteStr += "</div>";
-                //                        } else {
-                //                            TampleteStr += "<div class=\"col-12 pt-2 tableSign\">";
-                //                            TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
-                //                            TampleteStr += "簽核";
-                //                            TampleteStr += "</div>";
-                //                            TampleteStr += "<div class=\"mt-5 d-none\">";//SignImageBox
-                //                            TampleteStr += "<img style=\"width:100px\" src=\"";//img
-                //                            TampleteStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
-                //                            TampleteStr += "id=\"sign" + signImgID + "\"";
-                //                            TampleteStr += "class=\"" + Obj.Groups[i].Rows[0].Cols[r].QuestionID;
-                //                            TampleteStr += "\"name=\"" + Obj.Groups[i].Rows[0].Cols[r].QuestionID;
-                //                            TampleteStr += "\">";//img
-                //                            TampleteStr += "<span style=\"font-weight:lighter;\" name=\"" + Obj.Groups[i].Rows[0].Cols[r].QuestionID;
-                //                            TampleteStr += "\" class=\" signDate mt-3\">";//d-flex justify-content-end
-                //                            TampleteStr += today;
-                //                            TampleteStr += "</span>";
-                //                            TampleteStr += "</div>";//SignImageBox
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        TampleteStr += "</th>";
-                //                    }
-                //                    break;
-                //                case "date":
-                //                    TampleteStr += "<th class=\"sorting sorting_asc rowPart\">"
-
-                //                    if (Obj.Groups[i].Rows[0].Cols[r].QuestionText != "") {
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                    }
-                //                    if (Obj.Groups[i].Rows[0].Cols[r].Answers.length == 0) {
-                //                        Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": 0, "lastUpdate": "" });
-                //                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                    }
-                //                    TampleteStr += "<input type=\"date\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
-                //                    TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionID + "\"";
-                //                    if (Obj.Groups[i].Rows[0].Cols[r].Answers[0].value != 0) {
-                //                        let v = new Date(Obj.Groups[i].Rows[0].Cols[r].Answers[0].value);
-                //                        console.log("v" + v);
-                //                        if (v > 0) {
-                //                            v = v.Format("yyyy-MM-dd");
-                //                        }
-                //                        TampleteStr += "value=\"" + v + "\"";
-                //                    }
-                //                    TampleteStr += ">";
-                //                    TampleteStr += "</th>";
-
-                //                    break;
-                //                case "radio":
-                //                    TampleteStr += "<th class=\"sorting sorting_asc rowPart\">"
-
-                //                    if (Obj.Groups[i].Rows[0].Cols[r].QuestionText != "") {
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                    }
-                //                    for (var o = 0; o < Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length; o++) {
-                //                        if (Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length > Obj.Groups[i].Rows[0].Cols[r].Answers.length) {
-                //                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        TampleteStr += "<div class=\"form-check\">"
-                //                        TampleteStr += "<input type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\" class=\" mr-1\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionID + "\"";
-                //                        TampleteStr += "value=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].index;
-                //                        TampleteStr += "\"id=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].AnsText;
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].index + w;
-                //                        TampleteStr += "\"";
-                //                        if (Obj.Groups[i].Rows[0].Cols[r].Answers.length > 0) {
-                //                            if (Obj.Groups[i].Rows[0].Cols[r].Answers[o].value == true) {
-                //                                TampleteStr += "checked";
-                //                            }
-                //                        }
-                //                        TampleteStr += ">";
-                //                        TampleteStr += "<label for=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].AnsText;
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].index + w;
-                //                        TampleteStr += "\"class=\"\">" + Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].AnsText + "</label>";
-                //                        TampleteStr += "</div>";
-                //                    }
-                //                    if (Obj.Groups[i].Rows[0].Cols[r].hasOtherAnswers) {
-                //                        if (Obj.Groups[i].Rows[0].Cols[r].otherAnswer.length == 0) {
-                //                            Obj.Groups[i].Rows[0].Cols[r].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        TampleteStr += "<div class=\"form-check\">"
-                //                        TampleteStr += "<input class=\"otherAns\" type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionID;
-                //                        TampleteStr += "\"";
-                //                        if (Obj.Groups[i].Rows[0].Cols[r].otherAnswer.length > 0) {
-                //                            if (Obj.Groups[i].Rows[0].Cols[r].otherAnswer[0].value != null) {
-                //                                TampleteStr += "checked";
-                //                            }
-                //                        }
-                //                        TampleteStr += ">";
-                //                        TampleteStr += "<label >其他</label>";
-                //                        TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border form-control form-control-sm mb-3\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionID + "\"";
-                //                        if (Obj.Groups[i].Rows[0].Cols[r].otherAnswer.length > 0) {
-                //                            if (Obj.Groups[i].Rows[0].Cols[r].otherAnswer[0].value != null) {
-                //                                TampleteStr += "value=\"" + Obj.Groups[i].Rows[0].Cols[r].otherAnswer[0].value + "\"";
-                //                            }
-                //                        }
-                //                        TampleteStr += ">";
-
-                //                        TampleteStr += "</div>";
-
-                //                    }
-                //                    TampleteStr += "</th>";
-                //                    break;
-                //                case "checkbox":
-                //                    TampleteStr += "<th class=\"sorting sorting_asc rowPart\">";
-                //                    if (Obj.Groups[i].Rows[0].Cols[r].QuestionText != "") {
-                //                        Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                    }
-                //                    for (var o = 0; o < Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length; o++) {
-                //                        if (Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length > Obj.Groups[i].Rows[0].Cols[r].Answers.length) {
-                //                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        TampleteStr += "<div class=\"form-check\">"
-                //                        TampleteStr += "<input type=\"checkbox\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionID + "\"";
-                //                        TampleteStr += "value=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].index;
-                //                        TampleteStr += "\"id=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].AnsText;
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].index;
-                //                        TampleteStr += "\"";
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                            if (Obj.Groups[i].Rows[0].Cols[r].Answers[o].value == true) {
-                //                                TampleteStr += "checked";
-                //                            }
-                //                        }
-                //                        TampleteStr += ">";
-                //                        TampleteStr += "<label for=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].AnsText;
-                //                        TampleteStr += Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].index;
-                //                        TampleteStr += "\"class=\"\">" + Obj.Groups[i].Rows[0].Cols[r].AnswerOptions[o].AnsText + "</label>"
-                //                        TampleteStr += "</div>";
-                //                    }
-
-                //                    if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                //                            Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        TampleteStr += "<div class=\"form-check\">"
-                //                        TampleteStr += "<input class=\"otherAns\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                        TampleteStr += "\"";
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                TampleteStr += "checked";
-                //                            }
-                //                        }
-                //                        TampleteStr += ">";
-                //                        TampleteStr += "<label >其他</label>";
-                //                        TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border form-control mb-3\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                //                            }
-                //                        }
-                //                        TampleteStr += ">";
-
-                //                        TampleteStr += "</div>";
-                //                    }
-                //                    TampleteStr += "</th>";
-                //                    break;
-
-                //                default:
-                //            }
-                //        }
-                //        TampleteStr += "</thead>";//thead
-                //        TampleteStr += "<tbody>";//
-                //        let No = Obj.Groups[i].hasSN;
-                //        for (var w = 1; w < Obj.Groups[i].Rows.length; w++) {
-                //            TampleteStr += "<tr class=\"odd\">";
-                //            if (Obj.Groups[i].hasSN > 0) {
-                //                TampleteStr += " <td class=\"dtr-control sorting_1\">";
-                //                TampleteStr += No;
-                //                TampleteStr += "</td>";
-                //                No++;
-                //            }
-                //            for (var c = 0; c < Obj.Groups[i].Rows[w].Cols.length; c++) {//答案的顯示 存JSON的答案
-                //                TampleteStr += "<td class=\"dtr-control sorting_1\">";
-                //                switch (Obj.Groups[i].Rows[w].Cols[c].QuestionType) {
-                //                    case "text":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                //                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        TampleteStr += "<input type=\"text\"onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                            TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
-                //                        }
-                //                        TampleteStr += ">";
-                //                        break;
-                //                    case "number":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                //                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        TampleteStr += "<input type=\"number\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                            TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
-                //                        }
-                //                        TampleteStr += ">";
-                //                        break;
-                //                    //case "select":
-                //                    //    TampleteStr += Obj.Groups[i].Rows[w].Cols[c].Answers[0].value;
-                //                    //    break;
-                //                    case "display":
-                //                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionText;
-                //                        break;
-                //                    case "date":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                //                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        TampleteStr += "<input type=\"date\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers[0].value != 0) {
-                //                            let v = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].value);
-                //                            console.log("v" + v);
-                //                            if (v > 0) {
-                //                                v = v.Format("yyyy-MM-dd");
-                //                            }
-                //                            TampleteStr += "value=\"" + v + "\"";
-                //                        }
-                //                        TampleteStr += ">";
-
-                //                        break;
-                //                    case "radio":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check\">"
-                //                            TampleteStr += "<input type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\" class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            TampleteStr += "value=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"id=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index + w;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label for=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index + w;
-                //                            TampleteStr += "\"class=\"\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</label>";
-                //                            TampleteStr += "</div>";
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check d-flex mt-1\">"
-                //                            TampleteStr += "<input class=\"otherAns\" type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label class=\"pt-2 pl-1 mr-1\">其他</label>";
-                //                            TampleteStr += "<input style=\"max-width:100px\" type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border d-inline form-control form-control-sm mb-3\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        break;
-                //                    case "checkbox":
-                //                        //case "CheckboxMixImage":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check\">"
-                //                            TampleteStr += "<input type=\"checkbox\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            TampleteStr += "value=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"id=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label for=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"class=\"\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</label>"
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check d-flex mt-1\">"
-                //                            TampleteStr += "<input class=\"otherAns\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label class=\"pt-2 pl-1 pr-1\">其他</label>";
-                //                            TampleteStr += "<input style=\"max-width:100px\" type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border d-inline form-control form-control-sm mb-3\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        break;
-                //                    case "CheckboxMixImage":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check\">"
-                //                            TampleteStr += "<input type=\"checkbox\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            TampleteStr += "value=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"id=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label for=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"class=\"mb-5\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</label>";
-                //                            TampleteStr += "<img style =\"height:50px\"src=\"ShowAdminImg?id=" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].image + "\"" + "/>";
-
-                //                            TampleteStr += "</div>";
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check d-flex mt-1\">"
-                //                            TampleteStr += "<input class=\"otherAns\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label class=\"pt-2 pl-1 mr-1\">其他</label>";
-                //                            TampleteStr += "<input style=\"max-width:100px\" type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border d-inline form-control form-control-sm mb-3\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        break;
-                //                    case "sign":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                //                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": "" });
-                //                            document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                        }
-                //                        let signImgID = document.getElementById("mainPlaceHolder_adminSign").value;
-                //                        let time = new Date();
-                //                        let today = time.Format("yyyy-MM-dd");
-
-                //                        if (Number(Obj.Groups[i].Rows[w].Cols[c].Answers[0].value) > 0) {
-                //                            TampleteStr += "<div class=\"col-12 pt-2 tableSign\">";
-                //                            if (signImgID == Obj.Groups[i].Rows[w].Cols[c].Answers[0].value) {
-                //                                TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
-                //                                TampleteStr += "取消簽核";
-                //                                TampleteStr += "</div>";
-                //                            }
-                //                            TampleteStr += "<div class=\"mt-5 d-inline\">";//SignImageBox
-                //                            TampleteStr += "<img style=\"width:100px \" src=\"";//img
-                //                            TampleteStr += "ShowAdminImg?id=" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
-                //                            TampleteStr += "id=\"sign" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
-                //                            TampleteStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].rotate == true) {
-                //                                TampleteStr += " " + "signRotated mt-5 mb-3 ml_1";
-                //                            }
-                //                            TampleteStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\">";//img
-                //                            TampleteStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].rotate == true) {
-                //                                TampleteStr += "\" class=\"d-flex justify-content-start signDate mt-3\">";
-                //                            } else {
-                //                                TampleteStr += "\" class=\"signDate mt-3\">";//d-flex justify-content-end 
-                //                            }
-                //                            time = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].lastUpdate);
-                //                            TampleteStr += time.Format("yyyy-MM-dd");
-                //                            TampleteStr += "</span>";
-                //                            TampleteStr += "</div>";//SignImageBox
-                //                            TampleteStr += "</div>";
-                //                        } else {
-                //                            TampleteStr += "<div class=\"col-12 pt-2 tableSign\">";
-                //                            TampleteStr += "<div data-Staut=\"Edit\" style=\"font-size:10px\" data-GidandRow=\"GID\" onchange=\"changeTableJsonData(event)\" onclick=\"SignByAdminId(event)\" class=\"btn btn-primary Signbtn ml-2 rowPart\" >";//
-                //                            TampleteStr += "簽核";
-                //                            TampleteStr += "</div>";
-                //                            TampleteStr += "<div class=\"mt-5 d-none\">";//SignImageBox
-                //                            TampleteStr += "<img style=\"width:100px \" src=\"";//img
-                //                            TampleteStr += "ShowAdminImg.aspx?id=" + signImgID + "\"";
-                //                            TampleteStr += "id=\"sign" + signImgID + "\"";
-                //                            TampleteStr += "class=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\"name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\">";//img
-                //                            TampleteStr += "<span  name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\" class=\" signDate mt-3\">";//d-flex justify-content-end
-                //                            TampleteStr += today;
-                //                            TampleteStr += "</span>";
-                //                            TampleteStr += "</div>";//SignImageBox
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        break;
-                //                    case "filling":
-                //                        let fillingStr = Obj.Groups[i].Rows[w].Cols[c].QuestionText;
-                //                        let StrArr = fillingStr.split("##");
-                //                        let n = 1;
-                //                        let N = 0;//第幾個填充答案
-                //                        for (var s = 0; s < StrArr.length; s++) {
-                //                            if (StrArr[s].includes("^")) {
-                //                                if (n > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                //                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": n, "value": "", "lastUpdate": "" });
-                //                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                                }
-                //                                TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\" style=\"width:20%\"  class=\"form-control d-inline mr-1 ml-1 mb-2\"name=\"";
-                //                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                                TampleteStr += "data-filling=\"" + n + "\"";
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[N].value + "\"";
-                //                                }
-                //                                TampleteStr += ">";
-                //                                n++;
-                //                                N++;
-                //                                let txt = StrArr[s].substring(2);
-                //                                if (txt != null) {
-                //                                    TampleteStr += "<span>" + txt + "</span>";
-                //                                }
-                //                            } else {
-                //                                TampleteStr += "<span>" + StrArr[s] + "</span>";
-                //                            }
-                //                        }
-                //                        break;
-                //                    case "file"://要可以下載檔案
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        TampleteStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
-                //                        TampleteStr += "<input  onchange=\"changeTableJsonData(event)\" type=\"file\" class=\"Upload form-control mb-3\"name=\"";
-                //                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\">";
-                //                        TampleteStr += "上傳檔案";
-                //                        TampleteStr += "</span>";
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                            TampleteStr += "</br>";
-                //                            TampleteStr += "<span class=\"ml-3\">" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "</span>"
-                //                            TampleteStr += "<a class=\"download btn btn-default btn-sm ml-3\" href=\"Upload" + "/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
-                //                            TampleteStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
-                //                            TampleteStr += "</a>";
-                //                        }
-                //                        break;
-                //                    case "CheckboxMixFilling":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "Answers": [] });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check mt-2\">"
-                //                            TampleteStr += "<input type=\"checkbox\"onchange=\"changeTableJsonData(event)\" onclick=\"DisabledTrue(event)\" class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            TampleteStr += "value=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"id=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            let fillingStr = Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            let fSn = 1;
-                //                            let n = 0;
-                //                            let StrArr = fillingStr.split("##");
-                //                            for (var s = 0; s < StrArr.length; s++) {
-                //                                if (StrArr[s].includes("^")) {
-                //                                    if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length) {
-                //                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": fSn, "value": "", "lastUpdate": "" });
-                //                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                                    }
-                //                                    TampleteStr += "<input type=\"text\" disabled style=\"width:20%\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
-                //                                    TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                                    TampleteStr += "data-checkboxIndex=\"" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index + "\"";
-                //                                    TampleteStr += "data-TextIndex=\"" + fSn + "\"";
-                //                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length > 0) {
-                //                                        TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[n].value + "\"";
-                //                                    }
-                //                                    TampleteStr += ">";
-                //                                    fSn++;
-                //                                    n++;
-                //                                    let txt = StrArr[s].substring(2);
-                //                                    if (txt != null) {
-
-                //                                        TampleteStr += "<span>" + txt + "</span>";
-                //                                    }
-                //                                } else {
-
-                //                                    TampleteStr += "<span>" + StrArr[s] + "</span>";
-                //                                }
-                //                            }
-                //                            TampleteStr += "</div>";
-
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check d-flex  mt-2\">"
-                //                            TampleteStr += "<input class=\"otherAns\" type=\"checkbox\" onclick=\"DisabledTrue(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label class=\"pt-2 pl-1 pr-1\">其他</label>";
-                //                            TampleteStr += "<input style=\"max-width:100px\" type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border d-inline form-control form-control-sm mb-3\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        break;
-                //                    case "RadioMixFilling":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-                //                        for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "Answers": [] });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check mt-2\">"
-                //                            TampleteStr += "<input type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            TampleteStr += "value=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"id=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
-                //                                TampleteStr += "checked";
-                //                            }
-                //                            TampleteStr += ">";
-                //                            let fillingStr = Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            let StrArr = fillingStr.split("##");
-                //                            let fSn = 1;
-                //                            let n = 0;
-                //                            for (var s = 0; s < StrArr.length; s++) {
-                //                                if (StrArr[s].includes("^")) {
-                //                                    if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length) {
-                //                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": fSn, "value": "", "lastUpdate": "" });
-                //                                        document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                                    }
-                //                                    TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\"  disabled style=\"max-width:100px\" class=\"form-control-border form-control form-control-sm ml-1 mr-1 d-inline mb-2\"name=\"";//data-gidandrow
-                //                                    TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                                    TampleteStr += "data-RadioIndex=\"" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index + "\"";
-                //                                    TampleteStr += "data-TextIndex=\"" + fSn + "\"";
-                //                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length > 0) {
-                //                                        TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[n].value + "\"";
-                //                                    }
-                //                                    TampleteStr += ">";
-                //                                    fSn++;
-                //                                    n++;
-                //                                    let txt = StrArr[s].substring(2);
-                //                                    if (txt != null) {
-                //                                        TampleteStr += "<span>" + txt + "</span>";
-                //                                    }
-                //                                } else {
-                //                                    TampleteStr += "<span>" + StrArr[s] + "</span>";
-                //                                }
-                //                            }
-                //                            TampleteStr += "</div>";
-                //                        }
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check d-flex mt-2\">"
-                //                            TampleteStr += "<input class=\"otherAns\" type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label class=\"pt-2 pl-1 pr-1\">其他</label>";
-                //                            TampleteStr += "<input style=\"max-width:100px\" type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border d-inline form-control form-control-sm mb-3\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        break;
-                //                    case "RadioMixCheckbox":
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
-                //                            TampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].QuestionText + "</span>";
-                //                        }
-
-                //                        for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "Answers": [] });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check\">"
-                //                            TampleteStr += "<input type=\"radio\" onchange=\"changeTableJsonData(event)\" onclick=\"CleanOption(event)\" class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            TampleteStr += "value=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"id=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText;
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<span class=\"mr-2\" style=\"font-weight:bold \">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnsText + "</span>";
-                //                            for (var k = 0; k < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length; k++) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length) {
-                //                                    Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": "" });
-                //                                    document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                                }
-
-                //                                TampleteStr += "<input onchange=\"changeTableJsonData(event)\" type=\"checkbox\" disabled class=\"mr-1\"name=\"";
-                //                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                                TampleteStr += "value=\"";
-                //                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions[k].index;
-                //                                TampleteStr += "\"id=\"";
-                //                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions[k].AnsText;
-                //                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions[k].index;
-                //                                TampleteStr += "\"";
-                //                                TampleteStr += "data-RadioIndex=\"" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index + "\"";
-                //                                TampleteStr += "data-CheckboxIndex=\"" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions[k].index + "\"";
-                //                                console.log("RadioMixCheckbox");
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length > 0) {
-                //                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[k].value == true) {
-                //                                        TampleteStr += "checked";
-                //                                    }
-                //                                }
-                //                                TampleteStr += ">";
-                //                                TampleteStr += "<label for=\"";
-                //                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions[k].AnsText;
-                //                                TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions[k].index;
-                //                                TampleteStr += "\"class=\"mr-2\">" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions[k].AnsText + "</label>";
-                //                            }
-                //                            TampleteStr += "</div>";
-                //                        }
-                //                        console.log("hasOtherAnswers" + Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers);
-                //                        if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
-
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                //                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
-                //                                document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
-                //                            }
-                //                            TampleteStr += "<div class=\"form-check d-flex mt-1\">"
-                //                            TampleteStr += "<input class=\"otherAns\" type=\"radio\" onclick=\"CleanOthers(event)\" onchange=\"changeTableJsonData(event)\"  class=\" mr-1\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID;
-                //                            TampleteStr += "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "checked";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-                //                            TampleteStr += "<label class=\"pt-2 pl-1 pr-1\">其他</label>";
-                //                            TampleteStr += "<input style=\"max-width:100px\" type=\"text\"onchange=\"changeTableJsonData(event)\" disabled class=\"other form-control-border d-inline form-control form-control-sm mb-3\"name=\"";
-                //                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length > 0) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null) {
-                //                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "\"";
-                //                                }
-                //                            }
-                //                            TampleteStr += ">";
-
-                //                            TampleteStr += "</div>";
-                //                        }
-
-                //                        break;
-                //                    default:
-                //                }
-
-                //                TampleteStr += "</td>";
-                //            }
-                //        }
-                //        TampleteStr += "</tbody>";
-                //        TampleteStr += "</table>";
-                //        TampleteStr += "<div class=\"d-flex justify-content-center\"><div class=\" mb-3\">";
-                //        TampleteStr += "</div></div>";
-                //        TampleteStr += "</div>";//col-12
-                //        TampleteStr += "</div>";//row
-                //        TampleteStr += "</div>";//table-responsive
-                //        TampleteStr += "</div>";//rowPart
-                //        TampleteStr += "</div>";//rowContainer
-                //        TampleteStr += "</div>";//rowPart
-
-                //        ansEditFormT.innerHTML += TampleteStr;
-
-                //        break;
-                //    case "row":
-                //        let insertTitle = document.querySelector(".insertTitle");
-                //        insertTitle.innerText = Obj.Groups[i].GroupName;
-                //        let ansEditForm = document.querySelector(".ansEditForm ");
-                //        let tampleteStr = "";
-                //        tampleteStr += "<div class=\"rowPart\">";
-                //        tampleteStr += "<div class=\"rowPart\">";
-                //        tampleteStr += "<h3 class=\"rowPart\">" + Obj.Groups[i].GroupName;
-                //        tampleteStr += "</h3>";
-                //        tampleteStr += "<div class=\"rowContainer row card mb-4 rowPart\">";
-                //        tampleteStr += "<div class=\"rowPart\">";
-                //        tampleteStr += "<div class=\"table-responsive rowPart\" style=\"overflow-x:hidden\">";
-                //        tampleteStr += "<div class=\"row\">";
-                //        tampleteStr += "<div class=\"col-sm-12 col-12 rowPart\">";
-                //        tampleteStr += "<table class=\"table table-bordered dataTable rowPart\" style=\"width: 100%;\">";
-                //        tampleteStr += "<thead>";//thead
-                //        tampleteStr += "<tr role=\"row\">";
-                //        if (Obj.Groups[i].hasSN > 0) {
-                //            tampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + "項次";
-                //            tampleteStr += "</th>";
-                //        }
-                //        for (var r = 0; r < Obj.Groups[i].Rows[0].Cols.length; r++) {//首列的標題
-
-                //            switch (Obj.Groups[i].Rows[0].Cols[r].QuestionType) {
-                //                case "display":
-                //                    tampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                    tampleteStr += "</th>";
-                //                    break;
-                //                case "text":
-                //                    tampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + Obj.Groups[i].Rows[0].Cols[r].QuestionText;
-                //                    tampleteStr += "<input type=\"text\" value=\"" + Obj.Groups[i].Rows[0].Cols[r].Answers[0].value + "\">";
-                //                    tampleteStr += "</th>";
-                //                    break;
-                //                default:
-                //            }
-                //        }
-                //        tampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + "編輯";
-                //        tampleteStr += "</th>";
-                //        tampleteStr += "<th class=\"sorting sorting_asc rowPart\">" + "刪除";
-                //        tampleteStr += "</th>";
-                //        tampleteStr += "</tr>";
-                //        tampleteStr += "</thead>";//thead
-                //        tampleteStr += "<tbody>";//
-                //        //有項次
-                //        let no = Obj.Groups[i].hasSN;
-                //        if (Obj.Groups[i].hasSN > 0) {
-
-                //            tampleteStr += "<tr class=\"odd\">";
-                //            tampleteStr += "<td class=\"dtr-control sorting_1\">";
-                //            tampleteStr += no;
-                //            tampleteStr += "</td>";
-                //            tampleteStr += "</tr>";
-                //            no++;
-                //        }
-                //        for (var w = 1; w < Obj.Groups[i].Rows.length; w++) {
-                //            tampleteStr += "<tr class=\"odd\">";
-                //            for (var c = 0; c < Obj.Groups[i].Rows[w].Cols.length; c++) {//答案的顯示 存JSON的答案
-                //                tampleteStr += "<td class=\"dtr-control sorting_1\">";
-                //                if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                //                    switch (Obj.Groups[i].Rows[w].Cols[c].QuestionType) {
-                //                        case "file":
-                //                        case "image":
-                //                            tampleteStr += "<span>" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "</span>";
-                //                            tampleteStr += "<a  class=\"ml-1 btn btn-default btn-sm download\" href=\"Upload/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
-                //                            tampleteStr += "<i class=\"fas fa-cloud-download-alt\"></i>";
-                //                            tampleteStr += "</a>";
-                //                            break;
-                //                        case "text":
-                //                        case "number":
-                //                        case "select":
-                //                            tampleteStr += Obj.Groups[i].Rows[w].Cols[c].Answers[0].value;
-                //                            break;
-                //                        case "display":
-                //                            tampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionText;
-                //                            break;
-                //                        case "date":
-                //                            let dateValue = Obj.Groups[i].Rows[w].Cols[c].Answers[0].value;
-                //                            console.log("dateValue_" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value)
-                //                            let dateStr = new Date(dateValue);
-                //                            dateStr = dateStr.Format("yyyy-MM-dd");
-                //                            if (!dateStr.includes("Na") && dateValue != null) {//
-                //                                tampleteStr += dateStr;
-                //                            }
-                //                            break;
-                //                        case "radio":
-                //                        case "checkbox":
-                //                            for (var r = 0; r < Obj.Groups[i].Rows[1].Cols[c].Answers.length; r++) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[r].value == true) {
-                //                                    tampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnsText + "</br>";
-                //                                }
-                //                            }
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != "") {
-                //                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "</br>";
-                //                            }
-                //                            break;
-                //                        case "CheckboxMixImage":
-                //                            for (var r = 0; r < Obj.Groups[i].Rows[1].Cols[c].Answers.length; r++) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[r].value == true) {
-                //                                    tampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnsText + "</br>";
-                //                                    tampleteStr += "<img style=\"height:50px\"src=\"ShowAdminImg?id=" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].image + "\"" + "/>" + "</br>";
-                //                                }
-                //                            }
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != "") {
-                //                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value + "</br>";
-                //                            }
-
-                //                            break;
-                //                        case "sign":
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers[0].value != null && Obj.Groups[i].Rows[w].Cols[c].Answers[0].value != 0) {
-                //                                let time = new Date(Obj.Groups[i].Rows[w].Cols[c].Answers[0].lastUpdate);
-                //                                let strTime = time.Format("yyyy-MM-dd");
-                //                                tampleteStr += "<img style=\"width:20%\" id=\"sign\" src=\"" + "ShowAdminImg.aspx?id=" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\">";
-                //                                tampleteStr += "<span>" + strTime + "</span>";
-                //                            }
-                //                            break;
-                //                        case "filling":
-                //                            let fillingStr = Obj.Groups[i].Rows[w].Cols[c].QuestionText;
-                //                            let StrArr = fillingStr.split("##");
-                //                            let n = 1;
-                //                            let N = 0;//第幾個填充答案
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].Answers[N].value == "") {
-                //                                tampleteStr += "";
-                //                            } else {
-                //                                for (var s = 0; s < StrArr.length; s++) {
-                //                                    if (StrArr[s].includes("^")) {
-                //                                        let reStr = StrArr[s].substring(2);
-                //                                        tampleteStr += Obj.Groups[i].Rows[w].Cols[c].Answers[N].value + reStr;
-                //                                        n++;
-                //                                        N++;
-                //                                    } else {
-                //                                        tampleteStr += StrArr[s];
-                //                                    }
-                //                                }
-                //                            }
-                //                            break;
-                //                        case "CheckboxMixFilling":
-                //                        case "RadioMixFilling":
-                //                            for (var r = 0; r < Obj.Groups[i].Rows[w].Cols[c].Answers.length; r++) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[r].value == true) {
-                //                                    let fillingStr = Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnsText;
-                //                                    let StrArr = fillingStr.split("##");
-                //                                    let SN = 0;//第幾個填充答案
-                //                                    let n = 1;
-                //                                    for (var s = 0; s < StrArr.length; s++) {
-                //                                        if (StrArr[s].includes("^")) {
-                //                                            let reStr = StrArr[s].substring(2);
-                //                                            tampleteStr += Obj.Groups[i].Rows[w].Cols[c].Answers[r].Answers[SN].value + reStr;
-                //                                            n++;
-                //                                            SN++;
-                //                                        } else {
-                //                                            tampleteStr += StrArr[s];
-                //                                        }
-                //                                    }
-                //                                }
-                //                            }
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != "") {
-                //                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value;
-                //                            }
-
-                //                            break;
-                //                        case "RadioMixCheckbox":
-                //                            for (var r = 0; r < Obj.Groups[i].Rows[w].Cols[c].Answers.length; r++) {
-                //                                if (Obj.Groups[i].Rows[w].Cols[c].Answers[r].value == true) {
-                //                                    tampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnsText + ":";
-                //                                    for (var b = 0; b < Obj.Groups[i].Rows[w].Cols[c].Answers[r].Answers.length; b++) {
-                //                                        if (Obj.Groups[i].Rows[w].Cols[c].Answers[r].Answers[b].value == true) {
-                //                                            tampleteStr += "</br>" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[r].AnswerOptions[b].AnsText;
-                //                                        }
-                //                                    }
-                //                                }
-                //                            }
-                //                            if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != null && Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value != "") {
-                //                                tampleteStr += "其他:" + Obj.Groups[i].Rows[w].Cols[c].otherAnswer[0].value;
-                //                            }
-
-                //                            break;
-                //                        default:
-                //                    }
-
-                //                }
-                //                tampleteStr += "</td>";
-                //            }
-                //            tampleteStr += "<td class=\"dtr-control sorting_1\">";
-                //            tampleteStr += "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-isInsert=\"false\" data-target=\"#modal-update\"onclick =\"showModal(event)\"";
-                //            tampleteStr += "data-gid=\"" + Gsn + "\"" + "data-row=\"" + w + "\"";
-                //            tampleteStr += ">" + "編輯";
-                //            tampleteStr += "</button>"
-                //            tampleteStr += "</td>";
-                //            tampleteStr += "<td class=\"dtr-control sorting_1\">";
-                //            tampleteStr += "<button type=\"button\"onclick =\"DeleteRow(event)\" class=\"btn btn-danger\" data-toggle=\"modal\"  data-target=\"#modal-danger\"";
-                //            tampleteStr += "data-gid=\"" + Gsn + "\"" + "data-row=\"" + w + "\"";
-                //            tampleteStr += ">" + "刪除";
-                //            tampleteStr += "</button>"
-                //            tampleteStr += "</td>";
-                //            tampleteStr += "</tr>";
-                //        }
-                //        tampleteStr += "</tbody>";
-                //        tampleteStr += "</table>";
-                //        tampleteStr += "<div class=\"d-flex justify-content-center\"><div class=\" mb-3\">";
-                //        tampleteStr += "<button type=\"button\" class=\"btn btn-app \" data-toggle=\"modal\" data-isInsert=\"true\" data-target=\"#modal-insert\"data-gid=\"";
-                //        tampleteStr += Gsn + "\"";
-                //        tampleteStr += "onclick =\"showModal(event)\">";
-                //        tampleteStr += "<i class=\" fas fa-plus-circle\"><i>";
-                //        tampleteStr += "</button>";
-                //        tampleteStr += "</div></div>";
-                //        tampleteStr += "</div>";//col-12
-                //        tampleteStr += "</div>";//row
-                //        tampleteStr += "</div>";//table-responsive
-                //        tampleteStr += "</div>";//rowPart
-                //        tampleteStr += "</div>";//rowContainer
-                //        tampleteStr += "</div>";//rowPart
-
-                //        previewStr += "</div>";//卡片的Body
-                }
-            }
-            previewStr += "</div>";//ansEditForm
-            previewStr += "</div>";//card-body
-            previewStr += "</div>";//card
-            previewStr += "</div>";//ansEdit
-            previewStr += "</div>";//row
-            previewStr += "</div>";//container-fluid
-            previewStr += "</div>";//content
-            return previewStr;
-        }
 
         // 初始化輸入 Modal
         $('#displayModal').on('shown.bs.modal', function () {
