@@ -3702,7 +3702,7 @@
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                                 if (dataObj.Groups[i].Questions[j].AnswerOptions[r].AnsText.includes("##^")) {
                                                     for (var a = 0; a < dataObj.Groups[i].Questions[j].Answers[r].Answers.length; a++) {
-                                                        dataObj.Groups[i].Questions[j].Answers[r].Answers
+                                                        //dataObj.Groups[i].Questions[j].Answers[r].Answers
                                                     }
                                                 }
                                             }
