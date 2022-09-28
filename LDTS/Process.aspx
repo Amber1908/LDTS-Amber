@@ -38,8 +38,5 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="jqueryPlaceHolder" runat="server">
     <script>
-        let rawUrl = window.location.href;
-        console.log("rawUrl:" + rawUrl);
-        document.cookie = "proUrl=" + window.location.href;
     </script>
 </asp:Content>

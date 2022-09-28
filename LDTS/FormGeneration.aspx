@@ -40,13 +40,13 @@
                                             <asp:TextBox ID="FormTitle" runat="server" CssClass="form-control" placeholder="表單名稱"></asp:TextBox>
                                         </div>
                                     </td>
-                                    <td width="20%">
+                                    <td width="35%">
                                         <div class="form-group">
                                             <label for="Version">表單版本<span style="color:red">(上傳新範本時，請記得更換)</span></label>
                                             <asp:TextBox ID="Version" runat="server" CssClass="form-control" Text="1.0"></asp:TextBox>
                                         </div>
                                     </td>
-                                    <td width="20%">
+                                    <td width="10%">
                                         <div class="form-group">
                                             <label for="Status">表單狀態</label>
                                             <asp:RadioButtonList ID="Status" runat="server" RepeatDirection="Horizontal">
@@ -420,13 +420,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <span class="text-info">填充位置請以
-                        <label class="text-danger">##^n</label>
-                        來表示，例如: 檢體大小
-                        <label class="text-danger">##^1</label>
-                        x
-                        <label class="text-danger">##^2</label>
-                        。</span>
 
                     <div class="form-inline">
                         <input id="CheckboxMixImageInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
@@ -436,6 +429,14 @@
                         </div>
                     </div>
                     <hr />
+                        <span class="text-info">選項填充位置請以
+                        <label class="text-danger">##^n</label>
+                        來表示，例如: 檢體大小
+                        <label class="text-danger">##^1</label>
+                        x
+                        <label class="text-danger">##^2</label>
+                        。</span>
+
                     <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return CheckboxMinImageAddOption()">添加選項</button>
                     <div id="CheckboxMixImageOverlayDiv" class="overlay" style="display: none;">
                         <i class="fas fa-2x fa-sync fa-spin"></i>
