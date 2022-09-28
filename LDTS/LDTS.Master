@@ -115,11 +115,11 @@
 
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4 mainSidebarLDTS">
-                <!-- Brand Logo -->
+<%--                <!-- Brand Logo -->
                 <a href="Unit" class="brand-link elevation-4">
                     <img id="LogoIcon" runat="server" src="dist/img/AdminLTELogo.png" class="brand-image img-circle elevation-3" style="opacity: .8">
                     <asp:Label ID="UnitName" runat="server" CssClass="brand-text font-weight-light"></asp:Label>
-                </a>
+                </a>--%>
 
                 <!-- Sidebar -->
                 <div class="sidebar">

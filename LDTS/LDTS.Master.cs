@@ -20,11 +20,11 @@ namespace LDTS
             }
             //單位名稱
             UnitBasedata unitBasedata = UnitService.GetUnit();
-            if (unitBasedata != null)
-            {
-                UnitName.Text = unitBasedata.UnitName;
-                LogoIcon.Src = "ShowAdminImg.aspx?id=" + unitBasedata.UnitIcon;
-            }
+            //if (unitBasedata != null)
+            //{
+            //    UnitName.Text = unitBasedata.UnitName;
+            //    LogoIcon.Src = "ShowAdminImg.aspx?id=" + unitBasedata.UnitIcon;
+            //}
             Admin loginAdmin = (Admin)Session["LDTSAdmin"];
             adminMug.Src = "ShowAdminImg.aspx?id=" + loginAdmin.admin_image;
             adminName.Text = loginAdmin.admin_name;

@@ -15,6 +15,10 @@ namespace LDTS
         protected void Page_Load(object sender, EventArgs e)
         {
             Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+            if (loginAdmin==null)
+            {
+                Response.Redirect("Login.aspx");
+            }
             if (!loginAdmin.admin_ao.Contains("from"))
             {
                 Literal AlertMsg = new Literal();
@@ -59,6 +63,8 @@ namespace LDTS
                 else if (ReportAnswerId != 0)
                 {
                     ReportAnswer reportAnswer = FormService.GetReportAnswerById(ReportAnswerId);
+                    ReProcessQuestion reProcess = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == reportAnswer.QID).FirstOrDefault();
+                    ProUrl.NavigateUrl = "Process?pid=" + reProcess.PID;
                     Qtitle.Text = reportAnswer.Title;
                     jsonData.Value = reportAnswer.OutputJson;
                     ExtendName.Value = reportAnswer.ExtendName;
