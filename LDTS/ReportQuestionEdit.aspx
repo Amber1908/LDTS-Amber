@@ -852,7 +852,7 @@
                                                 TampleteStr += Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index;
                                                 TampleteStr += "\"";
                                                 if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value == true) {
+                                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].value) {
                                                         TampleteStr += "checked";
                                                     }
                                                 }
@@ -867,12 +867,12 @@
                                                             Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                         }
-                                                        TampleteStr += "<input type=\"text\" disabled style=\"width:20%\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
+                                                        TampleteStr += "<input type=\"text\" disabled style=\"max-width:100px\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
                                                         TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
                                                         TampleteStr += "data-checkboxIndex=\"" + Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].index + "\"";
                                                         TampleteStr += "data-TextIndex=\"" + fSn + "\"";
-                                                        if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length > 0) {
-                                                            TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[n].value + "\"";
+                                                        if (Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.length > 0) {
+                                                            TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings[n].value + "\"";
                                                         }
                                                         TampleteStr += ">";
                                                         fSn++;
