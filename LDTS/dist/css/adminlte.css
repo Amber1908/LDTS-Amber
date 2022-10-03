@@ -10,8 +10,6 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- @import url(paratmeter.css);
-
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -62,7 +60,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: Arial, "Microsoft Yahei", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -161,13 +159,13 @@ sup {
 }
 
 a {
-  color: #727b84; /*#007bff*/
+  color: #007bff;
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
-  color: #218cff; /*#0056b3*/
+  color: #0056b3;
   text-decoration: none;
 }
 
@@ -212,38 +210,6 @@ svg {
 
 table {
   border-collapse: collapse;
-}
-
-thead.sticky {
-    position: sticky;
-    top: 60px;
-    background: rgba(255,255,255,0.5);
-    backdrop-filter: blur(5px);
-    pointer-events: none;
-    user-select: none;
-}
-
-thead:before{
-    content:'';
-    display: inline-block;
-    position: absolute;
-    bottom:0px;
-    left: 0px;
-    width: 100%;
-    height: 1px;
-    border-bottom: solid 1px #aaa
-}
-
-thead > tr {
-    background: none !important;
-}
-
-.collapsed-card thead{
-    top:0px;
-}
-
-tr:hover{
-    background: rgba(170, 211, 255, 0.2);
 }
 
 caption {
@@ -1714,12 +1680,12 @@ pre code {
 .table td {
   padding: 0.75rem;
   vertical-align: top;
-  border-bottom: 1px solid #dee2e6; /*border-top*/
+  border-top: 1px solid #dee2e6;
 }
 
 .table thead th {
   vertical-align: bottom;
-  /*border-bottom: 2px solid #dee2e6;*/ /*Jesse Edit*/
+  border-bottom: 2px solid #dee2e6;
 }
 
 .table tbody + tbody {
@@ -4888,11 +4854,10 @@ input[type="button"].btn-block {
 }
 
 .card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1.25rem;
-    /*  padding-top: 0px;*/
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
 }
 
 .card-title {
@@ -10799,7 +10764,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
 }
 
 .layout-navbar-fixed .wrapper .control-sidebar {
-    top: 60px; /*嚙趣本0*/
+    top: 60px; /*原本0*/
 }
 
 .layout-navbar-fixed .wrapper a.anchor {
@@ -10810,7 +10775,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
 
 .layout-navbar-fixed .wrapper .main-sidebar:hover .brand-link {
     transition: width 0.3s ease-in-out;
-    width: var(--sideWidth); /*嚙趣本250*/
+    width: 300px; /*原本250*/
 }
 
 .layout-navbar-fixed .wrapper .brand-link {
@@ -10818,7 +10783,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
     position: fixed;
     top: 0;
     transition: width 0.3s ease-in-out;
-    width: 300px; /*嚙趣本250*/
+    width: 300px; /*原本250*/
     z-index: 1035;
 }
 
@@ -11135,7 +11100,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
   position: fixed;
   top: 0;
   transition: width 0.3s ease-in-out;
-  width: 300px;/*嚙趣本250*/
+  width: 300px;/*原本250*/
   z-index: 1035;
 }
 
@@ -11224,7 +11189,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
   }
     .layout-sm-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
         transition: width 0.3s ease-in-out;
-        width: 300px; /*嚙趣本250*/
+        width: 300px; /*原本250*/
     }
   .layout-sm-navbar-fixed .wrapper .brand-link {
     overflow: hidden;
@@ -11683,7 +11648,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
   body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer,
   body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
     transition: margin-left 0.3s ease-in-out;
-    margin-left: var(--sideWidth);/*嚙趣本250 300px */
+    margin-left: 300px;/*原本250*/
   }
 }
 
@@ -11795,7 +11760,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
 
 .main-sidebar, .main-sidebar::before {
     transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-    width: 300px; /*嚙趣本300*/
+    width: 300px; /*原本300*/
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -11819,7 +11784,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
 @media (max-width: 767.98px) {
     .main-sidebar, .main-sidebar::before {
         box-shadow: none !important;
-        margin-left: -300px; /*嚙趣本-250*/
+        margin-left: -300px; /*原本-250*/
     }
   .sidebar-open .main-sidebar, .sidebar-open .main-sidebar::before {
     margin-left: 0;
@@ -11834,7 +11799,7 @@ body:not(.layout-fixed) .main-sidebar {
 */}
 
 body:not(.layout-fixed) .main-sidebar .sidebar {
-  overflow-y: hidden; /*auto*/
+  overflow-y: auto;
 }
 
 .layout-fixed .brand-link {
@@ -11890,8 +11855,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
   background-color: #fff;
   border-top: 1px solid #dee2e6;
   color: #869099;
-  padding: 0.8rem;
-  font-size: 12px;
+  padding: 1rem;
 }
 
 .text-sm .main-footer, .main-footer.text-sm {
@@ -12601,14 +12565,13 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .sidebar {
-  /*height: calc(100% - (3.5rem + 1px));*/
-  height:100vh;
+  height: calc(100% - (3.5rem + 1px));
   overflow-x: hidden;
   overflow-y: initial;
   padding-bottom: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  /*padding-top: 60px;/*嚙趣本0*/
+  padding-top: 60px;/*原本0*/
   scrollbar-color: #a9a9a9 transparent;
   scrollbar-width: none;
 }
@@ -14638,175 +14601,175 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 .sidebar-mini .main-sidebar .nav-child-indent .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 1rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 1rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 1rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 1rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 1rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-legacy .nav-link,
 .sidebar-mini-md .main-sidebar .nav-legacy .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-legacy .nav-link {
-    width: 300px; /*嚙趣本250*/
+    width: 300px; /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-link {
-    width: calc(300px - 1rem); /*嚙趣本250*/
+    width: calc(300px - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 1rem - 1rem); /*嚙趣本250*/
+    width: calc(300px - 1rem - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 1rem - 2rem); /*嚙趣本250*/
+    width: calc(300px - 1rem - 2rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 1rem - 3rem); /*嚙趣本250*/
+    width: calc(300px - 1rem - 3rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 1rem - 4rem); /*嚙趣本250*/
+    width: calc(300px - 1rem - 4rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-flat .nav-link,
 .sidebar-mini-md .main-sidebar .nav-flat .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-flat .nav-link {
-    width: 300px; /*嚙趣本250*/
+    width: 300px; /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-link {
-    width: calc(300px); /*嚙趣本250*/
+    width: calc(300px); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem); /*嚙趣本250*/
+    width: calc(300px - .2rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem * 2); /*嚙趣本250*/
+    width: calc(300px - .2rem * 2); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem * 3); /*嚙趣本250*/
+    width: calc(300px - .2rem * 3); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem * 4); /*嚙趣本250*/
+    width: calc(300px - .2rem * 4); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - .5rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - .5rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 1rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 1rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 1.5rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 1.5rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 2rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 2rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 0.5rem * 2 - 2.5rem); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2 - 2.5rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-link {
-    width: 300px; /*嚙趣本250*/
+    width: 300px; /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link {
-    width: calc(300px - .5rem); /*嚙趣本250*/
+    width: calc(300px - .5rem); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 2); /*嚙趣本250*/
+    width: calc(300px - .5rem * 2); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 3); /*嚙趣本250*/
+    width: calc(300px - .5rem * 3); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 4); /*嚙趣本250*/
+    width: calc(300px - .5rem * 4); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-md .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 5); /*嚙趣本250*/
+    width: calc(300px - .5rem * 5); /*原本250*/
 }
 
 .sidebar-mini .main-sidebar .nav-link,
 .sidebar-mini-md .main-sidebar .nav-link,
 .sidebar-mini-xs .main-sidebar .nav-link {
-    width: calc(100% - 0.3rem * 2); /*嚙趣本250*/
+    width: calc(100% - 0.3rem * 2); /*原本250*/
     transition: width ease-in-out 0.3s;
 }
 
@@ -14844,7 +14807,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused:not(.sidebar-no-expand) .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover:not(.sidebar-no-expand) .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused:not(.sidebar-no-expand) .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover:not(.sidebar-no-expand) .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused:not(.sidebar-no-expand) .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover:not(.sidebar-no-expand) .nav-link {
-    width: calc(300px - 0.5rem * 2); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused:not(.sidebar-no-expand) .form-control-sidebar, .sidebar-collapse.sidebar-mini .main-sidebar:hover:not(.sidebar-no-expand) .form-control-sidebar, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused:not(.sidebar-no-expand) .form-control-sidebar, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover:not(.sidebar-no-expand) .form-control-sidebar, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused:not(.sidebar-no-expand) .form-control-sidebar, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover:not(.sidebar-no-expand) .form-control-sidebar {
@@ -14861,15 +14824,15 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-child-indent .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-child-indent .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-child-indent .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-child-indent .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-child-indent .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-child-indent .nav-link {
-    width: calc(300px - 0.5rem * 2); /*嚙趣本250*/
+    width: calc(300px - 0.5rem * 2); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-legacy .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-legacy .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-legacy .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-legacy .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-legacy .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-legacy .nav-link {
-    width: 300px; /*嚙趣本250*/
+    width: 300px; /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-link {
-    width: calc(300px - 1rem); /*嚙趣本250*/
+    width: calc(300px - 1rem); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-link {
@@ -14877,39 +14840,39 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 1rem - 2rem); /*嚙趣本250*/
+    width: calc(300px - 1rem - 2rem); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 1rem - 3rem); /*嚙趣本250*/
+    width: calc(300px - 1rem - 3rem); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-legacy.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - 1rem - 4rem); /*嚙趣本250*/
+    width: calc(300px - 1rem - 4rem); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-flat .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-flat .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-flat .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-flat .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-flat .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-flat .nav-link {
-    width: 300px; /*嚙趣本250*/
+    width: 300px; /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-link {
-    width: calc(300px); /*嚙趣本250*/
+    width: calc(300px); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem); /*嚙趣本250*/
+    width: calc(300px - .2rem); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem * 2); /*嚙趣本250*/
+    width: calc(300px - .2rem * 2); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem * 3); /*嚙趣本250*/
+    width: calc(300px - .2rem * 3); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .2rem * 4); /*嚙趣本250*/
+    width: calc(300px - .2rem * 4); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-child-indent.nav-compact .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-child-indent.nav-compact .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-child-indent.nav-compact .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-child-indent.nav-compact .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-child-indent.nav-compact .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-child-indent.nav-compact .nav-link {
@@ -14921,23 +14884,23 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-link {
-    width: calc(300px - .5rem); /*嚙趣本250*/
+    width: calc(300px - .5rem); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 2); /*嚙趣本250*/
+    width: calc(300px - .5rem * 2); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 3); /*嚙趣本250*/
+    width: calc(300px - .5rem * 3); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 4); /*嚙趣本250*/
+    width: calc(300px - .5rem * 4); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-md .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar.sidebar-focused .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link, .sidebar-collapse.sidebar-mini-xs .main-sidebar:hover .nav-child-indent.nav-legacy.nav-compact .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-treeview .nav-link {
-    width: calc(300px - .5rem * 5); /*嚙趣本250*/
+    width: calc(300px - .5rem * 5); /*原本250*/
 }
 
 .sidebar-collapse.sidebar-mini .sidebar-no-expand.main-sidebar.sidebar-focused,
@@ -15148,7 +15111,7 @@ body.text-sm .control-sidebar {
 .control-sidebar-open.control-sidebar-push .content-wrapper,
 .control-sidebar-open.control-sidebar-push .main-footer, .control-sidebar-open.control-sidebar-push-slide .content-wrapper,
 .control-sidebar-open.control-sidebar-push-slide .main-footer {
-    margin-right: 300px; /*嚙趣本250*/
+    margin-right: 300px; /*原本250*/
 }
 
 .control-sidebar-slide-open .control-sidebar {
@@ -15169,7 +15132,7 @@ body.text-sm .control-sidebar {
 .control-sidebar-slide-open.control-sidebar-push .content-wrapper,
 .control-sidebar-slide-open.control-sidebar-push .main-footer, .control-sidebar-slide-open.control-sidebar-push-slide .content-wrapper,
 .control-sidebar-slide-open.control-sidebar-push-slide .main-footer {
-    margin-right: 300px; /*嚙趣本250*/
+    margin-right: 300px; /*原本250*/
 }
 
 .control-sidebar-dark {
@@ -26687,7 +26650,7 @@ body.text-sm .input-group-text {
 }
 
 .card-primary:not(.card-outline) > .card-header {
-  background-color: var(--colorC); /*#007bff*/
+  background-color: #007bff;
 }
 
 .card-primary:not(.card-outline) > .card-header,
@@ -28790,13 +28753,12 @@ html.maximized-card {
 }
 
 .card-header {
-    background-color: var(--colorAccent); /*transparent*/
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    padding: 0.75rem 1.25rem;
-    position: relative;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    color: #fff;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 0.75rem 1.25rem;
+  position: relative;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 
 .collapsed-card .card-header {
