@@ -96,6 +96,8 @@
     <Content Include="Default.aspx" />
     <Content Include="DeleteRelation.aspx" />
     <Content Include="dist\css\adminlte.css" />
+    <Content Include="dist\css\adminlte.min.css" />
+    <Content Include="dist\css\adminlteLDTS.css" />
     <Content Include="dist\css\alt\adminlte.components.css" />
     <Content Include="dist\css\alt\adminlte.components.min.css" />
     <Content Include="dist\css\alt\adminlte.core.css" />
@@ -2335,6 +2337,9 @@
     <Content Include="DeleteOldReProSworkbook.ashx" />
     <Content Include="DeleteOldReProForm.ashx" />
     <Content Include="OutputWord.ashx" />
+    <Content Include="dist\css\adminlte.css.map" />
+    <Content Include="dist\css\adminlte.min.css.map" />
+    <Content Include="dist\css\.editorconfig" />
     <None Include="packages.config" />
     <Content Include="plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
     <Content Include="plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
