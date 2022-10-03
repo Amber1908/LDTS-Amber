@@ -1,0 +1,47 @@
+﻿/*body:not(.layout-fixed)*/
+
+.mainSidebarLDTS {
+    height: 100vh;
+    min-height: 100%;
+    position: fixed;
+    top: 0;
+}
+.fromLDTS{
+    float:left;
+    width:100%;
+}
+.bodyLDTS{
+    height:auto;
+    display:inline-block;
+    width:100%;
+}
+.layoutNavbarLDTS{
+    top:60px;
+}
+.img-circle {
+    border-radius: 50%;
+}
+.nav-LinkLDTS{
+    display:flex;
+    align-items:baseline;
+}
+.nav-sidebar .nav-link > p >.rightLDTS {
+    position: absolute;
+    right: 0.2rem;
+    top: 0.7rem
+}
+.snameHove:hover a{
+    color:cadetblue;
+}
+.table-responsiveLDTS {
+    display: block;
+    width: 100%;
+}
+.relaHover:hover {
+    color: #4e73df !important;
+}
+.Active {
+    font-weight: bolder;
+    font-size: 18px;
+    color: #4e73df !important;
+}
