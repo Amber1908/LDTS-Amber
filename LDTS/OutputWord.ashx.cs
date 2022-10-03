@@ -318,13 +318,6 @@ namespace LDTS
 
                                 Temp += r_answers[j]["value"].Value<bool>() ? "●" : "○";
                                 Temp += $" {r_answeroptions[j]["AnsText"].Value<string>()} ";
-                                if (fills.Count>0)
-                                {
-                                    for (int f = 0; f < fills.Count; f++)//tingyu
-                                    {
-                                        Temp += $" {r_answeroptions[j]["Answers"]["Answers"][f].Value<string>()} "; //tingyu
-                                    }
-                                }
                             }
                             fi.Add(new FieldContent($"col{i + 1}", Temp));
                             break;

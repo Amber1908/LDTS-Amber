@@ -17,6 +17,12 @@ namespace LDTS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+            if (loginAdmin == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+
             if (Request.RawUrl.Contains("pid"))
             {
                 //把 ReProcessForm中關聯的表格撈出並序列化 

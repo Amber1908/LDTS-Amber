@@ -35,6 +35,11 @@ namespace LDTS
                 int ReportQuestionSid = Convert.ToInt32(Request.QueryString["sqid"]);
                 int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);
                 int ReportAnswerSid = Convert.ToInt32(Request.QueryString["said"]);
+                string OutputTemplate = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).OutputTemplate;
+                if (OutputTemplate == string.Empty && OutputTemplate == null)
+                {
+                    Printbtn.Enabled = false;
+                }
                 if (ReportQuestionId != 0)
                 {
                     ReportQuestion reportQuestion = FormService.GetReportQuestionById(ReportQuestionId);
@@ -64,7 +69,7 @@ namespace LDTS
                 {
                     ReportAnswer reportAnswer = FormService.GetReportAnswerById(ReportAnswerId);
                     ReProcessQuestion reProcess = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == reportAnswer.QID).FirstOrDefault();
-                    ProUrl.NavigateUrl = "Process?pid=" + reProcess.PID;
+                    //ProUrl.NavigateUrl = "Process?pid=" + reProcess.PID;
                     Qtitle.Text = reportAnswer.Title;
                     jsonData.Value = reportAnswer.OutputJson;
                     ExtendName.Value = reportAnswer.ExtendName;
@@ -238,6 +243,7 @@ namespace LDTS
             }
             else
             {
+                
                 Literal AlertMsg = new Literal();
                 AlertMsg.Text = "<script language='javascript'>alert('目前沒有表單列印範本!!!');</script>";
                 this.Page.Controls.Add(AlertMsg);

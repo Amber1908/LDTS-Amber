@@ -15,6 +15,12 @@ namespace LDTS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+            if (loginAdmin == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+
             //全部的程序書
             List<Process> processes = ProcessService.GetAllProcesses();
             //全部跟程序書有關的標準書
