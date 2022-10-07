@@ -35,11 +35,15 @@ namespace LDTS
                         foreach (var ver in vers)
                         {
                             //版本號
-                            verStr += "<option value=\"" + "/Upload/" + ver.TemplateFile + "\">" + ver.Version + "</option>";
+                            verStr += "<option value=\"Upload/" + ver.TemplateFile + "\">" + ver.Version + "</option>";
+                            TemplateFile.Value = ver.TemplateFile;
                         }
                         verStr += "</select>";
-                        verStr += "<a class=\"ml-3 btn btn-info\" id=\"downloadVer\" href=\"";
-                        verStr += vers.Count > 0 ? "/Upload/" + vers[0].TemplateFile : "#";
+
+                        var disab = vers.Count > 0 && vers[0].TemplateFile.Length > 0 ? "" : "disabled";
+
+                        verStr += $"<a class=\"ml-3 btn btn-info {disab}\" id=\"downloadVer\" href=\"";
+                        verStr += vers.Count > 0 ? "Upload/" + vers[0].TemplateFile : "#";
                         verStr += "\">下載</a>";
                     }
 

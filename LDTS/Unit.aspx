@@ -146,6 +146,34 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="UnitMark">
+                        <div class="UnitMarkCard card">
+                            <div class="UnitMarkCardHeader card-header">
+                                <h6>上傳列印表頭圖像</h6>
+                            </div>
+                            <div class="UnitMarkCardBody card-body">
+                                <div class="form-horizontal d-flex justify-content-center">
+                                    <asp:Image runat="server" CssClass="mb-3 img-fluid" ID="UnitMark" Width="25%" ImageUrl="dist/img/Biomedica_Watermark.png" />
+                                </div>
+                                <div class="UnitMarkUpload form-group row">
+                                    <label for="UnitMark" class="col-sm-2 col-form-label">上傳列印表頭圖像</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <div class="UnitMarkfile custom-file">
+                                                <asp:FileUpload ID="FileUploadMark" CssClass="custom-file-input UploadMark" runat="server" OnPreRender="Page_Load" />
+                                                <asp:Label ID="Label1" runat="server" CssClass="custom-file-label">上傳表頭圖像</asp:Label>
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" onclick="showMark(event)">確認</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="UnitApplication d-flex justify-content-end mb-5">
                         <asp:Button  runat="server" ID="SaveButton" CssClass="btn btn-primary" Text="儲存" OnClick="SaveButton_Click"/>
                     </div>
@@ -165,6 +193,18 @@
             reader.onload = function () {
                 var Url = reader.result;
                 var img = document.getElementById("mainPlaceHolder_UnitLogo");
+                img.src = Url;
+            }
+        }
+
+        function showMark(event) {
+            var father = event.currentTarget.parentNode.parentNode;
+            var input = father.querySelector(".UploadMark");
+            var reader = new FileReader();
+            reader.readAsDataURL(input.files[0]);
+            reader.onload = function () {
+                var Url = reader.result;
+                var img = document.getElementById("mainPlaceHolder_UnitMark");
                 img.src = Url;
             }
         }

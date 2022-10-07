@@ -20,10 +20,11 @@ namespace LDTS
         static readonly Logger logger = new Logger("OutputWord");
 
         public void ProcessRequest(HttpContext context)
-       {
+        {
             string AID = context.Request["AID"];
             string new_filename = PublicUtil.GenFilename(".docx");
             string new_filepath = HttpContext.Current.Server.MapPath("~/Template/") + new_filename;
+            UnitBasedata unitBasedata = UnitService.GetUnit();
             try
             {
                 context.Response.Clear();
@@ -48,8 +49,14 @@ namespace LDTS
                     JArray rows, cols;
                     bool hasSN = false;
                     int rowSN = 0;
+
                     using (var outputDocument = new TemplateProcessor(new_filepath).SetRemoveContentControls(true))
                     {
+                        // 表頭處理
+                        byte[] imgMark = PublicUtil.readImage(unitBasedata.UnitWatermark);
+                        valuesToFill = new Content(new ImageContent("Watermark", imgMark));
+                        outputDocument.FillContent(valuesToFill);
+
                         foreach (var group in obj["Groups"])
                         {
                             switch (group["GroupType"].Value<string>())
@@ -60,6 +67,15 @@ namespace LDTS
                                         var Answers = (JArray)question["Answers"];
                                         if (Answers == null || Answers.Count < 1)
                                             continue;
+                                        var Fills = (JArray)question["fillings"];
+                                        if (Fills != null)
+                                        {
+                                            for (int i = 0; i < Fills.Count; i++)
+                                            {
+                                                valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}${i + 1}", Fills[i]["value"].Value<string>()));
+                                                outputDocument.FillContent(valuesToFill);
+                                            }
+                                        }
                                         switch (question["QuestionType"].Value<string>())
                                         {
                                             case "text":
@@ -81,26 +97,18 @@ namespace LDTS
                                                     outputDocument.FillContent(valuesToFill);
                                                 }
                                                 break;
-                                            case "filling":
-                                                for (int i = 0; i < Answers.Count; i++)
-                                                {
-                                                    valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}", Answers[i]["value"].Value<string>()));
-                                                    outputDocument.FillContent(valuesToFill);
-                                                }
-                                                break;
                                             case "radio":
-                                            case "RadioMixFilling":
                                                 for (int i = 0; i < Answers.Count; i++)
                                                 {
                                                     valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}", Answers[i]["value"].Value<bool>() ? "●" : "○"));
                                                     outputDocument.FillContent(valuesToFill);
 
-                                                    var fills = (JArray)Answers[i]["Answers"];
+                                                    var fills = (JArray)Answers[i]["fillings"];
                                                     if (fills != null && fills.Count > 0)
                                                     {
                                                         for (int j = 0; j < fills.Count; j++)
                                                         {
-                                                            valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}#{j + 1}", fills[j]["value"].Value<string>()));
+                                                            valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}${j + 1}", fills[j]["value"].Value<string>()));
                                                             outputDocument.FillContent(valuesToFill);
                                                         }
                                                     }
@@ -108,18 +116,17 @@ namespace LDTS
                                                 break;
                                             case "checkbox":
                                             case "CheckboxMixImage":
-                                            case "CheckboxMixFilling":
                                                 for (int i = 0; i < Answers.Count; i++)
                                                 {
                                                     valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}", Answers[i]["value"].Value<bool>() ? "■" : "□"));
                                                     outputDocument.FillContent(valuesToFill);
 
-                                                    var fills = (JArray)Answers[i]["Answers"];
+                                                    var fills = (JArray)Answers[i]["fillings"];
                                                     if (fills != null && fills.Count > 0)
                                                     {
                                                         for (int j = 0; j < fills.Count; j++)
                                                         {
-                                                            valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}#{j + 1}", fills[j]["value"].Value<string>()));
+                                                            valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}${j + 1}", fills[j]["value"].Value<string>()));
                                                             outputDocument.FillContent(valuesToFill);
                                                         }
                                                     }
@@ -130,14 +137,33 @@ namespace LDTS
                                                 {
                                                     valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}", Answers[i]["value"].Value<bool>() ? "●" : "○"));
                                                     outputDocument.FillContent(valuesToFill);
-
-                                                    var fills = (JArray)Answers[i]["Answers"];
+                                                    var fills = (JArray)Answers[i]["fillings"];
                                                     if (fills != null && fills.Count > 0)
                                                     {
                                                         for (int j = 0; j < fills.Count; j++)
                                                         {
-                                                            valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}#{j + 1}", fills[j]["value"].Value<bool>() ? "■" : "□"));
+                                                            valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}${j + 1}", fills[j]["value"].Value<string>()));
                                                             outputDocument.FillContent(valuesToFill);
+                                                        }
+                                                    }
+
+                                                    var checks = (JArray)Answers[i]["Answers"];
+                                                    if (checks != null && checks.Count > 0)
+                                                    {
+                                                        for (int j = 0; j < checks.Count; j++)
+                                                        {
+                                                            valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}#{j + 1}", checks[j]["value"].Value<bool>() ? "■" : "□"));
+                                                            outputDocument.FillContent(valuesToFill);
+
+                                                            var fillsuns = (JArray)checks[j]["fillings"];
+                                                            if (fillsuns != null && fillsuns.Count > 0)
+                                                            {
+                                                                for (int k = 0; k < fillsuns.Count; k++)
+                                                                {
+                                                                    valuesToFill = new Content(new FieldContent($"{question["QuestionID"]}#{i + 1}#{j + 1}${k + 1}", fillsuns[k]["value"].Value<string>()));
+                                                                    outputDocument.FillContent(valuesToFill);
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -157,6 +183,15 @@ namespace LDTS
                                                 var Answers = (JArray)cols[j]["Answers"];
                                                 if (Answers == null || Answers.Count < 1)
                                                     continue;
+                                                var Fills = (JArray)cols[j]["fillings"];
+                                                if (Fills != null)
+                                                {
+                                                    for (int k = 0; k < Fills.Count; k++)
+                                                    {
+                                                        valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}${k + 1}", Fills[k]["value"].Value<string>()));
+                                                        outputDocument.FillContent(valuesToFill);
+                                                    }
+                                                }
                                                 switch (cols[j]["QuestionType"].Value<string>())
                                                 {
                                                     case "text":
@@ -165,9 +200,9 @@ namespace LDTS
                                                         outputDocument.FillContent(valuesToFill);
                                                         break;
                                                     case "date":
-                                                        if (Answers[0]["value"].Value<long>()==0)
+                                                        if (Answers[0]["value"].Value<long>() == 0)
                                                         {
-                                                            valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}"," "));
+                                                            valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}", " "));
                                                             outputDocument.FillContent(valuesToFill);
 
                                                         }
@@ -187,45 +222,36 @@ namespace LDTS
                                                             outputDocument.FillContent(valuesToFill);
                                                         }
                                                         break;
-                                                    case "filling":
-                                                        for (int k = 0; i < Answers.Count; i++)
-                                                        {
-                                                            valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}", Answers[i]["value"].Value<string>()));
-                                                            outputDocument.FillContent(valuesToFill);
-                                                        }
-                                                        break;
                                                     case "checkbox":
                                                     case "CheckboxMixImage":
-                                                    case "CheckboxMixFilling":
                                                         for (int k = 0; k < Answers.Count; k++)
                                                         {
                                                             valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}", Answers[k]["value"].Value<bool>() ? "■" : "□"));
                                                             outputDocument.FillContent(valuesToFill);
 
-                                                            var fills = (JArray)Answers[k]["Answers"];
+                                                            var fills = (JArray)Answers[k]["fillings"];
                                                             if (fills != null && fills.Count > 0)
                                                             {
                                                                 for (int l = 0; l < fills.Count; l++)
                                                                 {
-                                                                    valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}#{l + 1}", fills[l]["value"].Value<string>()));
+                                                                    valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}${l + 1}", fills[l]["value"].Value<string>()));
                                                                     outputDocument.FillContent(valuesToFill);
                                                                 }
                                                             }
                                                         }
                                                         break;
                                                     case "radio":
-                                                    case "RadioMixFilling":
                                                         for (int k = 0; k < Answers.Count; k++)
                                                         {
                                                             valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}", Answers[k]["value"].Value<bool>() ? "●" : "○"));
                                                             outputDocument.FillContent(valuesToFill);
 
-                                                            var fills = (JArray)Answers[k]["Answers"];
+                                                            var fills = (JArray)Answers[k]["fillings"];
                                                             if (fills != null && fills.Count > 0)
                                                             {
                                                                 for (int l = 0; l < fills.Count; l++)
                                                                 {
-                                                                    valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}#{l + 1}", fills[l]["value"].Value<string>()));
+                                                                    valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}${l + 1}", fills[l]["value"].Value<string>()));
                                                                     outputDocument.FillContent(valuesToFill);
                                                                 }
                                                             }
@@ -237,13 +263,33 @@ namespace LDTS
                                                             valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}", Answers[k]["value"].Value<bool>() ? "●" : "○"));
                                                             outputDocument.FillContent(valuesToFill);
 
-                                                            var fills = (JArray)Answers[k]["Answers"];
+                                                            var fills = (JArray)Answers[k]["fillings"];
                                                             if (fills != null && fills.Count > 0)
                                                             {
                                                                 for (int l = 0; l < fills.Count; l++)
                                                                 {
-                                                                    valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}#{l + 1}", fills[l]["value"].Value<bool>() ? "■" : "□"));
+                                                                    valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}${l + 1}", fills[l]["value"].Value<string>()));
                                                                     outputDocument.FillContent(valuesToFill);
+                                                                }
+                                                            }
+
+                                                            var checks = (JArray)Answers[k]["Answers"];
+                                                            if (checks != null && checks.Count > 0)
+                                                            {
+                                                                for (int l = 0; l < checks.Count; l++)
+                                                                {
+                                                                    valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}#{l + 1}", checks[l]["value"].Value<bool>() ? "■" : "□"));
+                                                                    outputDocument.FillContent(valuesToFill);
+
+                                                                    var fillsons = (JArray)checks[l]["fillings"];
+                                                                    if (fillsons != null && fillsons.Count > 0)
+                                                                    {
+                                                                        for (int m = 0; m < fillsons.Count; m++)
+                                                                        {
+                                                                            valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}#{k + 1}#{l + 1}${m + 1}", fillsons[m]["value"].Value<string>()));
+                                                                            outputDocument.FillContent(valuesToFill);
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -258,12 +304,12 @@ namespace LDTS
                                     rows = (JArray)group["Rows"];
                                     if (rows.Count > 0)
                                     {
-                                        hasSN = group["hasSN"].Value<int>() < 0;
+                                        hasSN = group["hasSN"].Value<int>() > -1;
                                         rowSN = group["hasSN"].Value<int>() < 0 ? 0 : group["hasSN"].Value<int>();
-                                        for (int i = 1; i < rows.Count; i++)
+                                        for (int i = 2; i < rows.Count; i++)
                                         {
                                             cols = rows[i]["Cols"].Value<JArray>();
-                                            tableFill.AddRow(GetRowList(cols, rowSN + i, hasSN).ToArray());
+                                            tableFill.AddRow(GetRowList(cols, rowSN + i - 2, hasSN).ToArray());
                                         }
                                         valuesToFill = new Content(tableFill);
                                         outputDocument.FillContent(valuesToFill);
@@ -297,39 +343,33 @@ namespace LDTS
             try
             {
                 if (hasSN)
-                    fi.Add(new FieldContent("SN", rowIndex.ToString()));
+                    fi.Add(new FieldContent("sn", rowIndex.ToString()));
 
                 for (int i = 0; i < cols.Count; i++)
                 {
+                    Temp = cols[i]["QuestionText"].Value<string>();
+
+                    var Fills = (JArray)cols[i]["fillings"];
+                    if (Fills != null)
+                    {
+                        for (int j = 0; j < Fills.Count; i++)
+                        {
+                            Temp = Temp.Replace($"##^{j + 1}", Fills[j]["value"].Value<string>());
+                        }
+                    }
+                    if (Temp.Length > 0)
+                        Temp += Environment.NewLine;
+
                     switch (cols[i]["QuestionType"].Value<string>())
                     {
-                        case "display":
                         case "text":
                         case "number":
-                            fi.Add(new FieldContent($"col{i + 1}", cols[i]["Answers"][0]["value"].Value<string>()));
-                            break;
-                        case "radio":
-                            Temp = "";
-                            JArray r_answeroptions = cols[i]["AnswerOptions"].Value<JArray>();
-                            JArray r_answers = cols[i]["Answers"].Value<JArray>();//第一層
-                            for (int j = 0; j < r_answers.Count; j++)
-                            {
-                                var fills = (JArray)r_answers[j]["Answers"];
-
-                                Temp += r_answers[j]["value"].Value<bool>() ? "●" : "○";
-                                Temp += $" {r_answeroptions[j]["AnsText"].Value<string>()} ";
-                            }
+                            Temp += cols[i]["Answers"][0]["value"].Value<string>();
                             fi.Add(new FieldContent($"col{i + 1}", Temp));
                             break;
-                        case "checkbox":
-                            Temp = "";
-                            JArray answeroptions = cols[i]["AnswerOptions"].Value<JArray>();
-                            JArray answers = cols[i]["Answers"].Value<JArray>();
-                            for (int j = 0; j < answers.Count; j++)
-                            {
-                                Temp += answers[j]["value"].Value<bool>() ? "■" : "□";
-                                Temp += $" {answeroptions[j]["AnsText"].Value<string>()} ";
-                            }
+                        case "date":
+                            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(cols[i]["Answers"][0]["value"].Value<long>());
+                            Temp += dateTimeOffset.ToLocalTime().ToString("yyyy/MM/dd");
                             fi.Add(new FieldContent($"col{i + 1}", Temp));
                             break;
                         case "sign":
@@ -340,6 +380,83 @@ namespace LDTS
                                 byte[] img = (rotate != null && (bool)rotate == true) ? PublicUtil.readImageR(s_answers[0]["value"].Value<int>()) : PublicUtil.readImage(s_answers[0]["value"].Value<int>());
                                 fi.Add(new ImageContent($"col{i + 1}", img));
                             }
+                            break;
+                        case "checkbox":
+                        case "CheckboxMixImage":
+                            JArray answeroptions = cols[i]["AnswerOptions"].Value<JArray>();
+                            JArray answers = cols[i]["Answers"].Value<JArray>();
+                            for (int j = 0; j < answers.Count; j++)
+                            {
+                                Temp += answers[j]["value"].Value<bool>() ? "■" : "□";
+                                Temp += $" {answeroptions[j]["AnsText"].Value<string>()} " + Environment.NewLine;
+
+                                var Fillsons = (JArray)answers[j]["fillings"];
+                                if (Fillsons != null)
+                                {
+                                    for (int k = 0; k < Fillsons.Count; i++)
+                                    {
+                                        Temp = Temp.Replace($"##^{k + 1}", Fillsons[k]["value"].Value<string>());
+                                    }
+                                }
+                            }
+                            fi.Add(new FieldContent($"col{i + 1}", Temp));
+                            break;
+                        case "radio":
+                            JArray r_answeroptions = cols[i]["AnswerOptions"].Value<JArray>();
+                            JArray r_answers = cols[i]["Answers"].Value<JArray>();//第一層
+                            for (int j = 0; j < r_answers.Count; j++)
+                            {
+                                Temp += r_answers[j]["value"].Value<bool>() ? "●" : "○";
+                                Temp += $" {r_answeroptions[j]["AnsText"].Value<string>()} " + Environment.NewLine;
+
+                                var Fillsons = (JArray)r_answers[j]["fillings"];
+                                if (Fillsons != null)
+                                {
+                                    for (int k = 0; k < Fillsons.Count; k++)
+                                    {
+                                        Temp = Temp.Replace($"##^{k + 1}", Fillsons[k]["value"].Value<string>());
+                                    }
+                                }
+                            }
+                            fi.Add(new FieldContent($"col{i + 1}", Temp));
+                            break;
+                        case "RadioMixCheckbox":
+                            JArray r_answeroptions_1 = cols[i]["AnswerOptions"].Value<JArray>();
+                            JArray r_answers_1 = cols[i]["Answers"].Value<JArray>();//第一層
+                            for (int j = 0; j < r_answers_1.Count; j++)
+                            {
+                                Temp += r_answers_1[j]["value"].Value<bool>() ? "●" : "○";
+                                Temp += $" {r_answeroptions_1[j]["AnsText"].Value<string>()} " + Environment.NewLine;
+
+                                var Fillsons = (JArray)r_answers_1[j]["fillings"];
+                                if (Fillsons != null)
+                                {
+                                    for (int k = 0; k < Fillsons.Count; i++)
+                                    {
+                                        Temp = Temp.Replace($"##^{k + 1}", Fillsons[k]["value"].Value<string>());
+                                    }
+                                }
+
+                                JArray r_answeroptions_2 = r_answeroptions_1[j]["AnswerOptions"].Value<JArray>();
+                                JArray r_answers_2 = r_answers_1[j]["Answers"].Value<JArray>();//第二層
+                                for (int k = 0; k < r_answers_1.Count; k++)
+                                {
+                                    var fills2 = (JArray)r_answers_2[k]["Answers"];
+
+                                    Temp += r_answers_2[k]["value"].Value<bool>() ? "\t■" : "\t□";
+                                    Temp += $" {r_answeroptions_2[k]["AnsText"].Value<string>()} " + Environment.NewLine;
+
+                                    var Fillsons2 = (JArray)r_answers_2[k]["fillings"];
+                                    if (Fillsons2 != null)
+                                    {
+                                        for (int l = 0; l < Fillsons2.Count; l++)
+                                        {
+                                            Temp = Temp.Replace($"##^{l + 1}", Fillsons2[l]["value"].Value<string>());
+                                        }
+                                    }
+                                }
+                            }
+                            fi.Add(new FieldContent($"col{i + 1}", Temp));
                             break;
                     }
                 }

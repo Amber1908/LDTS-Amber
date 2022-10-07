@@ -40,13 +40,13 @@
                                             <asp:TextBox ID="FormTitle" runat="server" CssClass="form-control" placeholder="表單名稱"></asp:TextBox>
                                         </div>
                                     </td>
-                                    <td width="35%">
+                                    <td width="30%">
                                         <div class="form-group">
                                             <label for="Version">表單版本<span style="color:red">(上傳新範本時，請記得更換)</span></label>
                                             <asp:TextBox ID="Version" runat="server" CssClass="form-control" Text="1.0"></asp:TextBox>
                                         </div>
                                     </td>
-                                    <td width="10%">
+                                    <td>
                                         <div class="form-group">
                                             <label for="Status">表單狀態</label>
                                             <asp:RadioButtonList ID="Status" runat="server" RepeatDirection="Horizontal">
@@ -262,33 +262,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="return SaveQuestion('sign')">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- filling Modal -->
-    <div class="modal fade" id="fillingModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="fillingModalTitle">filling</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input id="fillingInput" type="text" class="form-control" placeholder="請輸入題目" />
-                    <span class="text-info">填充位置請以
-                        <label class="text-danger">##^n</label>
-                        來表示，例如: 檢體大小
-                        <label class="text-danger">##^1</label>
-                        x
-                        <label class="text-danger">##^2</label>
-                        。</span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('filling')">Save changes</button>
                 </div>
             </div>
         </div>
@@ -536,10 +509,6 @@
             $("#signCheck").prop("checked", false);
             $('#signInput').trigger('focus');
         });
-        $('#fillingModal').on('shown.bs.modal', function () {
-            $("#fillingInput").val('');
-            $('#fillingInput').trigger('focus');
-        });
         $('#dateModal').on('shown.bs.modal', function () {
             $("#dateInput").val('');
             $('#dateInput').trigger('focus');
@@ -553,12 +522,6 @@
             $("#RadioMixCheckboxCheck").prop("checked", false);
             $("#RadioMixCheckboxBody").html('');
             $('#RadioMixCheckboxInput').trigger('focus');
-        });
-        $('#RadioMixFillingModal').on('shown.bs.modal', function () {
-            $("#RadioMixFillingInput").val('');
-            $("#RadioMixFillingCheck").prop("checked", false);
-            $("#RadioMixFillingBody").html('');
-            $('#RadioMixFillingInput').trigger('focus');
         });
         $('#CheckboxMixImageModal').on('shown.bs.modal', function () {
             $("#CheckboxMixImageInput").val('');
@@ -591,9 +554,13 @@
         //選擇下載版本
         function changeVer(){
             console.log("changeVer");
-            let ver= $("#Ver option:selected").val();
+            let ver = $("#Ver option:selected").val();
             let downloadLink=$("#downloadVer");
-            downloadLink.attr("href",ver);
+            downloadLink.attr("href", ver);
+            if (ver.length < 10)
+                downloadLink.addClass("disabled");
+            else
+                downloadLink.removeClass("disabled");
         }
 
         // 選擇群組類型
@@ -926,9 +893,6 @@
                 case "sign":
                     $("#signModal").modal('show');
                     break;
-                case "filling":
-                    $("#fillingModal").modal('show');
-                    break;
                 case "date":
                     $("#dateModal").modal('show');
                     break;
@@ -938,14 +902,8 @@
                 case "RadioMixCheckbox":
                     $("#RadioMixCheckboxModal").modal('show');
                     break;
-                case "RadioMixFilling":
-                    $("#RadioMixFillingModal").modal('show');
-                    break;
                 case "CheckboxMixImage":
                     $("#CheckboxMixImageModal").modal('show');
-                    break;
-                case "CheckboxMixFilling":
-                    $("#CheckboxMixFillingModal").modal('show');
                     break;
             }
 
@@ -1015,11 +973,6 @@
                     };
                     $("#signModal").modal('hide');
                     break;
-                case "filling":
-                    const fillingInput = $("#fillingInput").val();
-                    item = { index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${fillingInput}`, QuestionType: "filling", AnswerOptions: [], Answers: [], otherAnswer: [] };
-                    $("#fillingModal").modal('hide');
-                    break;
                 case "date":
                     const dateInput = $("#dateInput").val();
                     item = { index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${dateInput}`, QuestionType: "date", AnswerOptions: [], Answers: [], otherAnswer: [] };
@@ -1042,15 +995,6 @@
                         });
                     });
                     $("#RadioMixCheckboxModal").modal('hide');
-                    break;
-                case "RadioMixFilling":
-                    const RadioMixFillingInput = $("#RadioMixFillingInput").val();
-                    const RadioMixFillingCheck = $('#RadioMixFillingCheck').is(":checked");
-                    item = { index: 0, hasOtherAnswers: RadioMixFillingCheck, QuestionID: "Question", QuestionText: `${RadioMixFillingInput}`, QuestionType: "RadioMixFilling", AnswerOptions: [], Answers: [], otherAnswer: [] };
-                    $(".RadioMixFillingBody").each(function (index) {
-                        item.AnswerOptions.push({ index: index + 1, AnsText: `${$(this).val()}` });
-                    });
-                    $("#RadioMixFillingModal").modal('hide');
                     break;
                 case "CheckboxMixImage":
                     const CheckboxMixImageInput = $("#CheckboxMixImageInput").val();
@@ -1142,11 +1086,13 @@
                                     <tbody>`;
 
                             $.each(this.Questions, function () {
+                                var QT = this.QuestionText;
+                                QT = QT.replace(/##.[0-9]/g, "____");
                                 QHtml += `<tr>
                                         <td>${this.index}.</td>
                                         <td>${this.QuestionID}</td>
                                         <td>${this.QuestionType}</td>
-                                        <td>${this.QuestionText}</td>
+                                        <td>${QT}</td>
                                         <td>`;
 
                                 switch (this.QuestionType) {
@@ -1157,9 +1103,7 @@
                                     case "text":
                                     case "number":
                                     case "image":
-                                    case "filling":
                                     case "date":
-                                    case "file":
                                         break;
                                     case "sign":
                                         if (this.rotate)
@@ -1167,46 +1111,43 @@
                                         break;
                                     case "RadioMixCheckbox":
                                         $.each(this.AnswerOptions, function () {
-                                            QHtml += `${this.index}.&nbsp;<input type="radio" />&nbsp;${this.AnsText}`;
+                                            var AT = this.AnsText.replace(/##.[0-9]/g, "____");
+                                            QHtml += `${this.index}.&nbsp;<input type="radio" />&nbsp;${AT}`;
 
                                             $.each(this.AnswerOptions, function () {
-                                                QHtml += `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" />&nbsp;${this.AnsText}`;
+                                                var ATS = this.AnsText.replace(/##.[0-9]/g, "____");
+                                                QHtml += `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" />&nbsp;${ATS}`;
                                             });
 
                                             QHtml += "<br />";
                                         });
                                         if (this.hasOtherAnswers)
                                             QHtml += `${this.AnswerOptions.length + 1}.&nbsp;<input type="radio" />&nbsp;其他 _____`;
-                                        break;
-                                    case "RadioMixFilling":
-                                    case "CheckboxMixFilling":
-                                        $.each(this.AnswerOptions, function () {
-                                            QHtml += `${this.index}.&nbsp;${this.AnsText}<br />`;
-                                        });
-                                        if (this.hasOtherAnswers)
-                                            QHtml += `${this.AnswerOptions.length + 1}.&nbsp;其他 _____`;
-                                        break;
+                                        break;                                    
                                     case "CheckboxMixImage":
                                         $.each(this.AnswerOptions, function () {
+                                            var AT = this.AnsText.replace(/##.[0-9]/g, "____");
                                             var showimage = "";
                                             var oc = this.image;
                                             if (oc > 0)
                                                 showimage = `<br />&nbsp;&nbsp;&nbsp;&nbsp;<image src="showimage?SN=${oc}" height="40" />`;
-                                            QHtml += `${this.index}.&nbsp;<input type="checkbox" />&nbsp;${this.AnsText}${showimage}<br />`;
+                                            QHtml += `${this.index}.&nbsp;<input type="checkbox" />&nbsp;${AT}${showimage}<br />`;
                                         });
                                         if (this.hasOtherAnswers)
                                             QHtml += `${this.AnswerOptions.length + 1}.&nbsp;<input type="checkbox" />&nbsp;其他 _____`;
                                         break;
                                     case "radio":
                                         $.each(this.AnswerOptions, function () {
-                                            QHtml += `${this.index}.&nbsp;<input type="radio" />&nbsp;${this.AnsText}<br />`;
+                                            var AT = this.AnsText.replace(/##.[0-9]/g, "____");
+                                            QHtml += `${this.index}.&nbsp;<input type="radio" />&nbsp;${AT}<br />`;
                                         });
                                         if (this.hasOtherAnswers)
                                             QHtml += `${this.AnswerOptions.length + 1}.&nbsp;<input type="radio" />&nbsp;其他 _____`;
                                         break;
                                     case "checkbox":
                                         $.each(this.AnswerOptions, function () {
-                                            QHtml += `${this.index}.&nbsp;<input type="checkbox" />&nbsp;${this.AnsText}<br />`;
+                                            var AT = this.AnsText.replace(/##.[0-9]/g, "____");
+                                            QHtml += `${this.index}.&nbsp;<input type="checkbox" />&nbsp;${AT}<br />`;
                                         });
                                         if (this.hasOtherAnswers)
                                             QHtml += `${this.AnswerOptions.length + 1}.&nbsp;<input type="checkbox" />&nbsp;其他 _____`;

@@ -36,9 +36,18 @@ namespace LDTS
                 int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);
                 int ReportAnswerSid = Convert.ToInt32(Request.QueryString["said"]);
                 string OutputTemplate = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).OutputTemplate;
-                if (OutputTemplate == string.Empty && OutputTemplate == null)
+                //if (OutputTemplate != null)
+                //{
+                //    if (OutputTemplate.Length == 0)
+                //    {
+                //        Printbtn.Enabled = false;
+                //        Printbtn.Visible = false;
+                //    }
+                //}
+                if (OutputTemplate==null)
                 {
                     Printbtn.Enabled = false;
+                    Printbtn.Visible = false;
                 }
                 if (ReportQuestionId != 0)
                 {
@@ -69,7 +78,7 @@ namespace LDTS
                 {
                     ReportAnswer reportAnswer = FormService.GetReportAnswerById(ReportAnswerId);
                     ReProcessQuestion reProcess = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == reportAnswer.QID).FirstOrDefault();
-                    //ProUrl.NavigateUrl = "Process?pid=" + reProcess.PID;
+                    ProUrl.NavigateUrl = "Process?pid=" + reProcess.PID;
                     Qtitle.Text = reportAnswer.Title;
                     jsonData.Value = reportAnswer.OutputJson;
                     ExtendName.Value = reportAnswer.ExtendName;

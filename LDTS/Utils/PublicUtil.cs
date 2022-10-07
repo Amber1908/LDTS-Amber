@@ -28,7 +28,7 @@ namespace LDTS.Utils
         /// <returns>產生檔名</returns>
         public static string GenFilename(string subname)
         {
-            return string.Format("IDT{0:yyyyMMddHHmmssfff}{1}", DateTime.Now, subname);
+            return string.Format("LDTS{0:yyyyMMddHHmmssfff}{1}", DateTime.Now, subname);
         }
 
         /// <summary>

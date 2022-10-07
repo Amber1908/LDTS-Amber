@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LDTS System P1</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.css" />
+    <!-- LDTS style -->
+    <link href="dist/css/LDTS_StyleSheet.css" rel="stylesheet" />
+    <!-- Customer Css -->
+
+    <style>
+
+        .type-temp {
+            width: 100%;
+            height:10px !important;
+            background-color: rgb(61, 61, 61);
+        }
+
+        .treeCtrl[type="checkbox"]:checked ~ .type-temp {
+            margin-top: -10px;
+        }
+
+
+.drg {
+    cursor: grab;
+    transition: transform 0.2s ease-out, margin 0.2s ease-out, background 0.2s ease-out, padding 0.2s ease-out;
+}
+
+    .drg:hover {
+        background: #e3e3e3;
+    }
+
+.dragitem {
+    opacity: .8;
+    background: #fff;
+    transform: scale(1.1) translateX(80px);
+    transition: all 0.2s ease-out;
+    box-shadow: 0px 7px 10px 0px rgba(90, 90, 90, 0.65);
+    border-bottom: none !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding-left: 5px !important;
+    z-index: 100;
+}
+
+    /*.dragitem:before {
+        top: 10px !important;
+        left: -45px !important;
+        content: '\f2f6' !important;
+        font-size: 22px;
+        color: #606060 !important;
+        font-family: 'Font Awesome 5 Pro';
+        font-weight: bold;
+    }*/
+
+    .dragitem + list {
+        border-top: solid 1px #ddd;
+    }
+
+    </style>
+    
+</head>
+<body id="homeTop" class="hold-transition sidebar-mini layout-navbar-fixed bodyLDTS">
+    <form method="post" action="./Process?pid=16" id="F1" class="fromLDTS" enctype="multipart/form-data">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<div class="aspNetHidden">
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="FBBCE4ED" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="6neRY0gF7nJw92syaBGlxkySttmXrKFxuJe10f7+4baSwdDsp4wzZzD0/vCm3gp1hrj1oC4DNX+YeowDKYN9K0wY34XMd9AOMu6rSK/AjTDt023QJhCLxxnvtiVhFa9D4CDd6bxrcwCArIrpQAg4TEXFld8FMsOQBS3sI/mfpdObH4qhsOmARWcp7Gl3XD7H9xh+CC69Ho9+jvoUzFW/Z+xK1/p+Pnxkjio/W5k3tfw=" />
+</div>
+        <!-- Site wrapper -->
+        <div class="wrapper">
+            <!-- Navbar -->
+            <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                <!-- Left navbar links -->
+                <ul class="navbar-nav">
+                    <li id="bodyCtrl" class="nav-item">
+                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                    </li>
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a href="Default" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a href="ReportAnswerSearch" class="nav-link">關聯表單搜尋</a>
+                    </li>
+                </ul>
+
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Notifications Dropdown Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-th-large"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            
+                            <div class="dropdown-divider"></div>
+                            <a href="PersonnelManagement.aspx" class="dropdown-item">
+                                <i class="fa fa-solid fa-user mr-1"></i>人員管理
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="Unit.aspx" class="dropdown-item">
+                                <i class="fas fa-users mr-2"></i>單位資訊
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="FormGeneration" class="dropdown-item">
+                                <i class="fa fa-sticky-note mr-2"></i>表單產生器
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="Ao" class="dropdown-item">
+                               
+                                 <i class="mr-2 fas fa-tasks"></i>權限管理
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="Relation.aspx" id="RelationItem" class="dropdown-item">
+                               <i class="fas fa-project-diagram mr-2"></i>程序書關聯設定
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="AlertSettingList" class="dropdown-item">
+                                <i class="fa fa-bell mr-2"></i>提醒設定
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="AdminWorkRecord.aspx" class="dropdown-item">
+                                <i class="fa fa-regular fa-address-book mr-2"></i>操作紀錄
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item user-panel pb-2 d-flex ml-4">
+                        <img src="ShowAdminImg.aspx?id=20066" id="adminMug" class=" img-circle elevation-2" style="height:35px;" alt="User Image" />
+                    </li>
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <span id="adminName">Admin</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            
+                            <div class="dropdown-divider"></div>
+                            <a href="account" class="dropdown-item">
+                                <i class="fas fa-users mr-2"></i>編輯個人資訊
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="RestPassWord" class="dropdown-item">
+                                <i class="fas fa-solid fa-unlock mr-2"></i>變更密碼
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="Logout" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt mr-2"></i>登出
+                            </a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.navbar -->
+
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar sidebar-dark-primary elevation-4 mainSidebarLDTS">
+               <treeWrap>
+                    <treeNav>
+                        <img src="dist/img/AdminLTELogo.png">
+                        <span>This is logo section</span>
+                    </treeNav>
+                    <treeHeader>
+                        <input type="text" placeholder="🔎︎">
+                        <button>Search</button>
+                    </treeHeader>
+                    <tree>
+                        <list class="type-1">
+                            <input class="treeCtrl" type="checkbox" name="tree">
+                            <span class="treeCtrlIcon"></span>
+                            <a href="https://www.adobe.com/"></a>
+                            <label>This is a folder with a freaking long name and stuff</label>
+                            <list class="type-2">
+                                <input class="treeCtrl" type="checkbox" name="tree">
+                                <span class="treeCtrlIcon"></span>
+                                <a href="https://code.blender.org/2022/09/vfx-reference-platform-2023-2024/"></a>
+                                <label>AD07資訊系統管制程序書</label>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.2">BenchMark XT IHC作業紀錄表 v20190715</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.7">Jesse From 2</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">病理切片漂浮槽維護保養紀錄表</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.7">BenchMark XT IHC作業紀錄表 v20190715</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="8.4">This a item</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="3.1">This a item</label>
+                                </list>
+                            </list>
+                            <list class="type-2" >
+                                <input class="treeCtrl" type="checkbox" name="tree">
+                                <span class="treeCtrlIcon"></span>
+                                <label>This is another folder with a freaking long name. Cheers</label>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">This an item</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">This an item</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">This an item</label>
+                                </list>
+                            </list>
+                            <list class="type-3">
+                                <a href="https://www.google.com"></a>
+                                <label>BenchMark XT IHC作業紀錄表 v123455</label>
+                            </list>
+                            <list class="type-3">
+                                <a href="https://www.google.com"></a>
+                                <label data-version="1.0">BenchMark XT IHC作業紀錄表 V4567b</label>
+                            </list>
+                        </list>
+                        <list class="type-1">
+                            <input class="treeCtrl" type="checkbox" name="tree">
+                            <span class="treeCtrlIcon"></span>
+                            <label>Second folder</label>
+                            <list class="type-2">
+                                <input class="treeCtrl" type="checkbox" name="tree">
+                                <span class="treeCtrlIcon"></span>
+                                <label>This is a folder</label>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">This a item</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">This a item</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">This a item</label>
+                                </list>
+                                <list class="type-3">
+                                    <a href="https://www.google.com"></a>
+                                    <label data-version="1.0">This a item</label>
+                                </list>
+                            </list>
+                            <list class="type-3">
+                                <a href="https://www.google.com"></a>
+                                <label>This a item</label>
+                            </list>
+                            <list class="type-3">
+                                <a href="https://www.google.com"></a>
+                                <label>This a item</label>
+                            </list>
+                        </list>
+                        <list class="type-1">
+                            <input class="treeCtrl" type="checkbox" name="tree">
+                            <span class="treeCtrlIcon"></span>
+                            <label>This another folder</label>
+                            <list class="type-2">
+                                <input class="treeCtrl" type="checkbox" name="tree">
+                                <span class="treeCtrlIcon"></span>
+                                <label>This is a folder</label>
+                                <list class="type-3">
+                                    <label>This a item</label>
+                                </list>
+                            </list>
+                        </list>
+                        <list class="type-1">
+                            <input class="treeCtrl" type="checkbox" name="tree">
+                            <span class="treeCtrlIcon"></span>
+                            <label>Last folder</label>
+                            <list class="type-2">
+                                <label>This is a folder</label>
+                                <input class="treeCtrl" type="checkbox" name="tree">
+                                <span class="treeCtrlIcon"></span>
+                                <list class="type-3">
+                                    <label>This a item</label>
+                                </list>
+                                <list class="type-3">
+                                    <label>This a item</label>
+                                </list>
+                                <list class="type-3">
+                                    <label>This a item</label>
+                                </list>
+                            </list>
+                        </list>
+                    </tree>
+                </treeWrap>
+            </aside>
+
+            <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">       
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row book_layout">
+                <div class="book_Setting">
+                    <h2>Relation Editor</h2>
+                    <div class="book_Save">
+                        <button>Save</button>
+                        <button>&#10799; Discard</button>
+                        <button>&#8635; Reload</button>
+                    </div>
+                </div>
+                <div id="mainPlaceHolder_processesInf" class="processesMain book_Tree">
+                    <treeWrap>
+                        <tree class="tree_Edit" data-msgEmpty="Start by creating a 標準程序書, then drag items from the list to start built relation tree" data-msgLastItem="列表結束">
+                            <list class="type-1" draggable="true" data-content="This is a folder" data-Category="type-1" data-Dulipe="false">
+                                <input class="treeCtrl" type="checkbox" name="tree">
+                                <span class="treeCtrlIcon"></span>
+                                <label>
+                                    <span>This is a folder with a freaking long name and stuff</span>
+                                </label>
+                                <list class="type-2" draggable="true" data-content="AD07資訊系統管制程序書" data-Category="type-2" data-Dulipe="false">
+                                    <input class="treeCtrl" type="checkbox" name="tree">
+                                    <span class="treeCtrlIcon"></span>
+                                    <label>
+                                        <span>AD07資訊系統管制程序書</span>
+                                        <div>
+                                            <button class="listDelete"></button>
+                                        </div>
+                                    </label>
+                                    <list class="type-3" draggable="true" data-content="BenchMark XT IHC作業紀錄表 v20190715" data-Category="type-3" data-Dulipe="false">
+                                        <label data-version="1.2">
+                                            <span>BenchMark XT IHC作業紀錄表 v20190715</span>
+                                            <div>
+                                                <button class="listDelete"></button>
+                                            </div>
+                                        </label>
+                                    </list>
+                                    <list class="type-3" draggable="true" data-content="Jesse From 2" data-Category="type-3" data-Dulipe="false">
+                                        <label data-version="1.7">
+                                            <span>Jesse From 2</span>
+                                            <div>
+                                                <button class="listDelete"></button>
+                                            </div>
+                                        </label>
+                                    </list>
+                                    <list class="type-3" draggable="true" data-content="病理切片漂浮槽維護保養紀錄表" data-Category="type-3" data-Dulipe="false">
+                                        <label data-version="1.0">
+                                            <span>病理切片漂浮槽維護保養紀錄表</span>
+                                            <div>
+                                                <button class="listDelete"></button>
+                                            </div>
+                                        </label>
+                                    </list>
+                                    <list class="type-3" draggable="true" data-content="XT IHC作業紀錄表 v20190715" data-Category="type-3" data-Dulipe="false">
+                                        <label data-version="1.7">
+                                            <span>XT IHC作業紀錄表 v20190715</span>
+                                            <div>
+                                                <button class="listDelete"></button>
+                                            </div>
+                                        </label>
+                                    </list>
+                                    <list class="type-3" raggable="true" data-content="This a item" data-Category="type-3" data-Dulipe="false">
+                                        <label data-version="8.4">
+                                            <span>This a item</span>
+                                            <div>
+                                                <button class="listDelete"></button>
+                                            </div>
+                                        </label>
+                                    </list>
+                                    <list class="type-temp">
+                                    </list>
+                                </list>
+                                <list class="type-2" draggable="true" data-content="is another folder with a freaking long name. Cheers" data-Category="type-2" data-Dulipe="false">
+                                    <input class="treeCtrl" type="checkbox" name="tree">
+                                    <span class="treeCtrlIcon"></span>
+                                    <label>
+                                        <span>is another folder with a freaking long name. Cheers</span>
+                                        <div>
+                                            <button class="listDelete"></button>
+                                        </div>
+                                    </label>
+                                    <list class="type-3" draggable="true" data-content="This an item" data-Category="type-2" data-Dulipe="false">
+                                        <label data-version="1.0">
+                                            <span>This an item</span>
+                                            <div>
+                                                <button class="listDelete"></button>
+                                            </div>
+                                        </label>
+                                    </list>
+                                    <list class="type-temp">
+                                    </list>
+                                </list>
+                                <list class="type-3" draggable="true" data-content="BenchMark XT IHC作業紀錄表 v123455" data-Category="type-3" data-Dulipe="false">
+                                    <label>
+                                        <span>BenchMark XT IHC作業紀錄表 v123455</span>
+                                        <div>
+                                            <button class="listDelete"></button>
+                                        </div>
+                                    </label>
+                                </list>
+                                <list class="type-3" draggable="true" data-content="aa" data-Category="type-3" data-Dulipe="false">
+                                    <label>
+                                        <span>aa</span>
+                                        <div>
+                                            <button class="listDelete"></button>
+                                        </div>
+                                    </label>
+                                </list>
+                            </list>
+                            <list class="type-1" draggable="true" data-content="folder" data-Category="type-1" data-Dulipe="false">
+                                <input class="treeCtrl" type="checkbox" name="tree">
+                                <span class="treeCtrlIcon"></span>
+                                <label>
+                                    <span>folder</span>
+                                </label>
+                            </list>
+                        </tree>
+                    </treeWrap>
+                </div>
+                <div class="card card-row card-default book_Card">
+                    <div class="card-header type-1 ">
+                        <h3 class="card-title ">標準程序書</h3>
+                        <div class="float-right swbCheckAll">
+                            <button title="Button function description goes here">&#43;</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="mainPlaceHolder_swbFormList" data-msgEmpty="No Entry, Please Create one by...">
+                            <label class="cardNotice">Some message over here regardign some tips and tricks</label>
+                            <div class="card book_Process">
+                                <div class="card-body card-content">
+                                    <span title="Some description goes here">Ada Lovelace</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card book_Process">
+                                <div class="card-body card-content">
+                                    <span>Ampere</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card book_Process">
+                                <div class="card-body card-content">
+                                    <span>Hopper</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card book_Process">
+                                <div class="card-body card-content">
+                                    <span>Turing</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>        
+                    </div> 
+                </div>
+                <div class="card card-row card-default book_Card">
+                    <div class="card-header type-2 ">
+                        <h3 class="card-title ">標準作業書</h3>
+                        <div class="float-right swbCheckAll">
+                            <button title="Button function description goes here">&#43;</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="mainPlaceHolder_swbFormList" data-msgEmpty="No Entry, Please Create one by...">
+                            <div class="card dragCard" draggable="true" data-content="AD03-001檢體外送檢驗作業標準書" data-Category="type-2" data-Dulipe="true">
+                                <div class="card-body card-content">
+                                    <span>AD03-001檢體外送檢驗作業標準書v2.1</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="Golang book" data-Category="type-2" data-Dulipe="true" title="I am Golang">
+                                <div class="card-body card-content">
+                                    <span>Golang book</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="Garfield" data-Category="type-2" data-Dulipe="true" title="I am cute cat">
+                                <div class="card-body card-content">
+                                    <span>Garfield</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 40 series" data-Category="type-2" data-Dulipe="true" title="北極熊在哭... again">
+                                <div class="card-body card-content">
+                                    <span>RTX 40 series</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 30 series" data-Category="type-2" data-Dulipe="true" title="北極熊在哭">
+                                <div class="card-body card-content">
+                                    <span>RTX 30 series</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 20 series" data-Category="type-2" data-Dulipe="true" title="2021 & 2022年礦潮時期從倉庫挖出來賣(穢土轉生)">
+                                <div class="card-body card-content">
+                                    <span>RTX 20 series</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 10 series" data-Category="type-2" data-Dulipe="true">
+                                <div class="card-body card-content">
+                                    <span>RTX 10 series</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX series" data-Category="type-2" data-Dulipe="true">
+                                <div class="card-body card-content">
+                                    <span>RTX series</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="GTX series" data-Category="type-2" data-Dulipe="true">
+                                <div class="card-body card-content">
+                                    <span>GTX series</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>        
+                    </div>
+    
+                </div>
+                <div class="card card-row card-default book_Card">
+                    <div class="card-header type-3">
+                        <h3 class="card-title">表單清單</h3>
+                        <div class="float-right swbCheckAll">
+                            <button title="Button function description goes here">&#43;</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="mainPlaceHolder_swbFormList" data-msgEmpty="No Entry, Please Create one by...">
+                            <div class="card dragCard" draggable="true" data-content="AD03-表單v2.1" data-Category="type-3">
+                                <div class="card-body card-content">
+                                    <span>AD03-表單v2.1</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="Gopher" data-Category="type-3">
+                                <div class="card-body card-content">
+                                    <span>Gopher</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 4090" data-Category="type-3" title="Power 850 W you need 220V" data-version="10.0">
+                                <div class="card-body card-content">
+                                    <span>RTX 4090</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 4080 16GB" data-Category="type-3" title="Power 750 W" data-version="11.0">
+                                <div class="card-body card-content">
+                                    <span>RTX 4080 16GB</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 4080 12GB" data-Category="type-3" title="Power 700 W old 4070 (ti) " data-version="11.0">
+                                <div class="card-body card-content">
+                                    <span>RTX 4080 12GB</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 3080 12GB" data-Category="type-3" title="Power 750 W" data-version="1.0">
+                                <div class="card-body card-content">
+                                    <span>RTX 3080 12GB</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 3060 12GB" data-Category="type-3" title="Power 550 W" data-version="2.0">
+                                <div class="card-body card-content">
+                                    <span>RTX 3060 12GB</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 3070 8GB" data-Category="type-3" title="Power 550 W" data-version="2.0">
+                                <div class="card-body card-content">
+                                    <span>RTX 3070 8GB</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 3080 10GB" data-Category="type-3" title="Power 750 W" data-version="2.0">
+                                <div class="card-body card-content">
+                                    <span>RTX 3080 10GB</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 3060 Ti 8GB" data-Category="type-3" title="唯一刀法切壞的卡 CP值之王">
+                                <div class="card-body card-content">
+                                    <span>RTX 3060 Ti 8GB</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="RTX 2080" data-Category="type-3">
+                                <div class="card-body card-content">
+                                    <span>RTX 2080</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card dragCard" draggable="true" data-content="GTX 1650" data-Category="type-3">
+                                <div class="card-body card-content">
+                                    <span>GTX 1650</span>
+                                    <span class="d-flex justify-content-end">
+                                        <a style="text-decoration:none" href="StandarWorkbookEdit?sid=13">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a style="text-decoration:none;" class="ml-1" href="DeleteRelation.aspx?sid=13">
+                                            <i class="fas fa-trash  "></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input name="ctl00$mainPlaceHolder$Ao" type="text" id="mainPlaceHolder_Ao" class="d-none" />
+    </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-block">
+                    <b>Version</b> 1.2.0
+                </div>
+                <strong>Copyright &copy; 2022 <a href="http://www.biomdcare.com/">Biomdcare</a>.</strong> All rights reserved.
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+    </form>
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+
+
+
+
+    <script>
+        let DragitemState= '';
+        let Card =  document.querySelectorAll('.dragCard');
+        let CardParents =  document.querySelectorAll('.tree_Edit .type-1, .tree_Edit .type-2');
+
+
+        Card.forEach(item => {
+            item.addEventListener('dragstart',drag,event);
+        });
+
+        function drag(event) {
+                DragitemState = 'Newitem';
+                CardParents =  document.querySelectorAll('.tree_Edit .type-1, .tree_Edit .type-2')
+                console.log('start');
+                CardParents.forEach(item => {
+                item.addEventListener('drop',drop,event);
+                item.addEventListener('dragover',allowDrop,event);
+            });
+
+            var data = {
+                content: event.currentTarget.getAttribute('data-content'),
+                Category: event.currentTarget.getAttribute('data-Category'),
+                Dulipe: event.currentTarget.getAttribute('data-Dulipe'),
+                Version: event.currentTarget.getAttribute('data-version'),
+                Descript: event.currentTarget.getAttribute('title')
+            }
+            event.dataTransfer.setData('text/plain', JSON.stringify(data));
+        }
+
+
+
+        function drop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (DragitemState != 'Newitem')
+                return;
+            var data = JSON.parse(event.dataTransfer.getData('text/plain'));
+
+            if (event.currentTarget.classList.contains('type-2') && data.Category == 'type-2')
+                return;
+            event.currentTarget.appendChild(CreatElelist(data));
+            //open tree
+            let childrenEle = event.currentTarget.children;
+            Array.from(childrenEle).forEach(ele =>{
+                if(ele.tagName =='INPUT' && ele.name == 'tree')
+                {
+                    ele.checked  = false;
+                }
+            });
+            Ev_RemoveDrop ();
+        }
+
+        function Ev_RemoveDrop ()
+        {
+            console.log('end');
+            CardParents.forEach(item => {
+                item.removeEventListener('drop',drop,event);
+                item.removeEventListener('dragover',allowDrop,event);
+                    
+            });
+        }
+
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function CreatElelist(data)
+        {
+            if (data.Dulipe == 'false')
+                return;
+            var root = document.createElement('list');
+            root.classList.add(data.Category,"appendlist");
+            setTimeout(() => {
+                root.classList.remove("appendlist");
+            },1000);
+            root.draggable = true;
+            root.setAttribute('data-content',data.content);
+            root.setAttribute('data-Category',data.Category);
+            root.setAttribute('data-Dulipe',false);
+            root.title = data.Descript;
+
+            root.addEventListener("dragstart",e =>{
+                e.stopPropagation();
+                SetRange(e); 
+                var imgtest = document.createElement("div");
+                 e.dataTransfer.setDragImage(imgtest, 0, 0);
+                
+            });
+            root.addEventListener("drag",SetDragstart,Event);		
+            root.addEventListener("drop",e =>{
+                tempdiv.classList.remove("dragitem");
+                Ev_remove();
+            });
+            root.addEventListener("mouseleave",e =>{
+                tempdiv.classList.remove("dragitem");
+                Ev_remove();
+            });
+
+
+
+
+
+
+            var chrild;
+
+            if (data.Category != 'type-3')
+            {
+                chrild = document.createElement('input');
+                chrild.type = 'checkbox';
+                chrild.name = 'tree';
+                chrild.classList.add('treeCtrl');
+                root.appendChild(chrild);
+
+                chrild = document.createElement('span');
+                chrild.classList.add('treeCtrlIcon');
+                root.appendChild(chrild);
+            }
+
+            chrild = document.createElement('label');
+            if (data.Category == 'type-3')
+                chrild.setAttribute('data-version',data.Version?data.Version:'');
+            var span = document.createElement('span');
+            span.textContent = data.content;
+            chrild.appendChild(span);
+
+            //Button
+            var div = document.createElement('div');
+            var but = document.createElement('button');
+            but.classList.add('listDelete');
+            but.addEventListener('click',FIndList);
+            div.appendChild(but);
+            chrild.appendChild(div);
+            root.appendChild(chrild);
+
+
+            if (data.Category == 'type-3')
+                return root;
+
+            chrild = document.createElement('list');
+            chrild.classList.add('type-temp');
+            root.appendChild(chrild);
+
+            return root;
+
+        }
+
+
+        
+    </script>
+
+    <script>
+        //Delete tree 
+        var ButDelete = document.querySelectorAll('.listDelete');
+
+        const FIndList = e =>{
+            e.preventDefault();
+            let tag = e.currentTarget;
+
+            for (var i =0; i<5 ;i++)
+            {
+                console.log(tag);
+                tag = tag.parentNode;
+                if (tag.tagName == 'LIST')
+               {
+                    tag.classList.add('deletelist');
+                    setTimeout(()=>{tag.remove();},200);
+                    break;
+                }
+
+            }
+        }
+
+        ButDelete.forEach(item => {
+            item.addEventListener('click',FIndList);
+        })
+
+
+    </script> 
+
+
+<script>
+    //var dragitem = document.querySelectorAll(".tree_Edit .type-2, .tree_Edit .type-2, .tree_Edit .type-3");
+    var dragitem = document.querySelectorAll(".tree_Edit > .type-1, .tree_Edit .type-2, .tree_Edit .type-3");
+    var tempdiv = document.createElement("div");
+    let contain = document.querySelectorAll(".tree_Edit, .tree_Edit .type-1, .tree_Edit .type-2");
+    //let contain = document.querySelectorAll(".tree_Edit .type-1, .tree_Edit .type-2");
+    let filteroption = ".tree_Edit .type-1:not(.dragitem), .tree_Edit .type-2:not(.dragitem), .tree_Edit .type-3:not(.dragitem), .type-temp";
+    //let filteroption = ".tree_Edit .type-2:not(.dragitem), .tree_Edit .type-3:not(.dragitem), .type-temp";
+    var target = null;
+    initevent ();
+    function initevent ()
+    {
+        for (var a=0; a < dragitem.length;a++)
+        {
+            dragitem[a].addEventListener("dragstart",e =>{
+                e.stopPropagation();
+                var imgtest = document.createElement("div");
+                 e.dataTransfer.setDragImage(imgtest, 0, 0);
+                 SetRange(e);              
+            });
+            dragitem[a].addEventListener("drag",SetDragstart,Event);		
+            dragitem[a].addEventListener("drop",e =>{
+                tempdiv.classList.remove("dragitem");
+                Ev_remove();
+            });
+            dragitem[a].addEventListener("mouseleave",e =>{
+                tempdiv.classList.remove("dragitem");
+                Ev_remove();
+            });
+        }
+    }
+
+    function SetRange(target){
+        var targetType = target.currentTarget.getAttribute('data-Category');
+        if (targetType == 'type-2')
+        {
+            contain = document.querySelectorAll(".tree_Edit .type-1");
+            filteroption = ".tree_Edit .type-2:not(.dragitem), .tree_Edit .type-1 > .type-3:not(.dragitem)";
+        }
+
+        else if (targetType == 'type-3')
+        {
+            contain = document.querySelectorAll(".tree_Edit .type-1, .tree_Edit .type-2");
+            filteroption = ".tree_Edit .type-2:not(.dragitem), .tree_Edit .type-3:not(.dragitem), .type-temp";
+        }
+        else if (targetType == 'type-1')
+        {
+            contain = document.querySelectorAll(".tree_Edit");
+            filteroption = ".tree_Edit .type-1:not(.dragitem)";
+        }
+
+        Ev_bindDragOver();
+    }
+    
+    function Ev_bindDragOver()
+    {
+        contain.forEach (co => {
+            co.addEventListener("dragover",handledragover,event);
+        });
+    }
+
+    function handledragover(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        co  = e.currentTarget;
+        const afterelement = getDragAfterelement(co,e.clientY);
+        //console.log(afterelement);
+        if (afterelement == null)
+            co.appendChild(tempdiv);
+        else
+        {
+            afterelement.parentNode.insertBefore(tempdiv,afterelement);
+            afterelement.parentNode.childNodes[0].checked = false;
+            //console.log(`element:${afterelement}`);
+        }
+    }
+
+    function Ev_remove ()
+    {
+        contain = document.querySelectorAll(".tree_Edit, .tree_Edit .type-1, .tree_Edit .type-2");
+        contain.forEach (item => {
+            item.removeEventListener('dragover',handledragover);
+        });
+    }
+
+    
+    function SetDragstart (event)
+    {
+        tempdiv = event.target;
+        tempdiv.classList.add("dragitem");
+        DragitemState = 'item_move';
+        /*event.dataTransfer.setData("image/png", event.target.id);*/
+    }
+    
+    function getDragAfterelement (content,y)
+    {
+        const contentelements = [...content.querySelectorAll(filteroption)];
+    
+    return	contentelements.reduce ((close,child) => {
+            const box = child.getBoundingClientRect();
+            const offset  = y - box.top - box.height/2;
+            //console.log(offset);
+            if (offset < 0 && offset >close.offset)
+            {
+                return {offset:offset,element: child}	
+            }
+            else
+            {
+                return close;	
+            }
+        },{offset: Number.NEGATIVE_INFINITY}).element;
+    
+    }
+
+</script>
+
+
+</body>
+</html>

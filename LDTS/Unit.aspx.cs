@@ -45,8 +45,9 @@ namespace LDTS
                     BossEmail.Text = unitBasedata.UnitBossEmail;
                     BossPhone.Text = unitBasedata.UnitBossPhone;
                     DesTextbox.Text = unitBasedata.UnitDesc;
-                    logo.Src= "ShowAdminImg.aspx?id="+ unitBasedata.UnitIcon;
-                    UnitLogo.ImageUrl= "ShowAdminImg.aspx?id=" + unitBasedata.UnitIcon;
+                    logo.Src = "ShowAdminImg.aspx?id=" + unitBasedata.UnitIcon;
+                    UnitLogo.ImageUrl = "ShowAdminImg.aspx?id=" + unitBasedata.UnitIcon;
+                    UnitMark.ImageUrl = "ShowAdminImg.aspx?id=" + unitBasedata.UnitWatermark;
                 }
             }
         }
@@ -55,49 +56,12 @@ namespace LDTS
         {
             UnitBasedata unitBasedata = UnitService.GetUnit();
             Admin admin = (Admin)Session["LDTSAdmin"];
-            if (FileUpload.HasFile && unitBasedata.UnitName == string.Empty)//新增
-            {
-                unitBasedata.UnitName = UnitNameTextBox1.Text;
-                unitBasedata.UnitDesc = DesTextbox.Text;
-                unitBasedata.UnitID = IDTextBox1.Text;
-                unitBasedata.UnitEmail = EmailTextBox2.Text;
-                unitBasedata.UnitPhone = PhoneTextBox1.Text;
-                unitBasedata.UnitAddr = AddrTextBox1.Text;
-                unitBasedata.UnitBoss = BossTextBox.Text;
-                unitBasedata.UnitBossEmail = BossEmail.Text;
-                unitBasedata.UnitBossPhone = BossPhone.Text;
-                unitBasedata.UnitContact = ContactTextbox.Text;
-                unitBasedata.UnitContactEmail = ContactMailTextbox.Text;
-                unitBasedata.UnitContactPhone = ContactPhoneTexBox.Text;
-                string fileName = FileUpload.FileName;
-                String filetype = System.IO.Path.GetExtension(fileName);
-                if (filetype.Contains(".jpg") || filetype.Contains(".png"))
-                {
-                    unitBasedata.UnitIcon = PublicUtil.saveImage(FileUpload);
-                    string workContent = "新增單位資訊";
-                    if (UnitService.InsertUnit(unitBasedata))
-                    {
-                        LDTSservice.InsertRecord(admin, workContent);
+            if (FileUpload.HasFile)
+                unitBasedata.UnitIcon = PublicUtil.saveImage(FileUpload);
+            if (FileUploadMark.HasFile)
+                unitBasedata.UnitWatermark = PublicUtil.saveImage(FileUploadMark);
 
-                        Literal AlertMsg = new Literal();
-                        AlertMsg.Text = "<script language='javascript'>alert('新增成功!');</script>";
-                        this.Page.Controls.Add(AlertMsg);
-                    }
-                    else
-                    {
-                        Literal AlertMsg = new Literal();
-                        AlertMsg.Text = "<script language='javascript'>alert('新增失敗!');</script>";
-                        this.Page.Controls.Add(AlertMsg);
-                    }
-                }
-                else
-                {
-                    Literal AlertMsg = new Literal();
-                    AlertMsg.Text = "<script language='javascript'>alert('新增失敗，圖片格式不符，請上傳jpg檔或png檔');</script>";
-                    this.Page.Controls.Add(AlertMsg);
-                }
-            }
-            else if (FileUpload.HasFile && unitBasedata.UnitName != string.Empty)//修改
+            if (unitBasedata.UnitName == string.Empty)//新增
             {
                 unitBasedata.UnitName = UnitNameTextBox1.Text;
                 unitBasedata.UnitDesc = DesTextbox.Text;
@@ -111,34 +75,24 @@ namespace LDTS
                 unitBasedata.UnitContact = ContactTextbox.Text;
                 unitBasedata.UnitContactEmail = ContactMailTextbox.Text;
                 unitBasedata.UnitContactPhone = ContactPhoneTexBox.Text;
-                string fileName = FileUpload.FileName;
-                String filetype = System.IO.Path.GetExtension(fileName);
-                if (filetype.Contains(".jpg") || filetype.Contains(".png"))
+
+                string workContent = "新增單位資訊";
+                if (UnitService.InsertUnit(unitBasedata))
                 {
-                    unitBasedata.UnitIcon = PublicUtil.saveImage(FileUpload);
-                    string workContent = "編輯單位資訊";
-                    if (UnitService.UpdateUnit(unitBasedata))
-                    {
-                        LDTSservice.InsertRecord(admin, workContent);
-                        Literal AlertMsg = new Literal();
-                        AlertMsg.Text = "<script language='javascript'>alert('編輯成功!');</script>";
-                        this.Page.Controls.Add(AlertMsg);
-                    }
-                    else
-                    {
-                        Literal AlertMsg = new Literal();
-                        AlertMsg.Text = "<script language='javascript'>alert('編輯失敗!');</script>";
-                        this.Page.Controls.Add(AlertMsg);
-                    }
+                    LDTSservice.InsertRecord(admin, workContent);
+
+                    Literal AlertMsg = new Literal();
+                    AlertMsg.Text = "<script language='javascript'>alert('新增成功!');location=location;</script>";
+                    this.Page.Controls.Add(AlertMsg);
                 }
                 else
                 {
                     Literal AlertMsg = new Literal();
-                    AlertMsg.Text = "<script language='javascript'>alert('新增失敗，圖片格式不符，請上傳jpg檔或png檔');</script>";
+                    AlertMsg.Text = "<script language='javascript'>alert('新增失敗!');</script>";
                     this.Page.Controls.Add(AlertMsg);
                 }
             }
-            else if (unitBasedata.UnitName != string.Empty)//不改圖片
+            else
             {
                 unitBasedata.UnitName = UnitNameTextBox1.Text;
                 unitBasedata.UnitDesc = DesTextbox.Text;
@@ -152,12 +106,13 @@ namespace LDTS
                 unitBasedata.UnitContact = ContactTextbox.Text;
                 unitBasedata.UnitContactEmail = ContactMailTextbox.Text;
                 unitBasedata.UnitContactPhone = ContactPhoneTexBox.Text;
+
                 string workContent = "編輯單位資訊";
                 if (UnitService.UpdateUnit(unitBasedata))
                 {
                     LDTSservice.InsertRecord(admin, workContent);
                     Literal AlertMsg = new Literal();
-                    AlertMsg.Text = "<script language='javascript'>alert('編輯成功!');</script>";
+                    AlertMsg.Text = "<script language='javascript'>alert('編輯成功!');location=location;</script>";
                     this.Page.Controls.Add(AlertMsg);
                 }
                 else
@@ -166,12 +121,6 @@ namespace LDTS
                     AlertMsg.Text = "<script language='javascript'>alert('編輯失敗!');</script>";
                     this.Page.Controls.Add(AlertMsg);
                 }
-            }
-            else if (unitBasedata.UnitName == string.Empty&& !FileUpload.HasFile)
-            {
-                Literal AlertMsg = new Literal();
-                AlertMsg.Text = "<script language='javascript'>alert('新增失敗，圖片格式不符，請上傳jpg檔或png檔');</script>";
-                this.Page.Controls.Add(AlertMsg);
             }
         }
     }

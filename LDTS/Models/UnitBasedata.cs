@@ -22,5 +22,7 @@ namespace LDTS.Models
         public string UnitBossPhone { get; set; }
         public string UnitBossEmail { get; set; }
         public int UnitIcon { get; set; }
+
+        public int UnitWatermark { get; set; }
     }
 }

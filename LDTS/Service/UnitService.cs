@@ -25,7 +25,7 @@ namespace LDTS.Service
                     sqc.Open();
                     sqlCommand.CommandText = @"Select * from UnitBasedata";
                     SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                    while (sqlDataReader.Read())
+                    if (sqlDataReader.Read())
                     {
                         unitBasedata.UnitName = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("UnitName")) ? " " : sqlDataReader.GetString(sqlDataReader.GetOrdinal("UnitName"));
                         unitBasedata.UnitDesc = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("UnitDesc")) ? " " : sqlDataReader.GetString(sqlDataReader.GetOrdinal("UnitDesc"));
@@ -40,6 +40,7 @@ namespace LDTS.Service
                         unitBasedata.UnitContactEmail = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("UnitContactEmail")) ? " " : sqlDataReader.GetString(sqlDataReader.GetOrdinal("UnitContactEmail"));
                         unitBasedata.UnitBossEmail = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("UnitBossEmail")) ? "" : sqlDataReader.GetString(sqlDataReader.GetOrdinal("UnitBossEmail"));
                         unitBasedata.UnitIcon = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("UnitIcon")) ? 0 : sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("UnitIcon"));
+                        unitBasedata.UnitWatermark = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal("UnitWatermark")) ? 0 : sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("UnitWatermark"));
                     }
                     sqc.Close();
 
@@ -61,7 +62,7 @@ namespace LDTS.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
-                    sqlCommand.CommandText = @"INSERT INTO UnitBasedata(UnitName,UnitDesc,UnitID,UnitPhone,UnitAddr,UnitEmail,UnitContact,UnitContactPhone,UnitContactEmail,UnitBoss,UnitBossPhone,UnitBossEmail,UnitIcon) VALUES(@UnitName,@UnitDesc,@UnitID,@UnitPhone,@UnitAddr,@UnitEmail,@UnitContact,@UnitContactPhone,@UnitContactEmail,@UnitBoss,@UnitBossPhone,@UnitBossEmail,@UnitIcon)";
+                    sqlCommand.CommandText = @"INSERT INTO UnitBasedata(UnitName,UnitDesc,UnitID,UnitPhone,UnitAddr,UnitEmail,UnitContact,UnitContactPhone,UnitContactEmail,UnitBoss,UnitBossPhone,UnitBossEmail,UnitIcon,UnitWatermark) VALUES(@UnitName,@UnitDesc,@UnitID,@UnitPhone,@UnitAddr,@UnitEmail,@UnitContact,@UnitContactPhone,@UnitContactEmail,@UnitBoss,@UnitBossPhone,@UnitBossEmail,@UnitIcon,@UnitWatermark)";
                     sqlCommand.Parameters.AddWithValue("@UnitID", unit.UnitID);
                     sqlCommand.Parameters.AddWithValue("@UnitName", unit.UnitName);
                     sqlCommand.Parameters.AddWithValue("@UnitDesc", unit.UnitDesc);
@@ -75,6 +76,7 @@ namespace LDTS.Service
                     sqlCommand.Parameters.AddWithValue("@UnitBossPhone", unit.UnitBossPhone);
                     sqlCommand.Parameters.AddWithValue("@UnitBossEmail", unit.UnitBossEmail);
                     sqlCommand.Parameters.AddWithValue("@UnitIcon", unit.UnitIcon);
+                    sqlCommand.Parameters.AddWithValue("@UnitWatermark", unit.UnitWatermark);
                     if (sqlCommand.ExecuteNonQuery() > 0)
                     {
                         result = true;
@@ -98,7 +100,7 @@ namespace LDTS.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand("", sqc);
                     sqc.Open();
-                    sqlCommand.CommandText = @"UPDATE TOP(1) UnitBasedata SET UnitName=@UnitName,UnitDesc=@UnitDesc,UnitID=@UnitID,UnitPhone=@UnitPhone,UnitAddr=@UnitAddr,UnitEmail=@UnitEmail,UnitContact=@UnitContact,UnitContactPhone=@UnitContactPhone,UnitContactEmail=@UnitContactEmail,UnitBoss=@UnitBoss,UnitBossPhone=@UnitBossPhone,UnitBossEmail=@UnitBossEmail,UnitIcon=@UnitIcon ";
+                    sqlCommand.CommandText = @"UPDATE TOP(1) UnitBasedata SET UnitName=@UnitName,UnitDesc=@UnitDesc,UnitID=@UnitID,UnitPhone=@UnitPhone,UnitAddr=@UnitAddr,UnitEmail=@UnitEmail,UnitContact=@UnitContact,UnitContactPhone=@UnitContactPhone,UnitContactEmail=@UnitContactEmail,UnitBoss=@UnitBoss,UnitBossPhone=@UnitBossPhone,UnitBossEmail=@UnitBossEmail,UnitIcon=@UnitIcon,UnitWatermark=@UnitWatermark ";
                     sqlCommand.Parameters.AddWithValue("@UnitName", unitBasedata.UnitName);
                     sqlCommand.Parameters.AddWithValue("@UnitDesc", unitBasedata.UnitDesc);
                     sqlCommand.Parameters.AddWithValue("@UnitID", unitBasedata.UnitID);
@@ -112,7 +114,7 @@ namespace LDTS.Service
                     sqlCommand.Parameters.AddWithValue("@UnitBossPhone", unitBasedata.UnitBossPhone);
                     sqlCommand.Parameters.AddWithValue("@UnitBossEmail", unitBasedata.UnitBossEmail);
                     sqlCommand.Parameters.AddWithValue("@UnitIcon", unitBasedata.UnitIcon);
-
+                    sqlCommand.Parameters.AddWithValue("@UnitWatermark", unitBasedata.UnitWatermark);
                     if (sqlCommand.ExecuteNonQuery() > 0)
                         result = true;
                     sqc.Close();

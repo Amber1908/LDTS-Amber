@@ -2,34 +2,32 @@
     --sideWidth: 350px; /*400px*/
     --logoWidth: 50px;
     --treeMarginLeft: 40px;
-    --side_top : 60px;
-    --colorWidth:1px;
+    --side_top: 60px;
+    --colorWidth: 1px;
     --procesBook: royalblue;
     --level2: rgb(35, 231, 0);
     --form: #ec7105;
     --anchorPosition: -100px;
     --userImage: 50px;
-    --autoTreeWidth:80%;
-    
-    --navHeight:60px;
-    --searchHeight:60px;
-
-    --colorA:#f3722c;
-    --colorB:#43aa8b;
-    --colorC:#3081d9; /*#3c75ab*/
-    --colorAccent:#0093ff;
-    --colorAccentWarning:#d32828;
-    --colorBGTreeDark:#343a40;
-    --treePadding:18px;
-
-    --treeWidth:400px;
-    --mainViewMargin:0px;
-
-    --treeListSpacing:5px;
-    --treeBtnSize:35px;
-
+    --autoTreeWidth: 80%;
+    --navHeight: 60px;
+    --searchHeight: 60px;
+    --colorA: #f3722c;
+    --colorB: #43aa8b;
+    --colorC: #3081d9; /*#3c75ab*/
+    --colorAccent: #0093ff;
+    --colorAccentWarning: #d32828;
+    --colorBGTreeDark: #343a40;
+    --treePadding: 18px;
+    --treeWidth: 400px;
+    --mainViewMargin: 0px;
+    --treeListSpacing: 5px;
+    --treeBtnSize: 35px;
+    --treeCtrlWidth: 10%;
     /**Author edit**/
     --operWidth: 150px;
     --operRight: 50px;
-    --operTop:20px;
+    --operTop: 20px;
+
+
 }
