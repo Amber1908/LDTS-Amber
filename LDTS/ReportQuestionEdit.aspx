@@ -1920,9 +1920,10 @@
                         tampleteStr += "</tr>";
                         tampleteStr += "</thead>";//thead
                         tampleteStr += "<tbody>";//
+                        let no = Obj.Groups[i].hasSN;
                         for (var w = 2; w < Obj.Groups[i].Rows.length; w++) {
                             //有項次
-                            let no = Obj.Groups[i].hasSN;
+                            
                             tampleteStr += "<tr class=\"odd\">";
                             if (Obj.Groups[i].hasSN > 0) {
                                 tampleteStr += "<td class=\"dtr-control sorting_1\">";
@@ -3820,7 +3821,7 @@
                                         dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": index, "value": dateV, "lastUpdate": today });
                                         dataObj2.Groups[i].Rows[sn].Cols[c].fillings = [];
                                         for (var f = 0; f < fillingsboxes.length; f++) {
-                                            dataObj2.Groups[i].Rows[sn].Cols[c].fillings.push({ "index": i + 1, "value": fillingsboxes[i].value, "lastUpdate": today });
+                                            dataObj2.Groups[i].Rows[sn].Cols[c].fillings.push({ "index": f + 1, "value": fillingsboxes[f].value, "lastUpdate": today });
                                         }
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj2));
 

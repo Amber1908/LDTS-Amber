@@ -36,14 +36,6 @@ namespace LDTS
                 int ReportAnswerId = Convert.ToInt32(Request.QueryString["aid"]);
                 int ReportAnswerSid = Convert.ToInt32(Request.QueryString["said"]);
                 string OutputTemplate = ReportAnswerService.GetReportAnswer(ReportAnswerId.ToString()).OutputTemplate;
-                //if (OutputTemplate != null)
-                //{
-                //    if (OutputTemplate.Length == 0)
-                //    {
-                //        Printbtn.Enabled = false;
-                //        Printbtn.Visible = false;
-                //    }
-                //}
                 if (OutputTemplate==null)
                 {
                     Printbtn.Enabled = false;
