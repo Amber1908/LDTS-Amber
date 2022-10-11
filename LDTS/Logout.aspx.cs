@@ -15,7 +15,7 @@ namespace LDTS
                 myCookie.Expires = DateTime.Now.AddDays(-10);
                 myCookie.Value = null;
                 Response.SetCookie(myCookie);
-                Response.Redirect("Login");
+                Response.Redirect("Login.aspx");
             }
         }
     }
