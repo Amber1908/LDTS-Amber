@@ -5375,9 +5375,11 @@
                             for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
                                 if (dataObj.Groups[i].Questions[j].QuestionID == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "radio") {
                                     if (event.currentTarget.checked) {
+                                        if (true) {
+
+                                        }
                                         for (var r = 0; r < dataObj.Groups[i].Questions[j].AnswerOptions.length; r++) {
                                             if (dataObj.Groups[i].Questions[j].AnswerOptions[r].index == event.currentTarget.value) {
-                                                console.log("");
                                                 dataObj.Groups[i].Questions[j].Answers[r].value = true;
                                                 dataObj.Groups[i].Questions[j].Answers[r].lastUpdate = today;
                                                 if (dataObj.Groups[i].Questions[j].hasOtherAnswers) {
@@ -5395,6 +5397,7 @@
                                                         dataObj.Groups[i].Questions[j].Answers[r].fillings[a].value = "";
                                                         dataObj.Groups[i].Questions[j].Answers[r].fillings[a].lastUpdate = today;
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+
                                                     }
                                                 }
                                             }
