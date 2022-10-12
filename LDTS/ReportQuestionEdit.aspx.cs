@@ -48,6 +48,9 @@ namespace LDTS
                     desc.Text = reportQuestion.Description;
                     jsonData.Value = reportQuestion.OutputJson;
                     Stauts.Value = reportQuestion.Status.ToString();
+                    //找出 表單範本的關聯程序書
+                    ReProcessQuestion reProcess = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == ReportQuestionId).First();
+                    ProUrl.NavigateUrl = "Process.aspx?pid=" + reProcess.PID;
                     //表單範本的權限
                     List<ReAdminForm> reQuestions = Service.RelationService.GetAllreAdminFormByAdminId(loginAdmin.admin_id).ToList();
                     if (reQuestions != null)
@@ -70,7 +73,7 @@ namespace LDTS
                 {
                     ReportAnswer reportAnswer = FormService.GetReportAnswerById(ReportAnswerId);
                     ReProcessQuestion reProcess = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == reportAnswer.QID).FirstOrDefault();
-                    ProUrl.NavigateUrl = "Process?pid=" + reProcess.PID;
+                    ProUrl.NavigateUrl = "Process.aspx?pid=" + reProcess.PID;
                     Qtitle.Text = reportAnswer.Title;
                     jsonData.Value = reportAnswer.OutputJson;
                     ExtendName.Value = reportAnswer.ExtendName;

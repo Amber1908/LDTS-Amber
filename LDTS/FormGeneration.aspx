@@ -126,6 +126,7 @@
                         <option value="file">file</option>
                         <option value="RadioMixCheckbox">RadioMixCheckbox</option>
                         <option value="CheckboxMixImage">CheckboxMixImage</option>
+                        <option value="memo">mome</option>
                     </select>
                 </div>
                 <div class="modal-footer">
@@ -191,6 +192,26 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="return SaveQuestion('text')">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- memo Modal -->
+    <div class="modal fade" id="memoModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memoModalTitle">text</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="memoInput" type="text" class="form-control" placeholder="請輸入題目" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('memo')">Save changes</button>
                 </div>
             </div>
         </div>
@@ -905,6 +926,9 @@
                 case "CheckboxMixImage":
                     $("#CheckboxMixImageModal").modal('show');
                     break;
+                case "memo":
+                    $("#memoModal").modal('show');
+                    break;
             }
 
             return false;
@@ -933,6 +957,11 @@
                     const textInput = $("#textInput").val();
                     item = { index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${textInput}`, QuestionType: "text", AnswerOptions: [], Answers: [], otherAnswer: [] };
                     $("#textModal").modal('hide');
+                    break;
+                case "memo":
+                    const memoInput = $("#memoInput").val();
+                    item = { index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${memoInput}`, QuestionType: "memo", AnswerOptions: [], Answers: [], otherAnswer: [] };
+                    $("#memoModal").modal('hide');
                     break;
                 case "number":
                     const numberInput = $("#numberInput").val();
@@ -1101,6 +1130,7 @@
                                             QHtml += `<img src="showimage?SN=${this.AnswerOptions[0].image}" height="50" />`;
                                         break;
                                     case "text":
+                                    case "memo":
                                     case "number":
                                     case "image":
                                     case "date":

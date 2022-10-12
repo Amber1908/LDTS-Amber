@@ -59,7 +59,7 @@ namespace LDTS
                         sidebarMenuString += "<img class=\"elevation-2 \" src=\"";
                         sidebarMenuString += "ShowAdminImg.aspx?id="+ admin.admin_image;
                         sidebarMenuString += "\">";
-                        sidebarMenuString += "<a class=\"nav-link\" href=\"PersonEdit?id=";
+                        sidebarMenuString += "<a class=\"nav-link\" href=\"PersonEdit.aspx?id=";
                         sidebarMenuString += admin.admin_id + "\">";//
                         sidebarMenuString += "<p>";
                         sidebarMenuString += admin.admin_name;//
@@ -80,7 +80,7 @@ namespace LDTS
                         sidebarMenuString += "<img class=\"elevation-2 \" src=\"";
                         sidebarMenuString += "ShowAdminImg.aspx?id=" + admin.admin_image;
                         sidebarMenuString += "\">";
-                        sidebarMenuString += "<a class=\"nav-link\" href=\"Ao?id=";
+                        sidebarMenuString += "<a class=\"nav-link\" href=\"Ao.aspx?id=";
                         sidebarMenuString += admin.admin_id + "\">";//
                         sidebarMenuString += "<p>";
                         sidebarMenuString += admin.admin_name;//
