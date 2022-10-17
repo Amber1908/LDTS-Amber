@@ -78,6 +78,7 @@ namespace LDTS
                                         }
                                         switch (question["QuestionType"].Value<string>())
                                         {
+                                            case "memo":
                                             case "text":
                                             case "number":
                                                 valuesToFill = new Content(new FieldContent((string)question["QuestionID"], Answers[0]["value"].Value<string>()));
@@ -194,6 +195,7 @@ namespace LDTS
                                                 }
                                                 switch (cols[j]["QuestionType"].Value<string>())
                                                 {
+                                                    case "memo":
                                                     case "text":
                                                     case "number":
                                                         valuesToFill = new Content(new FieldContent($"{group["GroupID"]}#{i + 1}#{j + 1}", Answers[0]["value"].Value<string>()));
@@ -362,6 +364,7 @@ namespace LDTS
 
                     switch (cols[i]["QuestionType"].Value<string>())
                     {
+                        case "memo":
                         case "text":
                         case "number":
                             Temp += cols[i]["Answers"][0]["value"].Value<string>();

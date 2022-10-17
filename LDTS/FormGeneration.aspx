@@ -58,6 +58,8 @@
                                     <td>
 <%--                                        <button type="button" class="btn btn-default mt-3" onclick="preview()">瀏覽表單</button>--%>
                                         <asp:Button ID="SaveForm" runat="server" Text="儲存" CssClass="btn btn-primary mt-3" OnClick="SaveForm_Click" OnClientClick="return ValidForm();" />
+                                        <button type="button" class="btn btn-default mt-3" data-toggle="modal" data-target="#modal-xl" id="ShowFormLists">開啟表單範本</button>
+<%--                                        <asp:Button ID="ShowFormLists" runat="server" Text="開啟表單範本" CssClass="btn btn-default mt-3" />--%>
                                     </td>
                                 </tr>
                                 <tr>
@@ -519,6 +521,26 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="return SaveQuestion('checkbox')">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- showFormList Modal -->
+    <div class="modal fade" id="modal-xl" aria-hidden="true" style="display:none">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">表單範本清單</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div id="formListModalBody" runat="server" class="modal-body">
+
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    
                 </div>
             </div>
         </div>

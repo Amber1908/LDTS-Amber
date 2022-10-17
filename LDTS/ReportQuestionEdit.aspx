@@ -1435,22 +1435,29 @@
                                             }
                                         }
                                         TampleteStr += "";
-                                        /*if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {*/
-                                            TampleteStr += "<span class=\"ml-3 mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>上傳檔案";
-                                            TampleteStr += "<input onchange=\"changeTableJsonData(event)\" type=\"file\" class=\"Upload form-control mb-3\"name=\"";
-                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\">";
-                                       /* }*/
-                                        TampleteStr += "</span>";
+                                        TampleteStr += "<div class=\"input-group\" style=\"width:450px\"> ";
+                                        TampleteStr += "<div class=\"custom-file\">";
+                                        TampleteStr += "<input type=\"file\" onchange=\"changeTableJsonData(event)\" class=\"custom-file-input Upload mb-3\"name=\"";
+                                        TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\">";
+                                        TampleteStr += "<lable name=\"" + Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\" class=\"custom-file-label\">";
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                                            TampleteStr += "</br>";
-                                            TampleteStr += "<a class=\"download btn btn-default btn-sm ml-3\" href=\"Upload" + "/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
+                                            TampleteStr += Obj.Groups[i].Rows[w].Cols[c].Answers[0].value.substring(18);
+                                        }
+                                        TampleteStr += "</label>";
+                                        TampleteStr += "</div>";//custom-file
+                                        TampleteStr += "<div class=\"input-group-append\"> ";
+                                        TampleteStr += "<span class=\"input-group-text\">";//input-group-text
+                                        if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
+                                            TampleteStr += "<a  href=\"Upload" + "/" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value + "\"";
                                             TampleteStr += "download=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value.substring(18) + "\">"
                                             TampleteStr += "<i class=\"fas fa-paperclip\"></i>";
-
                                             TampleteStr += "</a>";
-
-                                            TampleteStr += "<span class=\"ml-3\">" + Obj.Groups[i].Rows[w].Cols[c].Answers[0].value.substring(18) + "</span>";
+                                        } else {
+                                            TampleteStr += "<i class=\"fas fa-paperclip\"></i>";
                                         }
+                                        TampleteStr += "</span>";//input-group-text
+                                        TampleteStr += "</div>";//input-group-append
+                                        TampleteStr += "</div>";//input-group
                                         break;
                                     case "RadioMixCheckbox":
                                         //radio part
@@ -2506,12 +2513,18 @@
                             } else {
                                 insertBodyStr += "<h6>" + Obj.Groups[i].Rows[1].Cols[r].QuestionText + "</h6>";
                             }
-                            insertBodyStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
-                            insertBodyStr += "<input onchange=\"appenUploadName(event)\" type=\"file\" class=\"Upload form-control mb-3\"name=\"";
+                            insertBodyStr += "<div class=\"input-group\"style=\"width:465px\">";//input-group
+                            insertBodyStr += "<div class=\"custom-file\">";
+                            insertBodyStr += "<input type=\"file\" onchange=\"appenUploadName(event)\"class=\"custom-file-input Upload mb-3\"name=\"";
                             insertBodyStr += Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\">";
-                            insertBodyStr += "上傳檔案";
-                            insertBodyStr += "<span id=\"UploadName" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"></span>";
+                            insertBodyStr += "<lable class=\"custom-file-label\" name=\"" + Obj.Groups[i].Rows[1].Cols[r].QuestionID + "\"></lable>";
+                            insertBodyStr += "</div>";//custom-file
+                            insertBodyStr += "<div class=\"input-group-append\">";//input-group-append
+                            insertBodyStr += "<span class=\"input-group-text\">";
+                            insertBodyStr += "<i class=\"fas fa-paperclip\"></i>";
                             insertBodyStr += "</span>";
+                            insertBodyStr += "</div>";//input-group-append
+                            insertBodyStr += "</div>";//input-group
                             break;
                         case "memo":
                             insertBodyStr += "<h5>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h5>";
@@ -3384,19 +3397,42 @@
                                     updateBodyStr += "<h6>" + Obj.Groups[i].Rows[1].Cols[r].QuestionText + "</h6>";
                                 }
                             }
-                            updateBodyStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
-                            updateBodyStr += "<input type=\"file\" onchange=\"appenUploadName(event)\" class=\"form-control Upload mb-3\"name=\"";
+                            updateBodyStr += "<div class=\"input-group\" style=\"width:465px\">";//input-group
+                            updateBodyStr += "<div class=\"custom-file\">";//custom-file
+                            updateBodyStr += "<input type=\"file\" onchange=\"appenUploadName(event)\" class=\"custom-file-input Upload mb-3\"name=\"";
                             updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\">";
+                            updateBodyStr += "<lable class=\"custom-file-label\" name=\"" + Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\">";
                             if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
-                                updateBodyStr += "<span id=\"UploadName" + Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\">";
                                 updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].Answers[0].value.substring(18);
-                                updateBodyStr += "</span>";
-                            } else {
-                                updateBodyStr += "上傳檔案";
                             }
-                           
+                            updateBodyStr += "</label>";
+                            updateBodyStr += "</div>";//custom-file
+                            updateBodyStr += "<div class=\"input-group-append\">";
+                            updateBodyStr += "<span class=\"input-group-text\">";
+                            if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
+                                updateBodyStr += "<a href=\"Upload/" + Obj.Groups[i].Rows[w].Cols[r].Answers[0].value + "\"";
+                                updateBodyStr += "download=\"" + Obj.Groups[i].Rows[w].Cols[r].Answers[0].value.substring(18) + "\">";
+                                updateBodyStr += "<i class=\"fas fa-paperclip\"></i></a>";
+                            } else {
+                                updateBodyStr += "<i class=\"fas fa-paperclip\"></i>";
+                            }
                             updateBodyStr += "</span>";
-
+                            updateBodyStr += "</div>";//input-group-append
+                            updateBodyStr += "</div>";//input-group
+                            ////
+                            //updateBodyStr += "<span class=\"mb-3 btn btn-default btn-file\"><i class=\"fas fa-paperclip\"></i>";
+                            //updateBodyStr += "<input type=\"file\" onchange=\"appenUploadName(event)\" class=\"form-control Upload mb-3\"name=\"";
+                            //updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\">";
+                            //if (Obj.Groups[i].Rows[w].Cols[r].Answers.length > 0) {
+                            //    updateBodyStr += "<span id=\"UploadName" + Obj.Groups[i].Rows[w].Cols[r].QuestionID + "\">";
+                            //    updateBodyStr += Obj.Groups[i].Rows[w].Cols[r].Answers[0].value.substring(18);
+                            //    updateBodyStr += "</span>";
+                            //} else {
+                            //    updateBodyStr += "上傳檔案";
+                            //}
+                           
+                            //updateBodyStr += "</span>";
+                            ////
                             break;
                         case "text":
                             updateBodyStr += "<h5>" + Obj.Groups[i].Rows[0].Cols[r].QuestionText + "</h5>";
@@ -4142,13 +4178,15 @@
         }
         //row 上傳檔案顯示換檔案名稱
         function appenUploadName(event) {
-            let thisName = event.currentTarget;
-            let parentBox = event.currentTarget.parentNode;
-            let id = "UploadName" + event.currentTarget.name
-            let Uploadname = document.getElementById(id);
-            console.log("UploadName" + Uploadname);
-            Uploadname.innerText = "";
-            Uploadname.innerText = thisName.value.substring(12);
+            let QidItems = document.getElementsByName(event.currentTarget.name);
+            QidItems.forEach(function (item) {
+                console.log(item.tagName);
+                if (item.tagName == "LABLE") {
+                    console.log(event.currentTarget.value);
+                    item.innerText = event.currentTarget.value.substring(12);
+                }
+            });
+            
         }
         //row 新增
         function Insert(event) {
@@ -5133,8 +5171,12 @@
                                                     
                                                 } else if (dataObj.Groups[i].GroupType == "table") {
                                                     
-                                                    let oldfileName = fileName.split("_");
-                                                    event.currentTarget.parentNode.innerHTML = "<i class=\"fas fa-paperclip\"></i><input class=\"Upload \" onchange=\"changeTableJsonData(event)\"type=\"file\"name=\"" + dataObj.Groups[i].Rows[j].Cols[q].QuestionID + "\">" + "<span class=\"p-3\">" + oldfileName[1] + "</span>";
+                                                    let QidItems = document.getElementsByName(thischange.name);
+                                                    QidItems.forEach(function (item) {
+                                                        if (item.tagName == "LABLE") {
+                                                            item.innerText = fileName.substring(18)
+                                                        }
+                                                    });
                                                     dataObj.Groups[i].Rows[j].Cols[q].Answers.length = 0;
                                                     dataObj.Groups[i].Rows[j].Cols[q].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today})
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
@@ -5694,10 +5736,24 @@
                                         dataObj.Groups[i].Questions[j].Answers[0].value = fileName;
                                         dataObj.Groups[i].Questions[j].Answers[0].lastUpdate = today;
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                        let QIDitems = document.getElementsByName(thischange.name);
+                                        QIDitems.forEach(function (item) {
+                                            if (item.tagName == "LABEL") {
+                                                item.innerText = fileName.substring(18);
+                                               
+                                            }
+                                        });
                                         alert("檔案上傳成功!")
                                     } else {
                                         dataObj.Groups[i].Questions[j].Answers.push({ "index": 1, "value": fileName, "lastUpdate": today, "fillings": [] });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
+                                        let QIDItems = document.getElementsByName(thischange.name);
+                                        QIDItems.forEach(function (item) {
+                                            if (item.tagName == "LABEL") {
+                                                console.log(item.tagName)
+                                                item.innerText = fileName.substring(18);
+                                            }
+                                        });
                                         alert("檔案上傳成功!")
                                     }
                                 }
@@ -7366,29 +7422,61 @@
 
         }
         function CreateNormalTypeImage(DataObj, GroupSn, QusetionSn, Parent) {
+            let formGroup = document.createElement("div");
+            formGroup.classList.add("form-group");
+            let inputGroup = document.createElement("div");
+            inputGroup.classList.add("input-group");
             let ImageBox = document.createElement("div");
-            ImageBox.classList.add("col-8", "pt-2");
-            Parent.append(ImageBox);
+            ImageBox.classList.add("col-6", "pt-2","custom-file");
+            formGroup.append(inputGroup);
+            inputGroup.append(ImageBox);
+            Parent.append(inputGroup);
             let ImageInput = document.createElement("input");
             ImageInput.setAttribute("type", "file");
             ImageInput.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
             ImageInput.setAttribute("id", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+            ImageInput.classList.add("custom-file-input");
             ImageInput.setAttribute("onchange", "changeJsonData(event)");
             ImageInput.classList.add("Upload");
+            ImageBox.append(ImageInput);
             if (DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0] != null) {
-                let filename = document.createElement("span");
-                filename.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
-                filename.classList.add("mr-1");
+                let filename = document.createElement("label");
+                filename.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                filename.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value.substring(18);
+                filename.classList.add("custom-file-label");
+                let inputGroupAppend = document.createElement("div");
+                inputGroupAppend.classList.add("input-group-append");
+                let spanDownload = document.createElement("span");
+                spanDownload.classList.add("input-group-text");
                 let download = document.createElement("a");
                 download.href = "Upload/" + DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value;
-                download.classList.add("btn", "btn-default", "btn-sm", "mr-3","download");
+                download.setAttribute("download", DataObj.Groups[GroupSn].Questions[QusetionSn].Answers[0].value.substring(18))
+                download.classList.add("download");
+                spanDownload.append(download);
                 let icon = document.createElement("i");
                 icon.classList.add("fas", "fa-paperclip");
                 ImageBox.append(filename);
                 download.append(icon);
-                ImageBox.append(download);
+                inputGroupAppend.append(spanDownload);
+                inputGroup.append(inputGroupAppend);
+            } else {
+                let fileName = document.createElement("label");
+                fileName.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                fileName.classList.add("custom-file-label");
+                let InputGroupAppend = document.createElement("div");
+                InputGroupAppend.classList.add("input-group-append");
+                let SpanDownload = document.createElement("span");
+                SpanDownload.classList.add("input-group-text");
+                let Icon = document.createElement("i");
+                Icon.classList.add("fas", "fa-paperclip");
+                Icon.style.color = "#aaa";
+                SpanDownload.append(Icon);
+                ImageBox.append(fileName);
+                InputGroupAppend.append(SpanDownload);
+                inputGroup.append(InputGroupAppend);
+
             }
-            ImageBox.append(ImageInput);
+            
             let newData = checkIsFilling(DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionText, GroupSn, QusetionSn, DataObj);
             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(newData));
 
