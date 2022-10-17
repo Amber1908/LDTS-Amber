@@ -125,7 +125,9 @@
                         <option value="date">date</option>
                         <option value="file">file</option>
                         <option value="RadioMixCheckbox">RadioMixCheckbox</option>
+                        <option value="CheckboxMixRadio">CheckboxMixRadio</option>
                         <option value="CheckboxMixImage">CheckboxMixImage</option>
+                         <option value="memo">memo</option>
                     </select>
                 </div>
                 <div class="modal-footer">
@@ -191,6 +193,26 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="return SaveQuestion('text')">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- memo Modal -->
+    <div class="modal fade" id="memoModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memoModalTitle">text</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="memoInput" type="text" class="form-control" placeholder="請輸入題目" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('memo')">Save changes</button>
                 </div>
             </div>
         </div>
@@ -306,6 +328,46 @@
             </div>
         </div>
     </div>
+        <!-- CheckboxMixRadio Modal -->
+    <div class="modal fade" id="CheckboxMixRadioModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CheckboxMixRadioModalTitle">CheckboxMixRadio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="text-info">填充位置請以
+                        <label class="text-danger">##^n</label>
+                        來表示，例如: 檢體大小
+                        <label class="text-danger">##^1</label>
+                        x
+                        <label class="text-danger">##^2</label>
+                        。</span>
+
+                    <div class="form-inline">
+
+                        <input id="CheckboxMixRadioInput" type="text" class="form-control w-75" placeholder="請輸入題目" />
+                        <div class="form-check ml-3">
+                            <input type="checkbox" class="form-check-input" id="CheckboxMixRadioCheck">
+                            <label class="form-check-label" for="radioCheck">包含其他選項</label>
+                        </div>
+                    </div>
+                    <hr />
+                    <button type="button" class="btn btn-block btn-outline-info btn-sm" onclick="return CheckboxAddOption('CheckboxMixRadioBody')">添加選項</button>
+                    <div id="CheckboxMixRadioBody" class="mt-2">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="return SaveQuestion('CheckboxMixRadio')">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- RadioMixCheckbox Modal -->
     <div class="modal fade" id="RadioMixCheckboxModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -317,7 +379,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                                            <span class="text-info">填充位置請以
+                    <span class="text-info">填充位置請以
                         <label class="text-danger">##^n</label>
                         來表示，例如: 檢體大小
                         <label class="text-danger">##^1</label>
@@ -523,6 +585,12 @@
             $("#RadioMixCheckboxBody").html('');
             $('#RadioMixCheckboxInput').trigger('focus');
         });
+        $('#CheckboxMixRadioModal').on('shown.bs.modal', function () {
+            $("#CheckboxMixRadioInput").val('');
+            $("#CheckboxMixRadioCheck").prop("checked", false);
+            $("#CheckboxMixRadioBody").html('');
+            $('#CheckboxMixRadioInput').trigger('focus');
+        });
         $('#CheckboxMixImageModal').on('shown.bs.modal', function () {
             $("#CheckboxMixImageInput").val('');
             $("#CheckboxMixImageCheck").prop("checked", false);
@@ -717,6 +785,23 @@
             rb.append(`<input type="text" class="form-control mt-2 ${option}" />`);
             return false;
         }
+        //CheckboxMixRadio新增選項
+        function CheckboxAddOption(option) {
+            const item = `<div class="mt-2">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    <input type="text" class="form-control rounded-0 ${option}">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-info btn-flat" onclick="return CheckboxAddSunOption(this);"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                </div>
+                            </div>`;
+            const rb = $(`#${option}`);
+            rb.append(item);
+            return false;
+        }
 
         // RadioMixCheckbox 新增選項
         function RadioAddOption(option) {
@@ -733,6 +818,17 @@
                             </div>`;
             const rb = $(`#${option}`);
             rb.append(item);
+            return false;
+        }
+        //CheckboxMixRadio新增子選項
+        function CheckboxAddSunOption(obj) {
+            const ob = $(obj).parent().parent().parent();
+            ob.append(`<div class="input-group mt-1 ml-5 w-75">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-circle"></i></span>
+                            </div>
+                            <input type="text" class="form-control CheckboxMixRadioSun">
+                        </div>`);
             return false;
         }
 
@@ -902,8 +998,14 @@
                 case "RadioMixCheckbox":
                     $("#RadioMixCheckboxModal").modal('show');
                     break;
+                case "CheckboxMixRadio":
+                    $("#CheckboxMixRadioModal").modal('show');
+                    break;
                 case "CheckboxMixImage":
                     $("#CheckboxMixImageModal").modal('show');
+                    break;
+                case "memo":
+                    $("#memoModal").modal('show');
                     break;
             }
 
@@ -933,6 +1035,11 @@
                     const textInput = $("#textInput").val();
                     item = { index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${textInput}`, QuestionType: "text", AnswerOptions: [], Answers: [], otherAnswer: [] };
                     $("#textModal").modal('hide');
+                    break;
+                case "memo":
+                    const memoInput = $("#memoInput").val();
+                    item = { index: 0, hasOtherAnswers: false, QuestionID: "Question", QuestionText: `${memoInput}`, QuestionType: "memo", AnswerOptions: [], Answers: [], otherAnswer: [] };
+                    $("#memoModal").modal('hide');
                     break;
                 case "number":
                     const numberInput = $("#numberInput").val();
@@ -995,6 +1102,19 @@
                         });
                     });
                     $("#RadioMixCheckboxModal").modal('hide');
+                    break;
+                case "CheckboxMixRadio":
+                    const CheckboxMixRadio = $("#CheckboxMixRadioInput").val();
+                    const CheckboxMixRadioCheck = $('#CheckboxMixRadioCheck').is(":checked");
+                    item = { index: 0, hasOtherAnswers: CheckboxMixRadio, QuestionID: "Question", QuestionText: `${CheckboxMixRadio}`, QuestionType: "CheckboxMixRadio", AnswerOptions: [], Answers: [], otherAnswer: [] };
+                    $(".CheckboxMixRadioBody").each(function (index) {
+                        item.AnswerOptions.push({ index: index + 1, AnsText: `${$(this).val()}`, "AnswerOptions": [] });
+                        var pre = $(this).parent().parent().find("input.CheckboxMixRadioSun");
+                        pre.each(function (sindex) {
+                            item.AnswerOptions[index].AnswerOptions.push({ index: sindex + 1, AnsText: `${$(this).val()}` });
+                        });
+                    });
+                    $("#CheckboxMixRadioModal").modal('hide');
                     break;
                 case "CheckboxMixImage":
                     const CheckboxMixImageInput = $("#CheckboxMixImageInput").val();
@@ -1100,6 +1220,7 @@
                                         if (this.AnswerOptions.length > 0)
                                             QHtml += `<img src="showimage?SN=${this.AnswerOptions[0].image}" height="50" />`;
                                         break;
+                                    case "memo":
                                     case "text":
                                     case "number":
                                     case "image":

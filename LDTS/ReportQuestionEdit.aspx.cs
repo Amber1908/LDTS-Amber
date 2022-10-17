@@ -269,7 +269,7 @@ namespace LDTS
 
 
                     LDTSservice.InsertRecord(loginAdmin,"刪除表單"+ answer.ExtendName);
-                    string url = "Process?pid=" + reProcessQuestion.PID;
+                    string url = "Process.aspx?pid=" + reProcessQuestion.PID;
                     Response.Write("<script type='text/javascript'>alert('刪除表單成功!'); location.href ='"+ url +"'</script>");
 
 

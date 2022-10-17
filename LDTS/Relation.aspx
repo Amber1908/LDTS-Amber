@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="Default">Home</a></li>
+                        <li class="breadcrumb-item"><a href="Default.aspx">Home</a></li>
                         <li class="breadcrumb-item">程序書關聯設定</li>
                     </ol>
                 </div>

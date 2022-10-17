@@ -90,7 +90,7 @@ namespace LDTS
                 Processstring += "<div class=\"card-header\"style=\"height: 29px\"> ";
                 Processstring += "<span class=\"d-flex justify-content-end\">";
                 Processstring += "<a style=\"text-decoration:none; position: absolute \" href=\"";//
-                Processstring += "ProcessEdit?pid="+ process.PID+"\">";
+                Processstring += "ProcessEdit.aspx?pid=" + process.PID+"\">";
                 Processstring += "<i style=\"position: relative; top: -5px;right:20px\" class=\"fas fa-edit\"></i>";
                 Processstring += "</a>";
                 Processstring += "<a  style=\"text-decoration:none; position: absolute \" class=\"ml-1\" onClick=\"return confirm('確定刪除程序書?')\"; href =\"";
@@ -121,7 +121,7 @@ namespace LDTS
                 Sstr += "<div class=\"card-header\"style=\"height: 29px\"> ";
                 Sstr += "<span class=\"d-flex justify-content-end\">";
                 Sstr += "<a style=\"text-decoration:none; position: absolute \" href=\"";//
-                Sstr += "StandarWorkbookEdit?sid=" + standarWorkBook.SID + "\">";
+                Sstr += "StandarWorkbookEdit.aspx?sid=" + standarWorkBook.SID + "\">";
                 Sstr += "<i style=\"position: relative; top: -5px; right: 20px\" class=\"fas fa-edit\"></i>";
                 Sstr += "</a>";
                 Sstr += "<a style=\"text-decoration:none; position: absolute \" class=\"ml-1\" onClick=\"return confirm('確定刪除標準作業書?')\" href=\"";
@@ -159,7 +159,7 @@ namespace LDTS
                 Fstr += "<div class=\"card-header\"style=\"height: 29px\"> ";
                 Fstr += "<span class=\"d-flex justify-content-end\">";
                 Fstr += "<a  style=\"text-decoration:none; position: absolute \" href=\"";//
-                Fstr += "FormGeneration?QID=" + reportQuestion.QID + "\">";
+                Fstr += "FormGeneration.aspx?QID=" + reportQuestion.QID + "\">";
                 Fstr += "<i style=\"position: relative; top: -5px; right: 20px\" class=\"fas fa-edit\"></i>";
                 Fstr += "</a>";
                 Fstr += "<a onClick=\"return confirm('確定刪除表單範本?')\" style=\"text-decoration:none; position: absolute \" class=\"ml-1\" href=\"";

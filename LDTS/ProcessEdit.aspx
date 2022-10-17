@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="Relation">程序書關聯設定</a></li>
+                        <li class="breadcrumb-item"><a href="Relation.aspx">程序書關聯設定</a></li>
                         <li class="breadcrumb-item">編輯程序書</li>
                     </ol>
                 </div>
@@ -68,7 +68,9 @@
                             <div class="processesApplication form-group">
                                 <asp:Button runat="server" ID="DeletePro" CssClass="btn btn-danger float-lg-right" Text="刪除" OnClick="DeletePro_Click" />
                                 <asp:Button runat="server" ID="SaveButton" CssClass="btn btn-primary float-right mr-2" Text="儲存" OnClick="SaveButton_Click" />
-                                <a href="#" runat="server" id="download" class="btn btn-default float-right mr-2"><i class="fas fa-cloud-download-alt">下載程序書</i></a>
+                                <a href="#" download="" runat="server" id="download" class="btn btn-default float-right mr-2"><i class="fas fa-cloud-download-alt">下載程序書</i></a>
+<%--                                <input type="text" id="fileName" value="" class="d-none" runat="server" />--%>
+                                <asp:TextBox  ID="filemyName" runat="server" CssClass="d-none"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -86,7 +88,11 @@
                 processesUploadName.innerText = processesUpload.value;
             }
         });
-
+            var download = document.getElementById("mainPlaceHolder_download");
+            var url = document.getElementById("mainPlaceHolder_filemyName").value;
+            
+            console.log(url);
+            download.setAttribute("download", url)
         </script>
 
 </asp:Content>

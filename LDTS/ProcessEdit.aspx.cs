@@ -29,6 +29,9 @@ namespace LDTS
                 proName.Text = Pname;
                 desc.Text = ProcessService.GetProceById(PID).Description;
                 proIndex.Text = ProcessService.GetProceById(PID).Pindex.ToString();
+                string newName = ProcessService.GetProceById(PID).new_filename.Substring(18);
+                filemyName.Text = newName;
+
             }
         }
 

@@ -85,7 +85,7 @@ namespace LDTS
                     bool result = ReportQuestiovService.InsertReportQuestionFile(file);
                     if (Qid > 0 && result)
                     {
-                        Response.Write($"<script>alert('表單新增完成');location.href='FormGeneration?QID={Qid}';</script>");
+                        Response.Write($"<script>alert('表單新增完成');location.href='FormGeneration.aspx?QID={Qid}';</script>");
                     }
                     else
                     {
@@ -121,7 +121,7 @@ namespace LDTS
                     }
                     if (ReportQuestiovService.UpdateReportQuestion(rq)&& result)
                     {
-                        Response.Write($"<script>alert('表單儲存完成');location.href='FormGeneration?QID={rq.QID}';</script>");
+                        Response.Write($"<script>alert('表單儲存完成');location.href='FormGeneration.aspx?QID={rq.QID}';</script>");
                     }
                     else
                     {
