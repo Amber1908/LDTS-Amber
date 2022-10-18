@@ -62,7 +62,7 @@ namespace LDTS.Service
                     SqlCommand sqmm = new SqlCommand("", sqc);
                     sqc.Open();
 
-                    sqmm.CommandText = @"INSERT INTO [ReportQuestion]([Title],[Description],[OutputJson],[CreateMan],[Version],[Status]) VALUES(@Title,@Description,@OutputJson,@CreateMan,@Version,@Status); SET @QID = SCOPE_IDENTITY();";
+                    sqmm.CommandText = @"INSERT INTO [ReportQuestion]([Title],[Description],[OutputJson],[CreateMan],[Version],[Status],[LastupMan]) VALUES(@Title,@Description,@OutputJson,@CreateMan,@Version,@Status,@LastupMan); SET @QID = SCOPE_IDENTITY();";
 
                     sqmm.Parameters.AddWithValue("@Title", Rq.Title);
                     sqmm.Parameters.AddWithValue("@Description", Rq.Description);
@@ -70,7 +70,7 @@ namespace LDTS.Service
                     sqmm.Parameters.AddWithValue("@CreateMan", Rq.CreateMan);
                     sqmm.Parameters.AddWithValue("@Version", Rq.Version);
                     sqmm.Parameters.AddWithValue("@Status", Rq.Status);
-
+                    sqmm.Parameters.AddWithValue("@LastupMan", Rq.LastupMan);
                     SqlParameter pmtLogId = new SqlParameter("@QID", SqlDbType.Int)
                     {
                         Direction = ParameterDirection.Output
@@ -132,14 +132,15 @@ namespace LDTS.Service
                     SqlCommand sqmm = new SqlCommand("", sqc);
                     sqc.Open();
 
-                    sqmm.CommandText = @"UPDATE [ReportQuestion] SET [Title]=@Title,[Description]=@Description,[OutputJson]=@OutputJson,[Version]=@Version,[Status]=@Status WHERE QID=@QID ";
-
+                    sqmm.CommandText = @"UPDATE [ReportQuestion] SET [Title]=@Title,[Description]=@Description,[OutputJson]=@OutputJson,[Version]=@Version,[Status]=@Status,[LastupMan]=@LastupMan,[LastupDate]=@LastupDate WHERE QID=@QID ";
                     sqmm.Parameters.AddWithValue("@Title", Rq.Title);
                     sqmm.Parameters.AddWithValue("@Description", Rq.Description);
                     sqmm.Parameters.AddWithValue("@OutputJson", Rq.OutputJson);
                     sqmm.Parameters.AddWithValue("@Version", Rq.Version);
                     sqmm.Parameters.AddWithValue("@Status", Rq.Status);
                     sqmm.Parameters.AddWithValue("@QID", Rq.QID);
+                    sqmm.Parameters.AddWithValue("@LastupMan", Rq.LastupMan);
+                    sqmm.Parameters.AddWithValue("@LastupDate", Rq.LastupDate);
 
                     if (sqmm.ExecuteNonQuery() > 0)
                         result = true;
@@ -205,7 +206,9 @@ namespace LDTS.Service
                             CreateDate = sd.IsDBNull(sd.GetOrdinal("CreateDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("CreateDate")),
                             CreateMan = sd.IsDBNull(sd.GetOrdinal("CreateMan")) ? "" : sd.GetString(sd.GetOrdinal("CreateMan")),
                             Version = sd.IsDBNull(sd.GetOrdinal("Version")) ? "" : sd.GetString(sd.GetOrdinal("Version")),
-                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status"))
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status")),
+                            LastupDate = sd.IsDBNull(sd.GetOrdinal("LastupDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("LastupDate")),
+                            LastupMan = sd.IsDBNull(sd.GetOrdinal("LastupMan")) ? string.Empty : sd.GetString(sd.GetOrdinal("LastupMan"))
                         });
                     }
 
@@ -281,7 +284,9 @@ namespace LDTS.Service
                             CreateDate = sd.IsDBNull(sd.GetOrdinal("CreateDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("CreateDate")),
                             CreateMan = sd.IsDBNull(sd.GetOrdinal("CreateMan")) ? "" : sd.GetString(sd.GetOrdinal("CreateMan")),
                             Version = sd.IsDBNull(sd.GetOrdinal("Version")) ? "" : sd.GetString(sd.GetOrdinal("Version")),
-                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status"))
+                            Status = sd.IsDBNull(sd.GetOrdinal("Status")) ? 0 : sd.GetInt32(sd.GetOrdinal("Status")),
+                            LastupDate = sd.IsDBNull(sd.GetOrdinal("LastupDate")) ? (DateTime)SqlDateTime.Null : sd.GetDateTime(sd.GetOrdinal("LastupDate")),
+                            LastupMan = sd.IsDBNull(sd.GetOrdinal("LastupMan")) ? string.Empty : sd.GetString(sd.GetOrdinal("LastupMan"))
                         };
                     }
 

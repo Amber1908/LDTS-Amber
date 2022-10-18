@@ -10,8 +10,15 @@ namespace LDTS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Admin loginAdmin = (Admin)Session["LDTSAdmin"];
+            if (loginAdmin == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            
             if (!IsPostBack)
             {
+               
                 // OutputJson.Style.Add("display", "none");
                 if (Request["QID"] != null)
                 {
@@ -49,28 +56,63 @@ namespace LDTS
 
                     VersGroup.InnerHtml = verStr;
                 }
-
+                //開啟表單範本清單 Modal
+                List<ReportQuestion> reportQuestions = ReportQuestiovService.GetAllReportQuestions();
+                string modalStr = "";
+                modalStr = "<table class=\"table\">";
+                modalStr += "<thead class=\"sticky\">";
+                modalStr += "<tr>";
+                modalStr += "<th>表單名稱</th>";
+                modalStr += "<th>異動時間</th>";
+                modalStr += "<th>異動人員</th>";
+                modalStr += "<th>版本號</th>";
+                modalStr += "<th></th>";
+                modalStr += "</tr>";
+                modalStr += "</thead>";
+                modalStr += "<tbody>";
+                foreach (var Qs in reportQuestions)
+                {
+                    modalStr += "<tr>";
+                    modalStr += "<td>"+Qs.Title+"</td>";
+                    modalStr += "<td>" + Qs.LastupDate + "</td>";
+                    modalStr += "<td>" + Qs.LastupMan + "</td>";
+                    modalStr += "<td>" + Qs.Version + "</td>";
+                    modalStr += "<td>";
+                    modalStr += "<a onclick=\"if(confirm('目前編輯的單表若尚未儲存，請先儲存!!')==false)return false\" href=\"FormGeneration.aspx?qid=" + Qs.QID+"\">";
+                   
+                    modalStr += "<i class=\"fas fa-edit\">";
+                    modalStr += "</a>";
+                    modalStr += "</td>";
+                    modalStr += "</tr>";
+                }
+                
+                modalStr += "</tbody>";
+                modalStr += "</table>";
+                formListModalBody.InnerHtml = modalStr;
             }
         }
 
         protected void SaveForm_Click(object sender, EventArgs e)
         {
+            Admin loginAdmin = (Admin)Session["LDTSAdmin"];
             try
             {
                 string TemplateFileName = TemplateFile.Value;
 
                 if (PrintTemplate.HasFile)
                     TemplateFileName = TemplateFile.Value = PublicUtil.saveFile(PrintTemplate);
-
+                DateTime thisDay = DateTime.Now;
                 ReportQuestion rq = new ReportQuestion()
                 {
                     QID = int.Parse(QID.Value),
                     Title = FormTitle.Text,
                     Description = Description.Text,
                     OutputJson = OutputJson.Text,
-                    CreateMan = "Admin",
+                    CreateMan = loginAdmin.admin_id,
                     Version = Version.Text,
-                    Status = int.Parse(Status.SelectedValue)
+                    Status = int.Parse(Status.SelectedValue),
+                    LastupMan = loginAdmin.admin_name,
+                    LastupDate= thisDay
                 };
                 
                 if (rq.QID == 0)
@@ -108,7 +150,7 @@ namespace LDTS
                         result = ReportQuestiovService.UpdateReportQuestionFile(report);
                         //改所有ReportQuestion下面的 ReportAnswers的Reportfile
                         List<ReportAnswer> updateAnswers = ReportAnswerService.GetAllAnswersByQID(report.QID);
-
+                        
                         foreach (var updateAnswer in updateAnswers)
                         {
                             updateAnswer.OutputTemplate = TemplateFileName;

@@ -43,6 +43,10 @@ namespace LDTS
                 }
                 if (ReportQuestionId != 0)
                 {
+                    if (loginAdmin == null)
+                    {
+                        Response.Redirect("Login.aspx");
+                    }
                     ReportQuestion reportQuestion = FormService.GetReportQuestionById(ReportQuestionId);
                     Qtitle.Text = reportQuestion.Title;
                     desc.Text = reportQuestion.Description;
@@ -71,6 +75,10 @@ namespace LDTS
                 }
                 else if (ReportAnswerId != 0)
                 {
+                    if (loginAdmin == null)
+                    {
+                        Response.Redirect("Login.aspx");
+                    }
                     ReportAnswer reportAnswer = FormService.GetReportAnswerById(ReportAnswerId);
                     ReProcessQuestion reProcess = Service.RelationService.GetAllReProcesssQuestion().Where(x => x.QID == reportAnswer.QID).FirstOrDefault();
                     ProUrl.NavigateUrl = "Process.aspx?pid=" + reProcess.PID;

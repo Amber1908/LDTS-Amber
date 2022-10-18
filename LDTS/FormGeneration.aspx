@@ -1266,7 +1266,23 @@
                                         });
                                         if (this.hasOtherAnswers)
                                             QHtml += `${this.AnswerOptions.length + 1}.&nbsp;<input type="radio" />&nbsp;其他 _____`;
-                                        break;                                    
+                                        break;
+                                    case "CheckboxMixRadio":
+                                        $.each(this.AnswerOptions, function () {
+                                            var AT = this.AnsText.replace(/##.[0-9]/g, "____");
+                                            QHtml += `${this.index}.&nbsp;<input type="checkbox" />&nbsp;${AT}`;
+
+                                            $.each(this.AnswerOptions, function () {
+                                                var ATS = this.AnsText.replace(/##.[0-9]/g, "____");
+                                                QHtml += `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" />&nbsp;${ATS}`;
+                                            });
+                                            QHtml += "<br />";
+                                        });
+                                        if (this.hasOtherAnswers)
+                                            QHtml += `${this.AnswerOptions.length + 1}.&nbsp;<input type="checkbox" />&nbsp;其他 _____`;
+                                        break;
+                                        QHtml += "<br />";
+                                         break;
                                     case "CheckboxMixImage":
                                         $.each(this.AnswerOptions, function () {
                                             var AT = this.AnsText.replace(/##.[0-9]/g, "____");
@@ -1348,6 +1364,7 @@
                                 QHtml += `<tr>`;
 
                                 $.each(this.Cols, function () {
+
                                     QHtml += `<td>
                                                 <div class="info-box" style="max-width: 230px;">
                                                     <span class="info-box-icon bg-info">
@@ -1355,7 +1372,7 @@
                                                     </span>
                                                     <div class="info-box-content">
                                                         <span class="info-box-text text-sm"><b>${this.QuestionType}</b></span>
-                                                        <span class="info-box-text text-sm" data-toggle="tooltip" data-placement="top" title data-original-title="${this.QuestionText}">${this.QuestionText}</span>
+                                                        <span class="info-box-text text-sm" data-toggle="tooltip" data-placement="top" title data-original-title="${this.QuestionText.replace(/##.[0-9]/g, "____")}">${this.QuestionText.replace(/##.[0-9]/g, "____")}</span>
                                                     </div>
                                                 </div></td>`;
                                 });
