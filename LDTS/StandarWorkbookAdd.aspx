@@ -36,7 +36,7 @@
 
                             <div class="sName form-group">
                                 <label for="sName" style="font-size: 12px; color: #00000080">標準作業書名稱</label>
-                                <asp:TextBox ID="sName" MaxLength="50" runat="server" CssClass="form-control form-control-border"></asp:TextBox>
+                                <asp:TextBox ID="sName" MaxLength="40" runat="server" CssClass="form-control form-control-border"></asp:TextBox>
                             </div>
                             <div class="sDesc form-group">
                                 <label for="desc" style="font-size: 12px; color: #00000080">標準作業書描述</label>

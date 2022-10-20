@@ -268,7 +268,7 @@
                                 if (Obj.Groups[i].Questions[q].AnswerOptions.length > 0) {
                                     img.src = "ShowAdminImg.aspx?id=" + Obj.Groups[i].Questions[q].AnswerOptions[0].image;
                                     img.style.width = "80%";
-                                    QcardBody.append(img);
+                                    
                                 }
                             } else {
                                 Qlabel.classList.add("col-12","d-flex", "justify-content-start");
@@ -280,7 +280,7 @@
                             nQuestion.classList.add("nQuestion", "myTextColor");
                             nQuestion.style.fontSize = "20px";
                             if (hasSn > 0) {//有項次
-                                nQuestion.innerText = hasSn;
+                                nQuestion.innerText = hasSn+".";
                                 hasSn++;
                             }
                             if (Obj.Groups[i].Questions[q].QuestionType == "RadioMixCheckbox" || Obj.Groups[i].Questions[q].QuestionType == "CheckboxMixFilling" || Obj.Groups[i].Questions[q].QuestionType == "RadioMixFilling") {
@@ -317,24 +317,25 @@
                                         index++;
                                     } else {
                                         let Words = document.createElement('div');
-                                        Words.classList.add("ml-1", "mr-1", "pt-1","mb-2","myTextColor");
-                                        Words.innerText = strOfFilling[sf];
+                                        Words.classList.add("ml-1", "mr-1", "pt-1", "mb-2", "myTextColor");
+                                        Words.innerText = "<span>"+strOfFilling[sf]+"</span>";
                                         Words.style.fontSize = "20px";
                                         Qlabel.append(Words);
                                     }
 
                                 }
-
+                               
                             } else {
-                                nQuestion.innerText += Obj.Groups[i].Questions[q].QuestionText;//QuestionText
+                                nQuestion.innerText = Obj.Groups[i].Questions[q].QuestionText;//QuestionText
                             }
                             if (Obj.Groups[i].Questions[q].QuestionType == "display" && hasSn > 0) {
-                                nQuestion.innerText = hasSn - 1;//再填答區顯示
+                                nQuestion.innerText = hasSn - 1+".";//再填答區顯示
                                 Qlabel.append(nQuestion);
 
                             } else if (Obj.Groups[i].Questions[q].QuestionType == "display" && hasSn < 0) {
                                 nQuestion.innerText = "";
                                 nQuestion.style.fontSize = "0px";
+                                
                             }
                             if (Obj.Groups[i].Questions[q].QuestionType != "display" ) {
                                 Qlabel.append(nQuestion);
@@ -372,6 +373,7 @@
                                 case"display":
                                 case "filling":
                                     CreateNormalTypeFilling(Obj, i, q, QcardBody);
+                                    QcardBody.append(img);
                                     break;
                                 case "RadioMixCheckbox":
                                     CreateNormalTypeRadioMixCheckbox(Obj, i, q, QcardBody);
@@ -426,7 +428,7 @@
                                         for (var s = 0; s < StrArr.length; s++) {
                                             if (StrArr[s].includes("^")) {
                                                 if (n+1 > Obj.Groups[i].Rows[0].Cols[r].fillings.length) {
-                                                    Obj.Groups[i].Rows[0].Cols[r].fillings.push({ "index": fsn, "value": "", "lastUpdate": "" });
+                                                    Obj.Groups[i].Rows[0].Cols[r].fillings.push({ "index": fsn, "value": "", "lastUpdate": 0 });
                                                     fsn++;
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
@@ -464,7 +466,7 @@
                                         }
                                     }
                                     if (Obj.Groups[i].Rows[0].Cols[r].Answers.length == 0) {
-                                        Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                        Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": "", "lastUpdate": 0 });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                     }
                                     TampleteStr += "<input type=\"number\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
@@ -477,7 +479,7 @@
                                     break;
 
                                 case "text":
-                                    Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": "", "lastUpdate": ""});
+                                    Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": "", "lastUpdate": 0});
                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                     var valueTemp = Obj.Groups[i].Rows[0].Cols[r].Answers.length > 0 ? Obj.Groups[i].Rows[0].Cols[r].Answers[0].value : "";
 
@@ -506,7 +508,7 @@
                                         }
 
                                         if (Obj.Groups[i].Rows[0].Cols[r].Answers.length == 0) {
-                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": 0, "lastUpdate": "" });
+                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": 0, "lastUpdate": 0 });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         let signImgID = document.getElementById("mainPlaceHolder_adminSign").value;
@@ -571,7 +573,7 @@
                                         TampleteStr += Obj.Groups[i].Rows[0].Cols[r].QuestionText;
                                     }
                                     if (Obj.Groups[i].Rows[0].Cols[r].Answers.length == 0) {
-                                        Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": 0, "lastUpdate": "" });
+                                        Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": 1, "value": 0, "lastUpdate":0 });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                     }
                                     TampleteStr += "<input type=\"date\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
@@ -599,7 +601,7 @@
                                     }
                                     for (var o = 0; o < Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length; o++) {
                                         if (Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length > Obj.Groups[i].Rows[0].Cols[r].Answers.length) {
-                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
+                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate":0 });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         TampleteStr += "<div class=\"form-check\">"
@@ -626,7 +628,7 @@
                                     }
                                     if (Obj.Groups[i].Rows[0].Cols[r].hasOtherAnswers) {
                                         if (Obj.Groups[i].Rows[0].Cols[r].otherAnswer.length == 0) {
-                                            Obj.Groups[i].Rows[0].Cols[r].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
+                                            Obj.Groups[i].Rows[0].Cols[r].otherAnswer.push({ "index": 1, "value": null, "lastUpdate":0 });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         TampleteStr += "<div class=\"form-check\">"
@@ -665,7 +667,7 @@
                                     }
                                     for (var o = 0; o < Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length; o++) {
                                         if (Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length > Obj.Groups[i].Rows[0].Cols[r].Answers.length) {
-                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
+                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0});
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         TampleteStr += "<div class=\"form-check\">"
@@ -709,7 +711,7 @@
                                     }
                                     for (var o = 0; o < Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length; o++) {//checkbox
                                         if (Obj.Groups[i].Rows[0].Cols[r].AnswerOptions.length > Obj.Groups[i].Rows[0].Cols[r].Answers.length) {
-                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "","fillings":[]});
+                                            Obj.Groups[i].Rows[0].Cols[r].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0,"fillings":[]});
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         TampleteStr += "<div class=\"form-check\">";
@@ -737,7 +739,7 @@
                                             for (var s = 0; s < StrArr.length; s++) {
                                                 if (StrArr[s].includes("^")) {
                                                     if (fSn > Obj.Groups[i].Rows[0].Cols[r].Answers[o].fillings.length) {
-                                                        Obj.Groups[i].Rows[0].Cols[r].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                        Obj.Groups[i].Rows[0].Cols[r].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": 0 });
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                     }
                                                     TampleteStr += "<input type=\"text\"  style=\"max-width:100px\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
@@ -797,7 +799,7 @@
                                 switch (Obj.Groups[i].Rows[w].Cols[c].QuestionType) {
                                     case "text":
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": 0 });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
@@ -817,7 +819,7 @@
                                         break;
                                     case "memo":
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "" });
+                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": 0 });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         if (Obj.Groups[i].Rows[w].Cols[c].QuestionText != "") {
@@ -844,7 +846,7 @@
                                             }
                                         }
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": "","fillings":[]});
+                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": "", "lastUpdate": 0,"fillings":[]});
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         TampleteStr += "<input type=\"number\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
@@ -866,7 +868,7 @@
                                             }
                                         }
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": "","fillings": [] });
+                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": 0,"fillings": [] });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         TampleteStr += "<input type=\"date\" onchange=\"changeTableJsonData(event)\" class=\"form-control mb-3\"name=\"";
@@ -901,7 +903,7 @@
                                             }
                                             for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "fillings": []});
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0, "fillings": []});
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check mt-2\">"
@@ -926,7 +928,7 @@
                                                 for (var s = 0; s < StrArr.length; s++) {
                                                     if (StrArr[s].includes("^")) {
                                                         if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.length) {
-                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate":0 });
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                         }
                                                         TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\"  style=\"max-width:100px\" class=\"form-control-border form-control form-control-sm ml-1 mr-1 d-inline mb-2\"name=\"";//data-gidandrow
@@ -952,7 +954,7 @@
                                             }
                                             if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": "", "fillings": [{ "index": 1, "value": false, "lastUpdate": ""}] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": 0, "fillings": [{ "index": 1, "value": false, "lastUpdate": 0}] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check mt-2\">"
@@ -990,7 +992,7 @@
                                             }
                                             for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "fillings": [{ "index": 1, "value": false, "lastUpdate": "" }] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0, "fillings": [] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check\">"
@@ -1016,7 +1018,7 @@
                                             }
                                             if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": "", "fillings": [{ "index": 1, "value": false, "lastUpdate": "" }]});
+                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": 0, "fillings": [{ "index": 1, "value": false, "lastUpdate": 0 }]});
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check mt-1\">"
@@ -1064,7 +1066,7 @@
                                             }
                                             for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "fillings": [] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0, "fillings": [] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check mt-2\">"
@@ -1091,7 +1093,7 @@
                                                 for (var s = 0; s < StrArr.length; s++) {
                                                     if (StrArr[s].includes("^")) {
                                                         if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.length) {
-                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": 0 });
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                         }
                                                         TampleteStr += "<input type=\"text\" style=\"max-width:100px\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
@@ -1120,7 +1122,7 @@
                                             }
                                             if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": "", "fillings": [{ "index": 1, "value": "", "lastUpdate": "" }] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": 0, "fillings": [{ "index": 1, "value": "", "lastUpdate": 0 }] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check  mt-2\">"
@@ -1159,7 +1161,7 @@
                                             }
                                             for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" });
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0 });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check\">"
@@ -1186,7 +1188,7 @@
 
                                             if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers == true) {
                                                 if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": "" });
+                                                    Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": null, "lastUpdate": 0 });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check d-flex mt-1\">"
@@ -1231,7 +1233,7 @@
                                         }
                                         for (var o = 0; o < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length; o++) {//checkbox
                                             if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "" ,"fillings":[]});
+                                                Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0 ,"fillings":[]});
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
                                             TampleteStr += "<div class=\"form-check\">";
@@ -1259,7 +1261,7 @@
                                                 for (var s = 0; s < StrArr.length; s++) {
                                                     if (StrArr[s].includes("^")) {
                                                         if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.length) {
-                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": 0 });
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                         }
                                                         TampleteStr += "<input type=\"text\" style=\"max-width:100px\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
@@ -1298,7 +1300,7 @@
                                         }
                                         if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers ) {
                                             if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": "", "fillings": [{ "index": 1, "value": "", "lastUpdate": "" }] });
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": 0, "fillings": [{ "index": 1, "value": "", "lastUpdate": 0 }] });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
                                             TampleteStr += "<div class=\"form-check mt-1\">"
@@ -1336,7 +1338,7 @@
                                             }
                                         }
                                         if (Obj.Groups[i].Rows[w].Cols[c].Answers.length == 0) {
-                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value":0, "lastUpdate": "" });
+                                            Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": 1, "value":0, "lastUpdate": 0 });
                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                         }
                                         let signImgID = document.getElementById("mainPlaceHolder_adminSign").value;
@@ -1397,19 +1399,22 @@
                                             let fillingStr = Obj.Groups[i].Rows[w].Cols[c].QuestionText;
                                             let StrArr = fillingStr.split("##");
                                             let n = 1;
+                                            let inft = 1;
+                                            let fsn = 1;
                                             let N = 0;//第幾個填充答案
+                                            if (Obj.Groups[i].Rows[w].Cols[c].fillings == undefined) {
+                                                Obj.Groups[i].Rows[w].Cols[c].fillings = [];
+                                            }
                                             for (var s = 0; s < StrArr.length; s++) {
                                                 if (StrArr[s].includes("^")) {
-                                                    if (n > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                        Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": n, "value": "", "lastUpdate": "" });
+                                                    if (StrArr.length-1 > Obj.Groups[i].Rows[w].Cols[c].fillings.length) {
+                                                        Obj.Groups[i].Rows[w].Cols[c].fillings.push({ "index": fsn, "value": "", "lastUpdate": 0 });
+                                                        fsn++;
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                     }
-                                                    TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\" style=\"width:20%\"  class=\"form-control d-inline mr-1 ml-1 mb-2\"name=\"";
+                                                    TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\" style=\"max-width:100px\"  class=\"form-control-sm form-control-border form-control d-inline mr-1 ml-1 mb-2\"name=\"";
                                                     TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
                                                     TampleteStr += "data-filling=\"" + n + "\"";
-                                                    if (Obj.Groups[i].Rows[w].Cols[c].Answers.length > 0) {
-                                                        TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].Answers[N].value + "\"";
-                                                    }
                                                     TampleteStr += ">";
                                                     n++;
                                                     N++;
@@ -1421,7 +1426,7 @@
                                                     TampleteStr += "<span>" + StrArr[s] + "</span>";
                                                 }
                                             }
-
+                                            
                                         } else {
                                             TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionText;
                                         }
@@ -1482,7 +1487,7 @@
                                             TampleteStr += "<div class=\"form-check\">";//包一組選項radio and checkbox 
                                             if (isRadioMixFillings) {// radio has fillings
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "fillings": [], "Answers": [] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0, "fillings": [], "Answers": [] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 //radio part
@@ -1511,7 +1516,7 @@
                                                 for (var s = 0; s < StrArr.length; s++) {
                                                     if (StrArr[s].includes("^")) {
                                                         if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.length) {
-                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": 0 });
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                         }
                                                         TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\" style=\"max-width:100px\" class=\"form-control-border form-control form-control-sm ml-1 mr-1 d-inline mb-2\"name=\"";//data-gidandrow
@@ -1537,7 +1542,7 @@
                                                 //radio part
                                             } else {//radio hasn't fillings
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "","fillings":[],"Answers": [] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0,"fillings":[],"Answers": [] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check\">"
@@ -1569,7 +1574,7 @@
                                             if (isCheckboxMixfillings) {//checkbox has fillings
                                                 for (var k = 0; k < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length; k++) {
                                                     if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length) {
-                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": "","fillings":[]});
+                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": 0,"fillings":[]});
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                     }
                                                     //checkbox part
@@ -1602,7 +1607,7 @@
                                                         if (StrArr[s].includes("^")) {
                                                             
                                                             if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[k].fillings.length) {
-                                                                Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[k].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                                Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[k].fillings.push({ "index": fSn, "value": "", "lastUpdate": 0 });
                                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                             }
                                                             TampleteStr += "<input type=\"text\"  style=\"max-width:100px\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
@@ -1640,7 +1645,7 @@
                                                 //checkbox part
                                                 for (var k = 0; k < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length; k++) {
                                                     if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length) {
-                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": "" });
+                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": 0 });
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                     }
                                                     TampleteStr += "</br><input onchange=\"changeTableJsonData(event)\" type=\"checkbox\" class=\"mr-1\"name=\"";
@@ -1673,7 +1678,7 @@
                                         if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
                                             
                                             if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": "", "fillings": [{ "index": 1, "value": "", "lastUpdate": "" }] });
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": 0, "fillings": [{ "index": 1, "value": "", "lastUpdate": 0 }] });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
                                             TampleteStr += "<div class=\"form-check mt-1\">"
@@ -1727,7 +1732,7 @@
                                             TampleteStr += "<div class=\"form-check\">";//包一組選項radio and checkbox 
                                             if (IsCheckboxMixfillings) {// checkbox has fillings
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "fillings": [], "Answers": [] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0, "fillings": [], "Answers": [] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 //checkbox part
@@ -1756,7 +1761,7 @@
                                                 for (var s = 0; s < StrArr.length; s++) {
                                                     if (StrArr[s].includes("^")) {
                                                         if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.length) {
-                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                            Obj.Groups[i].Rows[w].Cols[c].Answers[o].fillings.push({ "index": fSn, "value": "", "lastUpdate": 0 });
                                                             document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                         }
                                                         TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\" style=\"max-width:100px\" class=\"form-control-border form-control form-control-sm ml-1 mr-1 d-inline mb-2\"name=\"";
@@ -1782,7 +1787,7 @@
                                                 //radio part
                                             } else {//radio hasn't fillings
                                                 if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers.length) {
-                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": "", "fillings": [], "Answers": [] });
+                                                    Obj.Groups[i].Rows[w].Cols[c].Answers.push({ "index": o + 1, "value": false, "lastUpdate": 0, "fillings": [], "Answers": [] });
                                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                 }
                                                 TampleteStr += "<div class=\"form-check\">"
@@ -1815,7 +1820,7 @@
                                             if (IsRadioMixFillings) {//radio has fillings
                                                 for (var k = 0; k < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length; k++) {
                                                     if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length) {
-                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": "", "fillings": [] });
+                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": 0, "fillings": [] });
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                     }
                                                     //radio part
@@ -1849,7 +1854,7 @@
                                                         if (StrArr[s].includes("^")) {
                                                             console.log("chkboxFillings");
                                                             if (fSn > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[k].fillings.length) {
-                                                                Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[k].fillings.push({ "index": fSn, "value": "", "lastUpdate": "" });
+                                                                Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers[k].fillings.push({ "index": fSn, "value": "", "lastUpdate": 0 });
                                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                             }
                                                             TampleteStr += "<input type=\"text\" style=\"max-width:100px\" onchange=\"changeTableJsonData(event)\"  class=\"form-control form-control-border form-control-sm d-inline ml-1 mr-1 mb-2\"name=\"";
@@ -1887,7 +1892,7 @@
                                                 //radio no fillings part
                                                 for (var k = 0; k < Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length; k++) {
                                                     if (Obj.Groups[i].Rows[w].Cols[c].AnswerOptions[o].AnswerOptions.length > Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.length) {
-                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": "" });
+                                                        Obj.Groups[i].Rows[w].Cols[c].Answers[o].Answers.push({ "index": k + 1, "value": false, "lastUpdate": 0 });
                                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                                     }
 
@@ -1923,7 +1928,7 @@
                                         if (Obj.Groups[i].Rows[w].Cols[c].hasOtherAnswers) {
 
                                             if (Obj.Groups[i].Rows[w].Cols[c].otherAnswer.length == 0) {
-                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": "", "fillings": [{ "index": 1, "value": "", "lastUpdate": "" }] });
+                                                Obj.Groups[i].Rows[w].Cols[c].otherAnswer.push({ "index": 1, "value": false, "lastUpdate": 0, "fillings": [{ "index": 1, "value": "", "lastUpdate": 0 }] });
                                                 document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                                             }
                                             TampleteStr += "<div class=\"form-check mt-1\">"
@@ -4110,7 +4115,7 @@
 
                                     } else if (SignImageBox[s].classList.contains("d-none")) {
                                         dataObj.Groups[i].Rows[sn].Cols[c].Answers.length = 0;
-                                        dataObj.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": null });
+                                        dataObj.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": 0 });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(dataObj));
                                     }
                                 }
@@ -4741,7 +4746,7 @@
                                             }
                                             if (dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length > dataObj2.Groups[i].Rows[sn].Cols[c].Answers.length) {
                                                 for (var o = 0; o < dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions.length; o++) {
-                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[o].index, "value": false, "lastUpdate": "","fillings":[], "Answers": [] });
+                                                    dataObj2.Groups[i].Rows[sn].Cols[c].Answers.push({ "index": dataObj2.Groups[i].Rows[sn].Cols[c].AnswerOptions[o].index, "value": false, "lastUpdate": 0,"fillings":[], "Answers": [] });
                                                 }
                                             }
                                             for (var r = 0; r < Radios.length; r++) {
@@ -6039,7 +6044,7 @@
                     for (var i = 0; i < dataObj.Groups.length; i++) {
                         if (dataObj.Groups[i].GroupType == "normal") {
                             for (var j = 0; j < dataObj.Groups[i].Questions.length; j++) {
-                                if (dataObj.Groups[i].Questions[j].QuestionText == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "checkbox") {
+                                if (dataObj.Groups[i].Questions[j].QuestionID == event.currentTarget.name && dataObj.Groups[i].Questions[j].QuestionType == "checkbox") {
                                     if (event.currentTarget.checked) {
                                         for (var ic = 0; ic < dataObj.Groups[i].Questions[j].AnswerOptions.length; ic++) {
                                             if (dataObj.Groups[i].Questions[j].AnswerOptions[ic].index == event.currentTarget.value) {
@@ -6354,7 +6359,7 @@
                             for (var c = 0; c < JsonObj.Groups[g].Rows[Row].Cols.length; c++) {
                                 console.log(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID);
                                 if (SignImage.classList.contains(JsonObj.Groups[g].Rows[Row].Cols[c].QuestionID)) {
-                                    JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": null });
+                                    JsonObj.Groups[g].Rows[Row].Cols[c].Answers.push({ "index": 1, "value": 0, "lastUpdate": 0 });
                                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                 } /*else {*/
                                 //    console.log("if" + Gid)
@@ -6440,8 +6445,8 @@
                                         var singDateT = document.getElementsByName(JsonObj.Groups[i].Rows[k].Cols[c].QuestionID)
                                         singDateT.innerText = today;
 
-                                        JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].value = null;
-                                        JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].lastUpdate = null;
+                                        JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].value = 0;
+                                        JsonObj.Groups[i].Rows[k].Cols[c].Answers[0].lastUpdate = 0;
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                     }
                                 }
@@ -6456,11 +6461,11 @@
                             for (var k = 0; k < JsonObj.Groups[i].Questions.length; k++) {
                                 if (SignImage.classList.contains(JsonObj.Groups[i].Questions[k].QuestionID)) {
                                     if (JsonObj.Groups[i].Questions[k].Answers.length < 0) {
-                                        JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": null, "lastUpdate": null });
+                                        JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": 0, "lastUpdate": 0 });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                     } else {
                                         JsonObj.Groups[i].Questions[k].Answers.length = 0;
-                                        JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": null, "lastUpdate": null });
+                                        JsonObj.Groups[i].Questions[k].Answers.push({ "index": 1, "value": 0, "lastUpdate": 0 });
                                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(JsonObj));
                                     }
                                 }
@@ -7144,7 +7149,7 @@
             for (var s = 0; s < StrArr.length; s++) {
                 if (StrArr[s].includes("^")) {
                     if (n + 1 > Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings.length) {
-                        Obj.Groups[i].Rows[0].Cols[r].fillings.push({ "index": fsn, "value": "", "lastUpdate": "" });
+                        Obj.Groups[i].Rows[0].Cols[r].fillings.push({ "index": fsn, "value": "", "lastUpdate": 0 });
                         fsn++;
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                     }
@@ -7179,12 +7184,12 @@
             let N = 0;//第幾個填充答案
             if (Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings == undefined) {
                 Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings = [];
-                Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings.push({ "index": n, "value": "", "lastUpdate": "" });
+                Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings.push({ "index": n, "value": "", "lastUpdate":0 });
             }
             for (var s = 0; s < StrArr.length; s++) {
                 if (StrArr[s].includes("^")) {
                     if (n > Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings.length) {
-                        Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings.push({ "index": fsn, "value": "", "lastUpdate": "" });
+                        Obj.Groups[GroupsSn].Rows[RowsSn].Cols[ColsSn].fillings.push({ "index": fsn, "value": "", "lastUpdate": 0 });
                         document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(Obj));
                     }
                     TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\" style=\"max-width:100px\" class=\"form-control-sm form-control-border form-control d-inline mr-1 ml-1 mb-2\"name=\"";
@@ -7222,7 +7227,7 @@
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.length == 0) {
                     for (var sf = 0; sf < strOfFilling.length; sf++) {
                         if (strOfFilling[sf].includes("^")) {//有^就是要填的位置
-                            DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.push({ "index": index, "value": "", "lastUpdate": "" });
+                            DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.push({ "index": index, "value": "", "lastUpdate": 0 });
                             index++;
                         }
                     }
@@ -7561,36 +7566,46 @@
             Parent.append(FillingBox);
             let Qtext = DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionText;//把填充題目取出
             let strOfFilling = Qtext.split("##");
+            let FillingsLength = strOfFilling.length;
             let AnsSn = 0;
             let index = AnsSn + 1;
             console.log("DataObj.Groups[GroupSn].Questions[QusetionSn].fillings" + DataObj.Groups[GroupSn].Questions[QusetionSn].fillings)
             if (DataObj.Groups[GroupSn].Questions[QusetionSn].fillings == undefined) {
                 DataObj.Groups[GroupSn].Questions[QusetionSn].fillings = [];
             }
+
             for (var sf = 0; sf < strOfFilling.length; sf++) {
                 if (strOfFilling[sf].includes("^")) {//有^就是要填的位置
                     
                     let fillinfPlace = document.createElement("input");//有要填的地方放Input
-                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.length > 1) {
-                        fillinfPlace.setAttribute("value", DataObj.Groups[GroupSn].Questions[QusetionSn].fillings[index-1].value);
+                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.length < FillingsLength - 1) {
+                        DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.push({ "index": index, "value": "", "lastUpdate": today });
+                    }
+                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.length> 0) {
+                            console.log("DataObj.Groups[GroupSn].Questions[QusetionSn].fillings[AnsSn].value" + AnsSn);
+                            fillinfPlace.setAttribute("value", DataObj.Groups[GroupSn].Questions[QusetionSn].fillings[AnsSn].value);
                     }
 
                     document.querySelector("#mainPlaceHolder_jsonData").setAttribute("value", JSON.stringify(DataObj));
 
-                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.length < strOfFilling.length - 1) {
-                        DataObj.Groups[GroupSn].Questions[QusetionSn].fillings.push({ "index": index, "value": "", "lastUpdate": today });
-                    }
+                    
 
                     fillinfPlace.setAttribute("type", "text");
                     fillinfPlace.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
                     fillinfPlace.setAttribute("data-textindex", index);
                     fillinfPlace.setAttribute("onchange", "changeJsonData(event)");//todo 檢查 有順序問題
-                    fillinfPlace.classList.add("form-control", "form-control-user", "col-1","form-control-sm","form-control-border", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                    fillinfPlace.classList.add("form-control", "col-1", "form-control-user", "form-control-sm", "form-control-border", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                    if (DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionText.length > 55) {
+                        fillinfPlace.style.maxWidth = "45px";
+                    } else {
+                        fillinfPlace.style.maxWidth = "100px";
+                    }
+                    
                     FillingBox.append(fillinfPlace);
                     let words = strOfFilling[sf].substring(2);
                     if (words != null) {
                         let wds = document.createElement('div');
-                        wds.classList.add("ml-1", "mr-1", "pt-1", "myTextColor");
+                        wds.classList.add("ml-1", "mr-1", "pt-1","myTextColor");
                         wds.style.fontSize = "20px";
                         wds.innerText = words;
                         FillingBox.append(wds);
@@ -7600,7 +7615,7 @@
                 } else {
                     let Words = document.createElement('div');
                     Words.classList.add("ml-1", "mr-1", "pt-1", "myTextColor");
-                    Words.innerText = strOfFilling[sf];
+                    Words.innerHTML ="<span>"+ strOfFilling[sf]+"</span>";
                     Words.style.fontSize = "20px";
                     FillingBox.append(Words);
                 }
@@ -7621,14 +7636,14 @@
             Parent.append(father);
             for (var acf = 0; acf < DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions.length; acf++) {//checkbox部分
                 let checkboxFillngBox = document.createElement("div");
-                checkboxFillngBox.classList.add("col-12", "pt-2", "d-flex","ml-5","mt-3", "checkboxFillngBox", "justify-content-start", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                checkboxFillngBox.classList.add("col-12", "d-flex","ml-5", "checkboxFillngBox", "justify-content-start", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
                 father.append(checkboxFillngBox);
                 let ckboxInput = document.createElement("input");
                 ckboxInput.setAttribute("type", "checkbox");
-                ckboxInput.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionText);
+                ckboxInput.setAttribute("name", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
                 ckboxInput.setAttribute("onchange", "changeJsonData(event)");
                 ckboxInput.setAttribute("onclick", "DisabledTrue(event)");
-                ckboxInput.classList.add("CheckboxMixFilling", "mycheckbox","mt-2", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
+                ckboxInput.classList.add("CheckboxMixFilling", "mycheckbox", DataObj.Groups[GroupSn].Questions[QusetionSn].QuestionID);
                 ckboxInput.setAttribute("value", DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[acf].index);//
                 checkboxFillngBox.append(ckboxInput);
                 if (DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions.length > DataObj.Groups[GroupSn].Questions[QusetionSn].Answers.length) {
@@ -7690,7 +7705,7 @@
                     }
                 } else {
                     let TXTS = document.createElement("span");//一開始的文字
-                    TXTS.innerText = DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[acf].AnsText;
+                    TXTS.innerHTML =DataObj.Groups[GroupSn].Questions[QusetionSn].AnswerOptions[acf].AnsText ;
                     checkboxFillngBox.append(TXTS);
                 }
                 fillingAns++;

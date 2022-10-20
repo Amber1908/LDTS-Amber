@@ -1288,3 +1288,6 @@ input.treeCtrl:hover + .treeCtrlIcon{
 .account {
     background-color: var(--colorC);
 }
+.custom-file-label::after {
+    content: 'Upload';
+}
