@@ -1415,6 +1415,7 @@
                                                     TampleteStr += "<input type=\"text\" onchange=\"changeTableJsonData(event)\" style=\"max-width:100px\"  class=\"form-control-sm form-control-border form-control d-inline mr-1 ml-1 mb-2\"name=\"";
                                                     TampleteStr += Obj.Groups[i].Rows[w].Cols[c].QuestionID + "\"";
                                                     TampleteStr += "data-filling=\"" + n + "\"";
+                                                    TampleteStr += "value=\"" + Obj.Groups[i].Rows[w].Cols[c].fillings[N].value + "\"";
                                                     TampleteStr += ">";
                                                     n++;
                                                     N++;
